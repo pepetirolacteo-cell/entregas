@@ -50,6 +50,10 @@ textarea:focus{border-color:var(--accent)}
 form button{border:0;border-radius:14px;background:var(--accent);color:var(--
 paper);font:inherit;font-weight:800;padding:0 18px;min-height:48px;cursor:pointer}
 form button:disabled{opacity:.5}
+.attach{border:2px solid var(--line);background:var(--paper);color:var(--accent-dark);border-radius:14px;width:48px;min-height:48px;flex:none;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.attach:hover{border-color:var(--accent)}
+.attach:disabled{opacity:.5;cursor:default}
+.m img{display:block;max-width:220px;width:100%;border-radius:12px;margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -58,7 +62,7 @@ form button:disabled{opacity:.5}
 <div id="log" role="log" aria-live="polite"></div>
 
 <div id="chips"></div>
-<form id="f"><div class="in"><textarea id="q" rows="1" placeholder=""></textarea><button 
+<form id="f"><div class="in"><input type="file" id="photoInput" accept="image/*" style="display:none"><button type="button" id="attach" class="attach" title="Attach a photo" aria-label="Attach a photo">📷</button><textarea id="q" rows="1" placeholder=""></textarea><button
 id="send" type="submit"></button></div></form>
 <script>
 /* =====================================================================
@@ -152,36 +156,96 @@ DISCLAIMERS THE MENTOR ALWAYS RESPECTS:
 EXTRA THINGS THIS MENTOR CAN DO ON REQUEST (all through this same chat, no extra tools):
 - Write a reply to a difficult client message: if the customer pastes a message from a client who is haggling or complaining, draft a firm-but-friendly reply that closes the sale without a fight.
 - Build a custom order plan: if the customer tells you the order details (shape, quantity, deadline), lay out the materials needed and the exact steps/timeline to get it done on time.
-- Act as a searchable "mistake bible": when asked about a specific problem, first check if it matches one of the COMMON MISTAKES above before answering generically.`
+- Act as a searchable "mistake bible": when asked about a specific problem, first check if it matches one of the COMMON MISTAKES above before answering generically.
+- Diagnose a photo: when the customer attaches a photo of a capsule mistake, look at what's visible (cracks, filling leaking out, dull or cloudy chocolate, white blotches, uneven shape, air bubbles) and match it to the closest cause in COMMON MISTAKES / COLORING / FINISHING above, then give the specific fix. If the photo doesn't clearly show a capsule-making problem, say so honestly instead of guessing at a diagnosis.`
 };
 /* ===================================================================== */
-const log = document.getElementById("log"), q = document.getElementById("q"), send = 
+const log = document.getElementById("log"), q = document.getElementById("q"), send =
 document.getElementById("send"), chips = document.getElementById("chips");
+const photoInput = document.getElementById("photoInput"), attach = document.getElementById("attach");
 document.getElementById("nom").textContent = CHAT.nombre;
 document.getElementById("rol").textContent = CHAT.rol;
 q.placeholder = CHAT.placeholder; send.textContent = CHAT.enviar;
 let historial = [];
-try { historial = JSON.parse(sessionStorage.getItem("chat-" + location.pathname) || "[]"); } 
+try { historial = JSON.parse(sessionStorage.getItem("chat-" + location.pathname) || "[]"); }
 catch (e) {}
-function persistir() { try { sessionStorage.setItem("chat-" + location.pathname, 
+function persistir() { try { sessionStorage.setItem("chat-" + location.pathname,
 JSON.stringify(historial.slice(-CHAT.maxHistorial))); } catch (e) {} }
-function burbuja(txt, cls) { const d = document.createElement("div"); d.className = "m " + 
-cls; d.textContent = txt; log.append(d); log.scrollTop = log.scrollHeight; return d; }
-function limpiar(t) { return t.replace(/\*\*(.+?)\*\*/g, "$1").replace(/^#+\s*/gm, 
+function burbuja(txt, cls, imgUrl) {
+  const d = document.createElement("div"); d.className = "m " + cls;
+  if (imgUrl) { const im = document.createElement("img"); im.src = imgUrl; im.alt = "Attached photo"; d.append(im); }
+  if (txt) { const p = document.createElement("div"); p.textContent = txt; d.append(p); }
+  log.append(d); log.scrollTop = log.scrollHeight; return d;
+}
+function limpiar(t) { return t.replace(/\*\*(.+?)\*\*/g, "$1").replace(/^#+\s*/gm,
 "").replace(/^\s*[-*]\s+/gm, "• "); }
+function imgUrlDe(parts) {
+  const p = (parts || []).find(p => p.inlineData);
+  return p ? `data:${p.inlineData.mimeType};base64,${p.inlineData.data}` : null;
+}
 burbuja(CHAT.bienvenida, "bot");
 
-historial.forEach(h => burbuja(h.parts[0].text, h.role === "user" ? "yo" : "bot"));
-if (!historial.length) CHAT.sugerencias.forEach(s => { const b = 
-document.createElement("button"); b.type = "button"; b.textContent = s; b.onclick = () => 
+historial.forEach(h => {
+  const textPart = (h.parts || []).find(p => p.text);
+  burbuja(textPart ? textPart.text : "", h.role === "user" ? "yo" : "bot", imgUrlDe(h.parts));
+});
+if (!historial.length) {
+  CHAT.sugerencias.forEach(s => { const b =
+document.createElement("button"); b.type = "button"; b.textContent = s; b.onclick = () =>
 preguntar(s); chips.append(b); });
-async function preguntar(texto) {
-  texto = (texto || "").trim(); if (!texto) return;
+  const photoChip = document.createElement("button"); photoChip.type = "button";
+  photoChip.textContent = "📷 Upload a photo of your mistake";
+  photoChip.onclick = () => attach.click();
+  chips.append(photoChip);
+}
+async function preguntar(texto, imagePart, previewUrl) {
+  texto = (texto || "").trim(); if (!texto && !imagePart) return;
   chips.innerHTML = "";
-  burbuja(texto, "yo");
-  historial.push({ role: "user", parts: [{ text: texto }] });
+  burbuja(texto, "yo", previewUrl);
+  const parts = [{ text: texto || "Please take a look at this photo." }];
+  if (imagePart) parts.push(imagePart);
+  historial.push({ role: "user", parts });
   await responder();
 }
+function resizeImageFile(file, maxDim, quality) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error("read-failed"));
+    reader.onload = () => {
+      const img = new Image();
+      img.onerror = () => reject(new Error("decode-failed"));
+      img.onload = () => {
+        let w = img.width, h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) { h = Math.round(h * maxDim / w); w = maxDim; }
+          else { w = Math.round(w * maxDim / h); h = maxDim; }
+        }
+        const canvas = document.createElement("canvas");
+        canvas.width = w; canvas.height = h;
+        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+attach.addEventListener("click", () => photoInput.click());
+photoInput.addEventListener("change", async () => {
+  const file = photoInput.files[0];
+  photoInput.value = "";
+  if (!file) return;
+  attach.disabled = true;
+  try {
+    const dataUrl = await resizeImageFile(file, 1024, 0.75);
+    const base64 = dataUrl.split(",")[1];
+    const texto = q.value.trim();
+    q.value = ""; q.style.height = "auto";
+    await preguntar(texto, { inlineData: { mimeType: "image/jpeg", data: base64 } }, dataUrl);
+  } catch (e) {
+    burbuja("Couldn't read that photo — try a different one.", "err");
+  } finally { attach.disabled = false; }
+});
 async function responder() {
   send.disabled = true;
   const t = document.createElement("div"); t.className = "m bot typing"; 
