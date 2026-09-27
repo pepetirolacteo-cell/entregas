@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content">
+<meta name="robots" content="noindex,nofollow">
+<title>The Perfect Capsule AI · Capsule World</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF3F1;--paper:#FFFFFF;--ink:#3D2419;--ink-soft:#8A7268;--
+accent:#CF9600;--accent-dark:#713D35;--line:#F0DCD8}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink)}
+body{font-family:'Inter',-apple-system,Arial,sans-serif;line-
+height:1.5;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{background:var(--accent-dark);color:var(--paper);padding:14px 16px;display:flex;align-
+items:center;gap:12px}
+.av{width:40px;height:40px;border-radius:50%;background:var(--paper);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Georgia',Georgia,serif;font-size:18px;flex:none;overflow:hidden}
+header b{display:block;font-family:'Georgia',Georgia,serif;font-size:17px}
+header small{opacity:.85}
+#log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;max-
+width:760px;width:100%;margin:0 auto}
+.m{max-width:88%;padding:11px 14px;border-radius:16px;white-space:pre-wrap;word-wrap:break-
+word;font-size:16px}
+.bot{background:var(--paper);border:1px solid var(--line);align-self:flex-start;border-
+bottom-left-radius:4px}
+.yo{background:var(--accent);color:var(--paper);align-self:flex-end;border-bottom-right-
+radius:4px}
+.err{background:#fbeaea;border:1px solid #e3b4b4;align-self:flex-start}
+.err button{margin-top:8px;border:0;background:var(--accent-dark);color:var(--paper);border-
+radius:8px;padding:6px 12px;font:inherit;font-weight:700;cursor:pointer}
+.typing span{display:inline-block;width:7px;height:7px;margin:0 2px;border-
+radius:50%;background:var(--ink-soft);animation:b 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,80%,100%{opacity:.3;transform:translateY(0)}40%
+{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.typing span{animation:none}}
+#chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 10px;max-
+width:760px;width:100%;margin:0 auto}
+#chips button{border:1px solid var(--accent);background:var(--paper);color:var(--accent-
+dark);border-radius:99px;padding:8px 14px;font:inherit;font-size:14px;font-
+weight:700;cursor:pointer;text-align:left}
+form{display:flex;gap:8px;padding:12px 16px calc(12px + env(safe-area-inset-
+bottom));background:var(--paper);border-top:1px solid var(--line)}
+form .in{display:flex;gap:8px;max-width:760px;width:100%;margin:0 auto}
+textarea{flex:1;min-width:0;resize:none;border:2px solid var(--line);border-
+radius:14px;padding:11px 13px;font:inherit;font-size:16px;max-height:140px;background:var(--
+bg);color:var(--ink);outline:none}
+textarea:focus{border-color:var(--accent)}
+form button{border:0;border-radius:14px;background:var(--accent);color:var(--
+paper);font:inherit;font-weight:800;padding:0 18px;min-height:48px;cursor:pointer}
+form button:disabled{opacity:.5}
+</style>
+</head>
+<body>
+<header><div class="av" id="av"><img src="../../img/u375cjbssk/fernanda-avatar.jpg" alt="Fernanda Caroline" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div><div><b id="nom"></b><small id="rol"></small></div>
+</header>
+<div id="log" role="log" aria-live="polite"></div>
+
+<div id="chips"></div>
+<form id="f"><div class="in"><textarea id="q" rows="1" placeholder=""></textarea><button 
+id="send" type="submit"></button></div></form>
+<script>
+/* =====================================================================
+   CONFIG DEL CHAT. Regla dura: acá NUNCA va una API key (ni entera, ni
+   partida, ni ofuscada). El chat le habla a TU proxy, que tiene la key
+   guardada como secreto del lado del servidor.
+   ===================================================================== */
+const CHAT = {
+  proxyUrl: "https://eqptprfkflexjkjedgvd.supabase.co/functions/v1/ai-proxy",            // ej: https://<tu-proyecto>.supabase.co/functions/v1/ai-proxy
+  modelo: "gemini-flash-lite-latest",                 // el más barato que esté en la allowlist del proxy
+  nombre: "Fernanda Caroline",
+  rol: "Assistant for Capsule World",
+  bienvenida: "Hi! I'm your assistant. Ask me anything about the product and I'll answer right away.",
+  placeholder: "Type your question…",
+  enviar: "Send",
+  errorTxt: "I couldn't answer right now. Try again in a few seconds.",
+  reintentar: "Retry",
+  sugerencias: [
+    "My shell keeps cracking when I unmold it",
+    "What coloring is safe to use without ruining the chocolate?",
+    "Write a reply to a client who says my price is too high",
+    "Help me plan a custom order (shape, qty, deadline)"
+  ],
+  maxHistorial: 12,
+  // CONOCIMIENTO: resumen del core y de cada bono. Si el core tiene ítems
+  // numerados, pegá el CATÁLOGO COMPLETO numerado (generado desde contenido.py),
+  // nunca ejemplos sueltos: si no, el modelo inventa números.
+  sistema: `Sos Fernanda Caroline, asistente experto de "Capsule World".
+Tu trabajo: ayudar a quien compró el producto a sacarle provecho.
+Reglas:
+- Respondé solo sobre el tema del producto. Si preguntan otra cosa, redirigí con amabilidad.
+- Respuestas cortas y prácticas, con pasos numerados cuando aplique.
+- Cuando recomiendes un ítem del catálogo, usá SIEMPRE su número exacto de la lista. Si no 
+estás seguro del número, nombralo sin número. Nunca inventes números, ítems ni páginas.
+- Nunca des consejos médicos, legales ni financieros personalizados.
+- Nunca des datos de contacto ni derives a canales externos.
+- Idioma: American English.
+CATÁLOGO Y CONTENIDO DEL PRODUCTO:
+REFERENCE GUIDE: "Lucrative Capsules" (Fernanda Caroline) — technique and business of gourmet chocolate capsules filled with tea/coffee.
+
+WHAT IT IS: a hollow chocolate shell molded in 2 halves, with a sugar-free instant coffee or powdered tea (matcha) filling in the center, sealed shut. It dissolves in hot milk/water.
+
+BASE TECHNIQUE (6 steps):
+1. Melt the chocolate in a double boiler or microwave in 20-second bursts, stirring each time. Beginners: use sugar-free baking chocolate or compound/candy melts (no tempering needed).
+2. Coat both mold halves with an even layer of chocolate, tap the mold on the counter to release air bubbles.
+3. Chill 5 minutes in the fridge/freezer and apply a SECOND coat (this is what gives it strength — a single coat cracks).
+4. Unmold once opaque, pressing from the back — never pulling on the chocolate.
+5. Fill only 2/3 of the cavity (if fully filled, it won't seal properly).
+6. Seal: warm a pan or plate slightly (warm, not hot), press the rim of the empty half against it for a couple seconds to melt it just enough, join the two halves and press, hold a bit longer than feels necessary, let cool completely before moving it.
+
+COMMON MISTAKES AND FIXES:
+- Shell cracks when unmolding → chocolate layer too thin. Fix: always apply the second coat, don't rush the freezer step.
+- It pops open and the filling spills → sealed without enough heat, or pressed too late. Fix: seal right as the rim melts and hold the press a bit longer than feels necessary.
+- Visible air bubbles in the shell → mold wasn't tapped after coating. Fix: a gentle tap against the counter before chilling.
+- Filling gets damp/clumpy over time → moisture got in (condensation from pulling it out of the fridge before it's fully sealed, or the filling powder wasn't stored airtight). Fix: always store the filling powder in an airtight jar.
+
+COFFEE (adjustments): use INSTANT coffee, never drip/filter grounds (they won't dissolve, they sit like sediment). If the instant coffee granules are coarse, grind them a bit finer (mortar or the back of a spoon). To soften the intensity, mix with powdered milk (~half and half). Keep the filling in powder form ALWAYS, never liquid extracts/essences (moisture clumps it and shortens shelf life). Variants: classic (coffee alone), mocha (+ unsweetened cocoa powder, equal parts), cappuccino (+ powdered milk + a pinch of cinnamon), hazelnut (+ finely ground dry hazelnuts or praline powder), cinnamon spice (+ cinnamon + a pinch of ginger), dulce de leche powder, finely ground dry shredded coconut, vanilla powder.
+
+SHAPES (difficulty): Easy = classic sphere, heart, star (as long as the points aren't too thin). Medium = flower (petals are thinner — coat that area with extra chocolate, it's where it cracks most), butterfly (flat halves, longer sealing edge — warm the plate a bit longer before joining). Advanced = teddy bear (ears/paws are thin protrusions that break when unmolding — apply a THIRD coat of chocolate right on those spots).
+
+COLORING (the rule with no exceptions): NEVER use water-based food coloring — it seizes the chocolate (the fat separates, it turns grainy, and there's no fixing it). ALWAYS use oil-based/candy coloring or colored cocoa butter. Pro technique: paint the color thinly on the empty mold walls with a brush, let it set for 1 minute, then apply the base chocolate over it. Marbled effect: paint 2-3 colors without fully blending them and drag a toothpick through to create veins before it sets.
+
+FINISHING: shine comes from proper tempering, not from adding oil or shine spray (that dulls it). Store away from heat and direct light (otherwise white blooming spots appear — not dangerous, just unprofessional-looking). A hand-painted detail (a contrasting color line, edible glitter, a signature) is what makes a customer recognize your work. Handle as little as possible once it's glossy (hold by the sealed rim, not the body).
+
+STORAGE: keep at a cool room temperature, NOT in the fridge (pulling it out causes condensation that ruins both the shine and the dry filling). Avoid sudden temperature swings. Keep away from strong odors (chocolate absorbs smells). Make shells ahead of time and fill/seal closer to delivery. Shelf life when stored well: about 2 weeks.
+
+PACKAGING: keep the packaging format consistent (builds brand identity). The label needs 4 minimum pieces of info: flavor, ingredients (milk/soy/nuts allergy info), production date, and usage instructions ("Drop the capsule into a cup of hot milk or water and stir until fully melted"). Low-cost details that raise perceived value: tissue paper inside the box, a sealing sticker with your logo, a small handwritten instructions card. Gift sets (3-6 flavors) sell better than loose units.
+
+PRICING (formula): cost of ingredients per unit + cost of packaging per unit + your labor time valued per hour + profit margin (30% to 50%) = sale price. Example: $1.50 ingredients + $0.60 packaging + $0.90 labor = $3.00 total cost; with a 40% margin: $3.00 + $1.20 = $4.20.
+
+SOCIAL MEDIA: the most-shared content is the moment the capsule dissolves in the cup (slow-motion reel if possible). Other ideas: behind-the-scenes painting the molds, before/after, stories testing a new flavor and asking for feedback, an honest post explaining the real work behind the price, assembling a gift box, a genuine customer testimonial.
+
+FIRST CLIENTS: start with your close circle (gift or sell at cost to family/friends, ask for a photo/video, get your first real testimonial). Leverage word of mouth (put your social handle on the packaging). Try local craft fairs/markets. Make ordering on social media easy with a clear flavor/shape list and quick replies.
+
+SCALING: move to a fixed production schedule (predictable rhythm). If you have more orders than you can comfortably handle, raise the price (don't just work more hours). Keep a fixed catalog of 6-8 well-mastered flavors/shapes. Make shells ahead of time in stages. Keep a simple monthly income/expense log.
+
+FAQ:
+- White chocolate? Works the same, but burns/seizes faster: shorter microwave bursts.
+- No oil-based coloring on hand? Leave the chocolate its natural color and vary shapes/finishes instead while you source the right coloring. Never substitute with water-based coloring.
+- Loose tea leaves instead of powder? Not recommended, leaves a gritty residue. Always use matcha or another instant powdered tea.
+- No shaped silicone molds? Won't come out clean — an improvised mold like an ice cube tray can't achieve the seal fit of the two halves.
+- How many capsules from 1 kg (~2.2 lb) of chocolate? Roughly 40 to 60 medium capsules, depending on mold size and shell thickness.
+- Need a kitchen thermometer? Not required with the simplified tempering method, but it helps consistency.
+- Shelf life? About 2 weeks stored well (cool, dry, no direct light).
+- Do I need a food business license/permit to sell? Depends on the country/state/city and whether sales are occasional or regular. This is NOT legal, tax, or accounting advice: always point the customer to a local accountant or their municipal/state authority for home-food regulations.
+
+DISCLAIMERS THE MENTOR ALWAYS RESPECTS:
+- Allergies & hygiene: chocolate and fillings may contain or have touched milk, soy, or nuts. Always remind the customer to disclose ingredients and work with clean hands/surfaces.
+- Pricing, sales, and growth advice is general guidance from practical experience, not legal, tax, or accounting advice.
+
+EXTRA THINGS THIS MENTOR CAN DO ON REQUEST (all through this same chat, no extra tools):
+- Write a reply to a difficult client message: if the customer pastes a message from a client who is haggling or complaining, draft a firm-but-friendly reply that closes the sale without a fight.
+- Build a custom order plan: if the customer tells you the order details (shape, quantity, deadline), lay out the materials needed and the exact steps/timeline to get it done on time.
+- Act as a searchable "mistake bible": when asked about a specific problem, first check if it matches one of the COMMON MISTAKES above before answering generically.`
+};
+/* ===================================================================== */
+const log = document.getElementById("log"), q = document.getElementById("q"), send = 
+document.getElementById("send"), chips = document.getElementById("chips");
+document.getElementById("nom").textContent = CHAT.nombre;
+document.getElementById("rol").textContent = CHAT.rol;
+q.placeholder = CHAT.placeholder; send.textContent = CHAT.enviar;
+let historial = [];
+try { historial = JSON.parse(sessionStorage.getItem("chat-" + location.pathname) || "[]"); } 
+catch (e) {}
+function persistir() { try { sessionStorage.setItem("chat-" + location.pathname, 
+JSON.stringify(historial.slice(-CHAT.maxHistorial))); } catch (e) {} }
+function burbuja(txt, cls) { const d = document.createElement("div"); d.className = "m " + 
+cls; d.textContent = txt; log.append(d); log.scrollTop = log.scrollHeight; return d; }
+function limpiar(t) { return t.replace(/\*\*(.+?)\*\*/g, "$1").replace(/^#+\s*/gm, 
+"").replace(/^\s*[-*]\s+/gm, "• "); }
+burbuja(CHAT.bienvenida, "bot");
+
+historial.forEach(h => burbuja(h.parts[0].text, h.role === "user" ? "yo" : "bot"));
+if (!historial.length) CHAT.sugerencias.forEach(s => { const b = 
+document.createElement("button"); b.type = "button"; b.textContent = s; b.onclick = () => 
+preguntar(s); chips.append(b); });
+async function preguntar(texto) {
+  texto = (texto || "").trim(); if (!texto) return;
+  chips.innerHTML = "";
+  burbuja(texto, "yo");
+  historial.push({ role: "user", parts: [{ text: texto }] });
+  await responder();
+}
+async function responder() {
+  send.disabled = true;
+  const t = document.createElement("div"); t.className = "m bot typing"; 
+t.setAttribute("aria-label", "…"); t.innerHTML = "<span></span><span></span><span></span>"; 
+log.append(t); log.scrollTop = log.scrollHeight;
+  try {
+    const r = await fetch(CHAT.proxyUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: CHAT.modelo,
+        systemInstruction: { parts: [{ text: CHAT.sistema }] },
+        contents: historial.slice(-CHAT.maxHistorial),
+        generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
+      })
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const d = await r.json();
+    const txt = (d.candidates?.[0]?.content?.parts || []).map(p => p.text || 
+"").join("").trim();
+    if (!txt) throw new Error("vacío");
+    t.remove();
+    burbuja(limpiar(txt), "bot");
+    historial.push({ role: "model", parts: [{ text: txt }] });
+    persistir();
+  } catch (e) {
+    t.remove();
+    const d = burbuja(CHAT.errorTxt, "err");
+    const b = document.createElement("button"); b.type = "button"; b.textContent = 
+CHAT.reintentar;
+    b.onclick = () => { d.remove(); responder(); };
+    d.append(document.createElement("br"), b);
+  } finally { send.disabled = false; q.focus(); }
+}
+document.getElementById("f").addEventListener("submit", e => { e.preventDefault(); const v = 
+q.value; q.value = ""; q.style.height = "auto"; preguntar(v); });
+q.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { 
+e.preventDefault(); document.getElementById("f").requestSubmit(); } });
+q.addEventListener("input", () => { q.style.height = "auto"; q.style.height = 
+Math.min(q.scrollHeight, 140) + "px"; });
+</script>
+</body>
+</html>
