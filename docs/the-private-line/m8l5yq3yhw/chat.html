@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content">
+<meta name="robots" content="noindex,nofollow">
+<title>Elena · The Private Line™ · Table Patterns</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F0EA;--paper:#FFFFFF;--ink:#22201C;--ink-soft:#6B5E55;--accent:#BC6C25;--accent-dark:#7A4A1A;--line:#ECE5D9}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink)}
+body{font-family:'Nunito Sans',-apple-system,Arial,sans-serif;line-height:1.5;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{background:var(--accent-dark);color:var(--paper);padding:14px 16px;display:flex;align-items:center;gap:12px}
+.av{width:40px;height:40px;border-radius:50%;background:var(--paper);color:var(--accent-dark);display:flex;align-items:center;justify-content:center;font-weight:800;font-family:'Fraunces',Georgia,serif;font-size:18px;flex:none}
+header b{display:block;font-family:'Fraunces',Georgia,serif;font-size:17px}
+header small{opacity:.85}
+#log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;max-width:760px;width:100%;margin:0 auto}
+.m{max-width:88%;padding:11px 14px;border-radius:16px;white-space:pre-wrap;word-wrap:break-word;font-size:16px}
+.bot{background:var(--paper);border:1px solid var(--line);align-self:flex-start;border-bottom-left-radius:4px}
+.yo{background:var(--accent);color:var(--paper);align-self:flex-end;border-bottom-right-radius:4px}
+.err{background:#fbeaea;border:1px solid #e3b4b4;align-self:flex-start}
+.err button{margin-top:8px;border:0;background:var(--accent-dark);color:var(--paper);border-radius:8px;padding:6px 12px;font:inherit;font-weight:700;cursor:pointer}
+.typing span{display:inline-block;width:7px;height:7px;margin:0 2px;border-radius:50%;background:var(--ink-soft);animation:b 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,80%,100%{opacity:.3;transform:translateY(0)}40%{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.typing span{animation:none}}
+#chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 10px;max-width:760px;width:100%;margin:0 auto}
+#chips button{border:1px solid var(--accent);background:var(--paper);color:var(--accent-dark);border-radius:99px;padding:8px 14px;font:inherit;font-size:14px;font-weight:700;cursor:pointer;text-align:left}
+form{display:flex;gap:8px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:var(--paper);border-top:1px solid var(--line)}
+form .in{display:flex;gap:8px;max-width:760px;width:100%;margin:0 auto}
+textarea{flex:1;min-width:0;resize:none;border:2px solid var(--line);border-radius:14px;padding:11px 13px;font:inherit;font-size:16px;max-height:140px;background:var(--bg);color:var(--ink);outline:none}
+textarea:focus{border-color:var(--accent)}
+form button{border:0;border-radius:14px;background:var(--accent);color:var(--paper);font:inherit;font-weight:800;padding:0 18px;min-height:48px;cursor:pointer}
+form button:disabled{opacity:.5}
+</style>
+</head>
+<body>
+<header><div class="av" id="av">E</div><div><b id="nom"></b><small id="rol"></small></div></header>
+<div id="log" role="log" aria-live="polite"></div>
+<div id="chips"></div>
+<form id="f"><div class="in"><textarea id="q" rows="1" placeholder=""></textarea><button id="send" type="submit"></button></div></form>
+<script>
+const CHAT = {
+  proxyUrl: "",
+  modelo: "gemini-2.0-flash",
+  nombre: "Elena",
+  rol: "Your Private Craft Mentor · Table Patterns",
+  bienvenida: "Hi! I'm Elena, your private craft mentor. Ask me anything about table setting techniques, materials, troubleshooting, or your projects. I'm here to help you finish every piece beautifully.",
+  placeholder: "Type your question…",
+  enviar: "Send",
+  errorTxt: "I couldn't answer right now. Try again in a few seconds.",
+  reintentar: "Retry",
+  sugerencias: [
+    "My cord is fraying, what do I do?",
+    "Which fabric works best for a table runner?",
+    "How do I fix glue bleed-through?",
+    "Help me pick a pattern for beginners"
+  ],
+  maxHistorial: 12,
+  sistema: `You are Elena, a private craft mentor specializing in table setting pieces (table runners, placemats, centerpieces, coasters) made with patterns on fabric, cord, jute, and similar materials.
+Your job: help the buyer of Table Patterns (+300 Table Setting Patterns) troubleshoot problems, choose materials, and improve their craft technique.
+Rules:
+- Answer only about table setting craft techniques, materials, troubleshooting, selling handmade table pieces, and related topics. If they ask about something else, redirect kindly.
+- Keep answers short and practical, with numbered steps when applicable.
+- When you recommend a technique, describe the hand position and movement clearly so they can follow without video.
+- Never give medical, legal, or personalized financial advice.
+- Never share contact details or redirect to external channels.
+- Language: English.
+- Tone: warm, encouraging, expert but approachable. Like a skilled friend who has been crafting for 15 years.
+
+YOUR EXPERTISE COVERS:
+- Cord work: jute, cotton cord, macrame cord, synthetic cord — attachment, tension, joining, finishing
+- Fabric: aida cloth, burlap/hessian, linen, cotton, plastic mesh — selection, cutting, preparation
+- Adhesives: hot glue, fabric glue, spray adhesive — application, troubleshooting, cleanup
+- Patterns: reading, scaling, transferring, centering, repeating
+- Techniques: basic cord attachment, straight lines, curves, turns, spirals, cross-hatching, layering, knots, scalloped edges, fringe, backing, finishing
+- Troubleshooting: fraying, puckering, stretching, staining, unraveling, misalignment, tension issues, glue problems
+- Materials: where to buy, what qualities matter, substitution options, bulk buying
+- Finishing: hemming, backing, blocking, washing, pressing, storage
+- Selling: pricing, photography, packaging, marketplace tips
+- Seasonal pieces: which designs work for which occasions`
+};
+const log = document.getElementById("log"), q = document.getElementById("q"), send = document.getElementById("send"), chips = document.getElementById("chips");
+document.getElementById("nom").textContent = CHAT.nombre;
+document.getElementById("rol").textContent = CHAT.rol;
+document.getElementById("av").textContent = (CHAT.nombre || "IA").trim().slice(0, 1).toUpperCase();
+q.placeholder = CHAT.placeholder; send.textContent = CHAT.enviar;
+let historial = [];
+try { historial = JSON.parse(sessionStorage.getItem("chat-" + location.pathname) || "[]"); } catch (e) {}
+function persistir() { try { sessionStorage.setItem("chat-" + location.pathname, JSON.stringify(historial.slice(-CHAT.maxHistorial))); } catch (e) {} }
+function burbuja(txt, cls) { const d = document.createElement("div"); d.className = "m " + cls; d.textContent = txt; log.append(d); log.scrollTop = log.scrollHeight; return d; }
+function limpiar(t) { return t.replace(/\*\*(.+?)\*\*/g, "$1").replace(/^#+\s*/gm, "").replace(/^\s*[-*]\s+/gm, "• "); }
+burbuja(CHAT.bienvenida, "bot");
+historial.forEach(h => burbuja(h.parts[0].text, h.role === "user" ? "yo" : "bot"));
+if (!historial.length) CHAT.sugerencias.forEach(s => { const b = document.createElement("button"); b.type = "button"; b.textContent = s; b.onclick = () => preguntar(s); chips.append(b); });
+async function preguntar(texto) {
+  texto = (texto || "").trim(); if (!texto) return;
+  chips.innerHTML = "";
+  burbuja(texto, "yo");
+  historial.push({ role: "user", parts: [{ text: texto }] });
+  await responder();
+}
+async function responder() {
+  send.disabled = true;
+  const t = document.createElement("div"); t.className = "m bot typing"; t.setAttribute("aria-label", "…"); t.innerHTML = "<span></span><span></span><span></span>"; log.append(t); log.scrollTop = log.scrollHeight;
+  try {
+    if (!CHAT.proxyUrl) throw new Error("Proxy not configured");
+    const r = await fetch(CHAT.proxyUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: CHAT.modelo,
+        systemInstruction: { parts: [{ text: CHAT.sistema }] },
+        contents: historial.slice(-CHAT.maxHistorial),
+        generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
+      })
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const d = await r.json();
+    const txt = (d.candidates?.[0]?.content?.parts || []).map(p => p.text || "").join("").trim();
+    if (!txt) throw new Error("empty");
+    t.remove();
+    burbuja(limpiar(txt), "bot");
+    historial.push({ role: "model", parts: [{ text: txt }] });
+    persistir();
+  } catch (e) {
+    t.remove();
+    const d = burbuja(CHAT.errorTxt, "err");
+    const b = document.createElement("button"); b.type = "button"; b.textContent = CHAT.reintentar;
+    b.onclick = () => { d.remove(); responder(); };
+    d.append(document.createElement("br"), b);
+  } finally { send.disabled = false; q.focus(); }
+}
+document.getElementById("f").addEventListener("submit", e => { e.preventDefault(); const v = q.value; q.value = ""; q.style.height = "auto"; preguntar(v); });
+q.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); document.getElementById("f").requestSubmit(); } });
+q.addEventListener("input", () => { q.style.height = "auto"; q.style.height = Math.min(q.scrollHeight, 140) + "px"; });
+</script>
+</body>
+</html>
