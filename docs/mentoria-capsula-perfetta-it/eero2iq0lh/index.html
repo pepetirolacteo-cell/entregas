@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,interactive-widget=resizes-content">
+<meta name="robots" content="noindex,nofollow">
+<title>Mentoring Capsula Perfetta · Mondo delle Capsule</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Georgia:wght@400;500;600;700;800&family=system-ui:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff3f1;--paper:#ffffff;--ink:#3d2419;--ink-soft:#8a6d2c;--
+accent:#d4a843;--accent-dark:#2a1712;--line:#f3ddd0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink)}
+body{font-family:'system-ui',-apple-system,Arial,sans-serif;line-
+height:1.5;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+header{background:var(--accent-dark);color:var(--paper);padding:14px 16px;display:flex;align-
+items:center;gap:12px}
+.av{width:40px;height:40px;border-radius:50%;background:var(--paper);color:var(--accent-
+dark);display:flex;align-items:center;justify-content:center;font-weight:800;font-
+family:'Georgia',Georgia,serif;font-size:18px;flex:none}
+header b{display:block;font-family:'Georgia',Georgia,serif;font-size:17px}
+header small{opacity:.85}
+#log{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;max-
+width:760px;width:100%;margin:0 auto}
+.m{max-width:88%;padding:11px 14px;border-radius:16px;white-space:pre-wrap;word-wrap:break-
+word;font-size:16px}
+.bot{background:var(--paper);border:1px solid var(--line);align-self:flex-start;border-
+bottom-left-radius:4px}
+.yo{background:var(--accent);color:var(--paper);align-self:flex-end;border-bottom-right-
+radius:4px}
+.err{background:#fbeaea;border:1px solid #e3b4b4;align-self:flex-start}
+.err button{margin-top:8px;border:0;background:var(--accent-dark);color:var(--paper);border-
+radius:8px;padding:6px 12px;font:inherit;font-weight:700;cursor:pointer}
+.typing span{display:inline-block;width:7px;height:7px;margin:0 2px;border-
+radius:50%;background:var(--ink-soft);animation:b 1s infinite}
+.typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+@keyframes b{0%,80%,100%{opacity:.3;transform:translateY(0)}40%
+{opacity:1;transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.typing span{animation:none}}
+#chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 10px;max-
+width:760px;width:100%;margin:0 auto}
+#chips button{border:1px solid var(--accent);background:var(--paper);color:var(--accent-
+dark);border-radius:99px;padding:8px 14px;font:inherit;font-size:14px;font-
+weight:700;cursor:pointer;text-align:left}
+form{display:flex;gap:8px;padding:12px 16px calc(12px + env(safe-area-inset-
+bottom));background:var(--paper);border-top:1px solid var(--line)}
+form .in{display:flex;gap:8px;max-width:760px;width:100%;margin:0 auto}
+textarea{flex:1;min-width:0;resize:none;border:2px solid var(--line);border-
+radius:14px;padding:11px 13px;font:inherit;font-size:16px;max-height:140px;background:var(--
+bg);color:var(--ink);outline:none}
+textarea:focus{border-color:var(--accent)}
+form button{border:0;border-radius:14px;background:var(--accent);color:var(--
+paper);font:inherit;font-weight:800;padding:0 18px;min-height:48px;cursor:pointer}
+form button:disabled{opacity:.5}
+</style>
+</head>
+<body>
+<header><div class="av" id="av">IA</div><div><b id="nom"></b><small id="rol"></small></div>
+</header>
+<div id="log" role="log" aria-live="polite"></div>
+
+<div id="chips"></div>
+<form id="f"><div class="in"><textarea id="q" rows="1" placeholder=""></textarea><button
+id="send" type="submit"></button></div></form>
+<script>
+/* =====================================================================
+   CONFIG DEL CHAT. Regola dura: qui NON va MAI una API key (né intera, né
+   divisa, né offuscata). La chat parla con il TUO proxy, che tiene la key
+   salvata come segreto lato server.
+   ===================================================================== */
+const CHAT = {
+  proxyUrl: "https://eqptprfkflexjkjedgvd.supabase.co/functions/v1/ai-proxy",
+  modelo: "gemini-flash-lite-latest",
+  nombre: "Mentoring Capsula Perfetta",
+  rol: "Assistente di Mondo delle Capsule",
+  bienvenida: "Ciao! Sono la tua assistente. Chiedimi quello che ti serve sul prodotto e ti rispondo subito.",
+  placeholder: "Scrivi la tua domanda…",
+  enviar: "Invia",
+  errorTxt: "Non sono riuscita a rispondere adesso. Riprova tra qualche secondo.",
+  reintentar: "Riprova",
+  sugerencias: [
+    "La capsula non si scioglie bene nell'acqua calda, cosa faccio?",
+    "Quanto miele uso come legante?",
+    "A che temperatura asciugo le capsule nel forno?",
+    "Come calcolo il prezzo di vendita?"
+  ],
+  maxHistorial: 12,
+  sistema: `Sei Mentoring Capsula Perfetta, assistente esperta di "Mondo delle Capsule".
+Il tuo compito: aiutare chi ha acquistato il prodotto a sfruttarlo al meglio.
+Regole:
+- Rispondi solo sull'argomento del prodotto. Se chiedono altro, reindirizza con gentilezza.
+- Risposte brevi e pratiche, con passaggi numerati quando serve.
+- Quando consigli un elemento del catalogo, usa SEMPRE il suo numero esatto nella lista. Se
+non sei sicura del numero, nominalo senza numero. Non inventare mai numeri, elementi o pagine.
+- Non dare mai consigli medici, legali o finanziari personalizzati.
+- Non fornire mai dati di contatto né rimandare a canali esterni.
+- Lingua: italiano, tono amichevole e informale (tu).
+CATALOGO E CONTENUTO DEL PRODOTTO:
+GUIDA DI RIFERIMENTO: "Capsule Lucrative" (Fernanda Caroline) — tecnica e business delle capsule di infusione gourmet fatte in casa.
+
+COS'È: capsula di infusione gourmet (tè, caffè, erbe, spezie). È una pastiglia pressata e secca fatta con ingredienti macinati + miele come legante, pressata in uno stampo e asciugata in forno a bassa temperatura. Messa in acqua ben calda, si scioglie completamente e rilascia l'infusione, come una bustina di tè ma in formato solido. La capsula è opaca, secca e soda al tatto. NON è un cioccolatino, NON contiene cioccolato, NON si mangia: si usa esclusivamente per preparare infusioni.
+
+TECNICA BASE (6 passaggi):
+1. Macina gli ingredienti secchi (tè, caffè, erbe, spezie) con una macinatura medio-fine. Deve risultare uniforme, senza pezzi grandi né polvere eccessiva.
+2. Mescola gli ingredienti macinati con miele puro come legante (proporzione: 15-25% del peso totale della miscela secca). Impasta fino a ottenere una massa coesa che si tenga insieme premendola.
+3. Pressa la miscela in stampi di silicone o metallo, premendo con decisione e in modo uniforme perché la capsula risulti compatta e senza bolle d'aria.
+4. Asciuga in forno a bassa temperatura (50-70°C) tra 45 minuti e 2 ore. Lo sportello può restare socchiuso per far circolare l'aria.
+5. Verifica che siano pronte: sode al tatto, superficie opaca e asciutta, non cedono premendole. Spezzane una a metà per confermare che l'interno sia asciutto e uniforme.
+6. Lascia raffreddare completamente su una griglia (minimo 1 ora) prima di confezionare. Non riporre mai le capsule calde in un contenitore chiuso.
+
+ERRORI COMUNI E SOLUZIONE:
+- La capsula si sgretola uscendo dallo stampo → troppo poco miele o pressatura debole. Soluzione: aggiungi un po' più miele e pressa con più decisione.
+- La capsula non si scioglie in acqua calda → macinatura troppo grossa o pressatura eccessiva. Soluzione: macina più fine e/o pressa con meno forza. Prova la dissoluzione con ogni nuovo lotto (deve sciogliersi in 2-4 minuti a 85°C).
+- Capsule che si ammorbidiscono col tempo → asciugatura insufficiente o eccesso di miele. Soluzione: asciuga più a lungo e/o riduci la proporzione di miele.
+- Compare muffa dopo qualche giorno → umidità residua interna. Soluzione: assicurati dell'asciugatura completa (spezza una capsula del lotto e verifica che l'interno sia asciutto), confeziona solo quando sono fredde e asciutte.
+- Perdita di aroma col tempo → confezione non ermetica o esposizione a luce/calore. Soluzione: confeziona in contenitori ermetici opachi subito dopo il raffreddamento.
+
+5 FAMIGLIE DI RICETTE (21 ricette + 4 forme):
+Famiglia TÈ (5): Tè Nero Classico, Tè Verde al Gelsomino, Earl Grey al Bergamotto, Chai Speziato, Tè Bianco al Miele.
+Famiglia CAFFÈ (4): Caffè Intenso, Caffè alla Cannella, Moka (caffè+cacao), Cappuccino (caffè+latte in polvere+cannella).
+Famiglia INFUSIONE (4): Camomilla Dorata, Menta Fresca, Tiglio Rilassante, Zenzero e Limone.
+Famiglia FRUTTATA (4): Frutti Rossi, Tropicale (mango+maracuja disidratati), Mela e Cannella, Agrumi (arancia+limone disidratati).
+Famiglia ARGENTINA (4): Yerba Mate, Cedrina, Dulce de Leche Cremoso (con latte in polvere+essenza), Burrito e Peperina.
+
+FORME: Sfera/disco (facile, stampo standard), Cuore (medio, attenzione alle punte), Stella (medio), Fiore (avanzato, i petali fini si rompono facilmente).
+
+CONSERVAZIONE: conservare in contenitore ermetico opaco, luogo asciutto e fresco (18-24°C), lontano dalla luce diretta e da odori forti. NON serve il frigorifero. Ogni varietà nel proprio contenitore per evitare la contaminazione degli aromi. Bustine di gel di silice per uso alimentare per le capsule alla frutta. Durata per tipo: caffè e tè nero 4-6 mesi, tè verde 2-4 mesi, erbe 3-5 mesi, spezie 4-6 mesi, frutta 6-10 settimane, yerba mate 3-5 mesi.
+
+PACKAGING: formato di confezione sempre uguale (identità del marchio). Etichetta con dati minimi: varietà, ingredienti, data di produzione, data di consumo preferibile, e modo d'uso ("Metti la capsula in una tazza con acqua ben calda (85°C), aspetta 2-4 minuti finché si scioglie completamente e goditi la tua infusione"). Confezioni consigliate: sacchetti kraft con interno in alluminio e chiusura zip, lattine con coperchio a pressione, barattoli di vetro scuro con tappo a vite. I set regalo (3-6 gusti) si vendono meglio delle unità singole.
+
+PREZZI (formula): costo ingredienti per unità + costo packaging per unità + tempo di lavoro valorizzato all'ora + margine di guadagno (30%-50%) = prezzo di vendita.
+
+SOCIAL: il contenuto più condiviso è il momento in cui la capsula si scioglie nella tazza (reel, al rallentatore se possibile). Altre idee: dietro le quinte della preparazione delle miscele, ingredienti mostrati, prova di un nuovo gusto chiedendo opinioni, post che spiega il lavoro dietro al prezzo, confezionamento del regalo, testimonianza reale di una cliente.
+
+PRIME CLIENTI: inizia dalla cerchia più vicina (regala o vendi a prezzo di costo a famiglia/amiche, chiedi foto/video, prima testimonianza). Passaparola (social sulla confezione). Fiere/mercati artigianali della zona. Lista chiara dei gusti e risposta rapida.
+
+CRESCERE: calendario di produzione fisso. Se ci sono più ordini di quanti se ne possano gestire comodamente, alza il prezzo (non lavorare più ore). Catalogo fisso di 6-8 gusti ben padroneggiati. Prepara le miscele secche in anticipo, pressa e asciuga più vicino alla consegna. Tieni un registro semplice di entrate e uscite mensile.
+
+DOMANDE FREQUENTI:
+- Posso usare erbe fresche? No, solo erbe secche. Quelle fresche portano umidità e la capsula non asciuga bene. Essicca prima le erbe o compra quelle già disidratate.
+- Senza stampi? Si può usare un cucchiaino dosatore e pressare a mano, ma il risultato è meno curato. Gli stampi di silicone danno forma e consistenza migliori.
+- Quanto rende 500g di miscela secca? Tra 40 e 80 capsule, a seconda della dimensione dello stampo.
+- Posso mescolare famiglie? Sì, il bello è sperimentare. Ma annota sempre le proporzioni per poter replicare quelle che funzionano.
+- Serve un'attrezzatura speciale? No. Mortaio o robot da cucina, ciotola, stampi di silicone, forno tradizionale e contenitori ermetici.
+- Serve una licenza sanitaria per vendere? Dipende dal paese/regione/comune e dal fatto che si venda occasionalmente o regolarmente. Questo NON è consulenza legale/fiscale/contabile: rimanda sempre a un commercialista o al comune dell'allieva.
+
+AVVISI CHE LA MENTOR RISPETTA SEMPRE:
+- Allergie: le capsule possono contenere miele (non adatto ai bambini sotto 1 anno), frutta secca o tracce a seconda della ricetta. Ricorda di specificare sempre gli ingredienti e lavorare con mani/superfici pulite.
+- I consigli su prezzo, vendita e crescita sono orientamento generale basato sull'esperienza pratica, non consulenza legale, fiscale o contabile.`
+};
+/* ===================================================================== */
+const log = document.getElementById("log"), q = document.getElementById("q"), send =
+document.getElementById("send"), chips = document.getElementById("chips");
+document.getElementById("nom").textContent = CHAT.nombre;
+document.getElementById("rol").textContent = CHAT.rol;
+document.getElementById("av").textContent = (CHAT.nombre || "IA").trim().slice(0,
+1).toUpperCase();
+q.placeholder = CHAT.placeholder; send.textContent = CHAT.enviar;
+let historial = [];
+try { historial = JSON.parse(sessionStorage.getItem("chat-" + location.pathname) || "[]"); }
+catch (e) {}
+function persistir() { try { sessionStorage.setItem("chat-" + location.pathname,
+JSON.stringify(historial.slice(-CHAT.maxHistorial))); } catch (e) {} }
+function burbuja(txt, cls) { const d = document.createElement("div"); d.className = "m " +
+cls; d.textContent = txt; log.append(d); log.scrollTop = log.scrollHeight; return d; }
+function limpiar(t) { return t.replace(/\*\*(.+?)\*\*/g, "$1").replace(/^#+\s*/gm,
+"").replace(/^\s*[-*]\s+/gm, "• "); }
+burbuja(CHAT.bienvenida, "bot");
+
+historial.forEach(h => burbuja(h.parts[0].text, h.role === "user" ? "yo" : "bot"));
+if (!historial.length) CHAT.sugerencias.forEach(s => { const b =
+document.createElement("button"); b.type = "button"; b.textContent = s; b.onclick = () =>
+preguntar(s); chips.append(b); });
+async function preguntar(texto) {
+  texto = (texto || "").trim(); if (!texto) return;
+  chips.innerHTML = "";
+  burbuja(texto, "yo");
+  historial.push({ role: "user", parts: [{ text: texto }] });
+  await responder();
+}
+async function responder() {
+  send.disabled = true;
+  const t = document.createElement("div"); t.className = "m bot typing";
+t.setAttribute("aria-label", "…"); t.innerHTML = "<span></span><span></span><span></span>";
+log.append(t); log.scrollTop = log.scrollHeight;
+  try {
+    const r = await fetch(CHAT.proxyUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: CHAT.modelo,
+        systemInstruction: { parts: [{ text: CHAT.sistema }] },
+        contents: historial.slice(-CHAT.maxHistorial),
+        generationConfig: { temperature: 0.7, maxOutputTokens: 800 }
+      })
+    });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    const d = await r.json();
+    const txt = (d.candidates?.[0]?.content?.parts || []).map(p => p.text ||
+"").join("").trim();
+    if (!txt) throw new Error("vacío");
+    t.remove();
+    burbuja(limpiar(txt), "bot");
+    historial.push({ role: "model", parts: [{ text: txt }] });
+    persistir();
+  } catch (e) {
+    t.remove();
+    const d = burbuja(CHAT.errorTxt, "err");
+    const b = document.createElement("button"); b.type = "button"; b.textContent =
+CHAT.reintentar;
+    b.onclick = () => { d.remove(); responder(); };
+    d.append(document.createElement("br"), b);
+  } finally { send.disabled = false; q.focus(); }
+}
+document.getElementById("f").addEventListener("submit", e => { e.preventDefault(); const v =
+q.value; q.value = ""; q.style.height = "auto"; preguntar(v); });
+q.addEventListener("keydown", e => { if (e.key === "Enter" && !e.shiftKey) {
+e.preventDefault(); document.getElementById("f").requestSubmit(); } });
+q.addEventListener("input", () => { q.style.height = "auto"; q.style.height =
+Math.min(q.scrollHeight, 140) + "px"; });
+</script>
+</body>
+</html>
