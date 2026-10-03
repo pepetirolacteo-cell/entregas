@@ -13,6 +13,13 @@
   h1 { font-size:32px; line-height:1.2; margin:20px 0 8px; color:var(--gold); }
   .sub { font-size:15px; color:var(--muted); margin:0 0 32px; line-height:1.5; }
   h2 { font-size:18px; margin:36px 0 16px; color:var(--gold); letter-spacing:.04em; text-transform:uppercase; font-family:system-ui,sans-serif; border-bottom:1px solid var(--line); padding-bottom:8px; }
+  .hero-card { background:var(--card); border:2px solid var(--gold); border-radius:14px; padding:20px 22px; margin-bottom:24px; display:flex; align-items:center; gap:16px; text-decoration:none; color:var(--ink); transition:border-color .2s, background .2s; }
+  .hero-card:hover { background:#241F1A; border-color:#E8C05A; }
+  .hero-icon { font-size:36px; flex-shrink:0; width:52px; text-align:center; }
+  .hero-body { flex:1; min-width:0; }
+  .hero-title { font-size:17px; font-weight:700; margin:0 0 4px; font-family:system-ui,sans-serif; color:var(--gold); }
+  .hero-desc { font-size:14px; color:var(--muted); margin:0; line-height:1.5; }
+  .hero-size { font-size:13px; color:var(--gold); flex-shrink:0; font-family:system-ui,sans-serif; font-weight:600; }
   .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:16px 18px; margin-bottom:10px; display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--ink); transition:border-color .2s; }
   .card:hover { border-color:var(--acc); }
   .card-icon { font-size:28px; flex-shrink:0; width:44px; text-align:center; }
@@ -21,78 +28,95 @@
   .card-desc { font-size:13px; color:var(--muted); margin:0; line-height:1.4; }
   .card-size { font-size:12px; color:var(--muted); flex-shrink:0; font-family:system-ui,sans-serif; }
   .bonus-tag { display:inline-block; font-size:10px; background:var(--gold); color:#000; padding:2px 7px; border-radius:3px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; margin-left:6px; font-family:system-ui,sans-serif; }
+  .note { background:#1A1714; border:1px solid var(--line); border-radius:10px; padding:16px 18px; margin:24px 0; font-size:14px; color:var(--muted); line-height:1.6; }
+  .note strong { color:var(--ink); }
   .footer { margin-top:48px; text-align:center; font-size:13px; color:var(--muted); line-height:1.6; }
   .footer strong { color:var(--ink); }
-  @media (max-width:520px) { h1 { font-size:24px; } .card { padding:14px; gap:10px; } }
+  @media (max-width:520px) { h1 { font-size:24px; } .hero-card { padding:16px; gap:12px; } .card { padding:14px; gap:10px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
   <span class="badge">Acquisto confermato</span>
   <h1>I Casi Irrisolti</h1>
-  <p class="sub">Benvenuto, Investigatore. Di seguito troverai tutti i fascicoli e i bonus inclusi nel Suo acquisto. Clicchi su ciascun file per scaricarlo. Stampi tutto in formato A4 per la migliore esperienza di gioco.</p>
+  <p class="sub">Benvenuto, Investigatore. Di seguito troverai il Suo manuale completo e tutti i fascicoli fotografici da stampare. Inizi dal manuale: contiene le storie, le istruzioni e le soluzioni di tutti e 7 i casi.</p>
 
-  <h2>I 7 Fascicoli Investigativi</h2>
+  <h2>Manuale Investigativo Completo</h2>
+
+  <a class="hero-card" href="pdf/manuale-investigativo-completo.pdf" download>
+    <span class="hero-icon">&#128213;</span>
+    <div class="hero-body">
+      <p class="hero-title">Manuale Investigativo Completo</p>
+      <p class="hero-desc">La Sua guida principale: come giocare, le storie dei 7 casi, suggerimenti per l'indagine e le soluzioni finali &middot; 73 pagine</p>
+    </div>
+    <span class="hero-size">1.8 MB</span>
+  </a>
+
+  <div class="note">
+    <strong>Come funziona:</strong> Il manuale contiene tutto il testo: la storia di ogni caso, i profili dei sospettati, gli interrogatori e i suggerimenti. I fascicoli fotografici qui sotto contengono le prove visive (foto della scena, documenti, mappe) da stampare separatamente e distribuire tra i giocatori durante l'indagine.
+  </div>
+
+  <h2>I 7 Fascicoli Fotografici</h2>
 
   <a class="card" href="pdf/caso-001.pdf" download>
-    <span class="card-icon">&#128194;</span>
+    <span class="card-icon">&#128247;</span>
     <div class="card-body">
-      <p class="card-title">Fascicolo 1 &mdash; Morte nella Vigna</p>
-      <p class="card-desc">Toscana, 1994 &middot; 12 pagine &middot; Difficolt&agrave; &#9733;&#9733;&#9734;&#9734;&#9734;</p>
+      <p class="card-title">Prove Caso 1 &mdash; Morte nella Vigna</p>
+      <p class="card-desc">Toscana, 1994 &middot; 12 prove fotografiche</p>
     </div>
     <span class="card-size">4.3 MB</span>
   </a>
 
   <a class="card" href="pdf/caso-002.pdf" download>
-    <span class="card-icon">&#128194;</span>
+    <span class="card-icon">&#128247;</span>
     <div class="card-body">
-      <p class="card-title">Fascicolo 2 &mdash; Veleno tra le Nevi</p>
-      <p class="card-desc">Dolomiti, 1997 &middot; 10 pagine &middot; Difficolt&agrave; &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+      <p class="card-title">Prove Caso 2 &mdash; Veleno tra le Nevi</p>
+      <p class="card-desc">Dolomiti, 1997 &middot; 10 prove fotografiche</p>
     </div>
     <span class="card-size">3.5 MB</span>
   </a>
 
   <a class="card" href="pdf/caso-003.pdf" download>
-    <span class="card-icon">&#128194;</span>
+    <span class="card-icon">&#128247;</span>
     <div class="card-body">
-      <p class="card-title">Fascicolo 3 &mdash; Il Segreto del Faro</p>
-      <p class="card-desc">Sardegna, 1987 &middot; 10 pagine &middot; Difficolt&agrave; &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+      <p class="card-title">Prove Caso 3 &mdash; Il Segreto del Faro</p>
+      <p class="card-desc">Sardegna, 1987 &middot; 10 prove fotografiche</p>
     </div>
     <span class="card-size">3.8 MB</span>
   </a>
 
   <a class="card" href="pdf/caso-004.pdf" download>
-    <span class="card-icon">&#128194;</span>
+    <span class="card-icon">&#128247;</span>
     <div class="card-body">
-      <p class="card-title">Fascicolo 4 &mdash; Fuoco e Cenere</p>
-      <p class="card-desc">Milano, 1999 &middot; 10 pagine &middot; Difficolt&agrave; &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+      <p class="card-title">Prove Caso 4 &mdash; Fuoco e Cenere</p>
+      <p class="card-desc">Milano, 1999 &middot; 10 prove fotografiche</p>
     </div>
     <span class="card-size">3.0 MB</span>
   </a>
 
   <a class="card" href="pdf/caso-005.pdf" download>
-    <span class="card-icon">&#128194;</span>
+    <span class="card-icon">&#128247;</span>
     <div class="card-body">
-      <p class="card-title">Fascicolo 5 &mdash; Morte al Teatro</p>
-      <p class="card-desc">Venezia, 1991 &middot; 10 pagine &middot; Difficolt&agrave; &#9733;&#9733;&#9733;&#9734;&#9734;</p>
+      <p class="card-title">Prove Caso 5 &mdash; Il Buio di Carnevale</p>
+      <p class="card-desc">Venezia, 1991 &middot; 10 prove fotografiche</p>
     </div>
     <span class="card-size">4.1 MB</span>
   </a>
 
   <a class="card" href="pdf/caso-006.pdf" download>
-    <span class="card-icon">&#128194;</span>
+    <span class="card-icon">&#128247;</span>
     <div class="card-body">
-      <p class="card-title">Fascicolo 6 &mdash; L'Ombra nelle Catacombe</p>
-      <p class="card-desc">Napoli, 1989 &middot; 10 pagine &middot; Difficolt&agrave; &#9733;&#9733;&#9733;&#9733;&#9734;</p>
+      <p class="card-title">Prove Caso 6 &mdash; L'Ipogeo della Sanit&agrave;</p>
+      <p class="card-desc">Napoli, 1989 &middot; 10 prove fotografiche</p>
     </div>
     <span class="card-size">3.9 MB</span>
   </a>
 
   <a class="card" href="pdf/caso-007.pdf" download>
-    <span class="card-icon">&#128194;</span>
+    <span class="card-icon">&#128247;</span>
     <div class="card-body">
-      <p class="card-title">Fascicolo 7 &mdash; Il Codice del Bibliofilo</p>
-      <p class="card-desc">Roma, 1995 &middot; 10 pagine &middot; Difficolt&agrave; &#9733;&#9733;&#9733;&#9733;&#9733;</p>
+      <p class="card-title">Prove Caso 7 &mdash; Il Codice del Lotto Tredici</p>
+      <p class="card-desc">Roma, 1995 &middot; 10 prove fotografiche</p>
     </div>
     <span class="card-size">3.8 MB</span>
   </a>
@@ -118,7 +142,7 @@
   </a>
 
   <div class="footer">
-    <p><strong>Come giocare:</strong> Stampi il fascicolo scelto in formato A4. Distribuisca le prove tra i giocatori. L'ultima pagina contiene la soluzione: non la apra fino al termine dell'indagine.</p>
+    <p><strong>Istruzioni rapide:</strong> (1) Scarichi e stampi il Manuale. (2) Scelga un caso e stampi il suo fascicolo fotografico. (3) Distribuisca le prove tra i giocatori. (4) Segua il manuale per le fasi dell'indagine. Le soluzioni sono in fondo al manuale: non le legga prima!</p>
     <p>Prossimo passo: raduni i Suoi amici, prepari carta e penna, e buona investigazione.</p>
   </div>
 </div>
