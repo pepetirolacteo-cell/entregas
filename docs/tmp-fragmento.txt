@@ -1,0 +1,1945 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ccr-bg: #000000;
+  --ccr-bg-alt: #FFFFFF;
+  --ccr-text: #FFFFFF;
+  --ccr-text-alt: #000000;
+  --ccr-accent: #C0392B;
+  --ccr-success: #00A042;
+  --ccr-border: #000000;
+  --ccr-hover: #262626;
+  --ccr-gray: rgba(0,0,0,0.6);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--ccr-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background: var(--ccr-bg);
+  color: var(--ccr-text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a { text-decoration: none; color: inherit; }
+
+/* --- FADE IN ON SCROLL --- */
+html.ccr-js .ccr-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+html.ccr-js .ccr-fade-in.ccr-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* --- CONTAINER --- */
+.ccr-container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- SECTION BASE --- */
+.ccr-section-dark {
+  background: var(--ccr-bg);
+  color: var(--ccr-text);
+  padding: 80px 0;
+}
+.ccr-section-light {
+  background: var(--ccr-bg-alt);
+  color: var(--ccr-text-alt);
+  padding: 80px 0;
+}
+
+/* --- BUTTONS --- */
+.ccr-btn-primary {
+  display: inline-block;
+  background: var(--ccr-accent);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  padding: 18px 40px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.2s ease, transform 0.15s ease;
+  text-transform: uppercase;
+}
+.ccr-btn-primary:hover {
+  background: #a93226;
+  transform: translateY(-1px);
+}
+.ccr-btn-primary:active {
+  transform: translateY(0);
+}
+
+/* --- SECTION TAG (small caps label) --- */
+.ccr-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 20px;
+}
+.ccr-tag-dark {
+  color: rgba(0,0,0,0.4);
+}
+
+/* ===========================
+   1. HERO
+   =========================== */
+.ccr-hero {
+  background: var(--ccr-bg);
+  padding: 100px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+.ccr-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+.ccr-hero-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  margin-bottom: 24px;
+}
+.ccr-hero h1 {
+  font-size: 44px;
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+}
+.ccr-hero h1 .ccr-hero-accent {
+  display: block;
+  color: var(--ccr-accent);
+  font-style: italic;
+  font-weight: 700;
+  font-size: 28px;
+  margin-top: 8px;
+}
+.ccr-hero-body {
+  font-size: 17px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.8);
+  margin: 24px 0 28px;
+}
+.ccr-hero-checks {
+  list-style: none;
+  margin-bottom: 36px;
+}
+.ccr-hero-checks li {
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  padding: 6px 0;
+  padding-left: 28px;
+  position: relative;
+}
+.ccr-hero-checks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ccr-success);
+}
+.ccr-hero-checks li::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  width: 8px;
+  height: 5px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+}
+.ccr-hero-img {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 1/1;
+  background: #111;
+}
+.ccr-hero-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===========================
+   2. STATS TICKER
+   =========================== */
+.ccr-ticker {
+  background: var(--ccr-accent);
+  padding: 14px 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.ccr-ticker-track {
+  display: inline-flex;
+  animation: ccr-scroll 20s linear infinite;
+}
+.ccr-ticker-item {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+  padding: 0 32px;
+}
+.ccr-ticker-item .ccr-ticker-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.6);
+  margin-left: 32px;
+}
+@keyframes ccr-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ===========================
+   3. NUMBERS
+   =========================== */
+.ccr-numbers {
+  background: var(--ccr-bg);
+  padding: 60px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.ccr-numbers-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  text-align: center;
+}
+.ccr-numbers-item {
+  padding: 24px 12px;
+}
+.ccr-numbers-value {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.ccr-numbers-label {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+
+/* ===========================
+   4 & 10. OFFER BOX
+   =========================== */
+#ccr-offer {
+  scroll-margin-top: 24px;
+}
+.ccr-offer {
+  background: var(--ccr-bg);
+  padding: 80px 0;
+}
+.ccr-offer-card {
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: 48px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.ccr-offer-eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 16px;
+}
+.ccr-offer-title {
+  font-size: 26px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.ccr-offer-product-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ccr-accent);
+  margin-bottom: 12px;
+}
+.ccr-offer-rating {
+  font-size: 14px;
+  color: rgba(255,255,255,0.7);
+  margin-bottom: 28px;
+}
+.ccr-offer-rating .ccr-stars {
+  color: #f0c040;
+  margin-right: 6px;
+}
+.ccr-offer-checks {
+  list-style: none;
+  margin-bottom: 32px;
+}
+.ccr-offer-checks li {
+  font-size: 15px;
+  color: rgba(255,255,255,0.85);
+  padding: 7px 0;
+  padding-left: 30px;
+  position: relative;
+  line-height: 1.5;
+}
+.ccr-offer-checks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ccr-success);
+}
+.ccr-offer-checks li::after {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 15px;
+  width: 8px;
+  height: 5px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+}
+.ccr-offer-checks li.ccr-offer-bonus {
+  font-weight: 700;
+  color: #fff;
+  margin-top: 6px;
+}
+.ccr-offer-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.ccr-offer-original-price {
+  font-size: 22px;
+  color: rgba(255,255,255,0.4);
+  text-decoration: line-through;
+}
+.ccr-offer-price {
+  font-size: 40px;
+  font-weight: 900;
+  color: #fff;
+}
+.ccr-offer-savings {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ccr-success);
+  background: rgba(0,160,66,0.12);
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.ccr-offer-cta {
+  display: block;
+  width: 100%;
+  background: var(--ccr-accent);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.5px;
+  padding: 20px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  text-transform: uppercase;
+  transition: background 0.2s ease, transform 0.15s ease;
+}
+.ccr-offer-cta:hover {
+  background: #a93226;
+  transform: translateY(-1px);
+}
+.ccr-offer-secure {
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 16px;
+}
+.ccr-offer-product-img {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  background: #111;
+}
+.ccr-offer-product-img img {
+  width: 100%;
+  height: auto;
+}
+
+/* ===========================
+   5. PROCESS
+   =========================== */
+.ccr-process {
+  background: var(--ccr-bg-alt);
+  color: var(--ccr-text-alt);
+  padding: 80px 0;
+}
+.ccr-process-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 56px;
+}
+.ccr-process-title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.ccr-process-subtitle {
+  font-size: 17px;
+  color: var(--ccr-gray);
+  line-height: 1.7;
+}
+.ccr-process-img {
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 56px;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #eee;
+}
+.ccr-process-img img {
+  width: 100%;
+  height: auto;
+}
+.ccr-process-steps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+.ccr-step {
+  position: relative;
+  padding-left: 0;
+}
+.ccr-step-number {
+  font-size: 48px;
+  font-weight: 900;
+  color: rgba(0,0,0,0.06);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.ccr-step-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+.ccr-step-body {
+  font-size: 15px;
+  color: var(--ccr-gray);
+  line-height: 1.6;
+}
+
+/* ===========================
+   6. CASES GALLERY
+   =========================== */
+.ccr-cases {
+  background: var(--ccr-bg);
+  padding: 80px 0;
+}
+.ccr-cases-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 56px;
+}
+.ccr-cases-title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.ccr-cases-subtitle {
+  font-size: 17px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+.ccr-cases-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 48px;
+}
+.ccr-case-card {
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+.ccr-case-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255,255,255,0.18);
+}
+.ccr-case-img {
+  aspect-ratio: 3/2;
+  overflow: hidden;
+  background: #111;
+  position: relative;
+}
+.ccr-case-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ccr-case-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--ccr-accent);
+  color: #fff;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+.ccr-case-badge-star {
+  background: #f0c040;
+  color: #000;
+}
+.ccr-case-content {
+  padding: 20px;
+}
+.ccr-case-number {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 6px;
+}
+.ccr-case-title {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.ccr-case-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+.ccr-case-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+.ccr-case-difficulty {
+  color: rgba(255,255,255,0.4);
+  font-size: 14px;
+  letter-spacing: 2px;
+}
+.ccr-cases-cta {
+  text-align: center;
+}
+
+/* ===========================
+   7. EVIDENCE DETAIL
+   =========================== */
+.ccr-evidence {
+  background: var(--ccr-bg);
+  padding: 80px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.ccr-evidence-header {
+  text-align: center;
+  max-width: 660px;
+  margin: 0 auto 56px;
+}
+.ccr-evidence-title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.ccr-evidence-subtitle {
+  font-size: 17px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+.ccr-evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.ccr-doc-card {
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.25s ease;
+}
+.ccr-doc-card:hover {
+  transform: translateY(-3px);
+}
+.ccr-doc-img {
+  aspect-ratio: 4/3;
+  overflow: hidden;
+  background: #111;
+}
+.ccr-doc-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ccr-doc-content {
+  padding: 20px;
+}
+.ccr-doc-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin-bottom: 6px;
+}
+.ccr-doc-title {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.ccr-doc-desc {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.6;
+}
+.ccr-doc-sealed .ccr-doc-img {
+  position: relative;
+}
+.ccr-doc-sealed .ccr-doc-img::after {
+  content: 'SIGILLATO';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-12deg);
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 6px;
+  color: var(--ccr-accent);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+  pointer-events: none;
+}
+.ccr-evidence-note {
+  text-align: center;
+  font-size: 15px;
+  color: rgba(255,255,255,0.5);
+  max-width: 560px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+.ccr-evidence-cta {
+  text-align: center;
+}
+
+/* ===========================
+   8. BONUSES
+   =========================== */
+.ccr-bonuses {
+  background: var(--ccr-bg);
+  padding: 80px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+/* bonus marquee */
+.ccr-marquee {
+  overflow: hidden;
+  white-space: nowrap;
+  padding: 12px 0;
+  margin-bottom: 56px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.ccr-marquee-track {
+  display: inline-flex;
+  animation: ccr-marquee-slide 18s linear infinite;
+}
+.ccr-marquee-item {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  padding: 0 40px;
+}
+@keyframes ccr-marquee-slide {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.ccr-bonuses-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 16px;
+}
+.ccr-bonuses-title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.ccr-bonuses-subtitle {
+  font-size: 17px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+  margin-bottom: 56px;
+}
+.ccr-bonus-card {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 40px;
+  align-items: start;
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 32px;
+}
+.ccr-bonus-img {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #111;
+  aspect-ratio: 3/4;
+}
+.ccr-bonus-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ccr-bonus-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ccr-accent);
+  margin-bottom: 10px;
+}
+.ccr-bonus-sealed-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--ccr-accent);
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+.ccr-bonus-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.ccr-bonus-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.ccr-bonus-checks {
+  list-style: none;
+}
+.ccr-bonus-checks li {
+  font-size: 14px;
+  color: rgba(255,255,255,0.75);
+  padding: 5px 0;
+  padding-left: 26px;
+  position: relative;
+  line-height: 1.5;
+}
+.ccr-bonus-checks li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--ccr-success);
+}
+.ccr-bonus-checks li::after {
+  content: '';
+  position: absolute;
+  left: 3.5px;
+  top: 13px;
+  width: 7px;
+  height: 4px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg);
+}
+.ccr-bonuses-footer {
+  text-align: center;
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  margin: 48px 0 40px;
+  line-height: 1.7;
+}
+.ccr-bonuses-cta {
+  text-align: center;
+}
+
+/* ===========================
+   9. TESTIMONIALS
+   =========================== */
+.ccr-testimonials {
+  background: var(--ccr-bg);
+  padding: 80px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.ccr-testimonials-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+.ccr-testimonials-title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.ccr-testimonials-rating {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 16px;
+}
+.ccr-testimonials-rating .ccr-stars {
+  color: #f0c040;
+  margin-right: 4px;
+}
+.ccr-testimonials-rating span {
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
+  font-size: 14px;
+}
+.ccr-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.ccr-review-card {
+  background: #0a0a0a;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 28px;
+}
+.ccr-review-stars {
+  color: #f0c040;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.ccr-review-headline {
+  font-size: 17px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  line-height: 1.3;
+}
+.ccr-review-body {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.ccr-review-author {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+}
+.ccr-review-meta {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+/* ===========================
+   11. FAQ
+   =========================== */
+.ccr-faq {
+  background: var(--ccr-bg);
+  padding: 80px 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.ccr-faq-header {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 48px;
+}
+.ccr-faq-title {
+  font-size: 32px;
+  font-weight: 900;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.ccr-faq-list {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.ccr-faq-item {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.ccr-faq-question {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: left;
+  padding: 24px 40px 24px 0;
+  cursor: pointer;
+  position: relative;
+  line-height: 1.4;
+}
+.ccr-faq-question::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 24px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.4);
+  transition: transform 0.3s ease;
+}
+.ccr-faq-item.ccr-faq-open .ccr-faq-question::after {
+  content: '\2013';
+}
+.ccr-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease, padding 0.35s ease;
+}
+.ccr-faq-item.ccr-faq-open .ccr-faq-answer {
+  max-height: 400px;
+}
+.ccr-faq-answer-inner {
+  padding: 0 0 24px;
+  font-size: 15px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+}
+
+/* ===========================
+   MOBILE STICKY BAR
+   =========================== */
+.ccr-sticky-bar {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding: 12px 16px;
+  z-index: 9999;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+}
+.ccr-sticky-bar a {
+  display: block;
+  width: 100%;
+  background: var(--ccr-accent);
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 0.5px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+@media (max-width: 768px) {
+  .ccr-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .ccr-hero-img {
+    order: -1;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .ccr-hero h1 {
+    font-size: 34px;
+  }
+  .ccr-numbers-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .ccr-cases-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .ccr-evidence-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  .ccr-reviews-grid {
+    grid-template-columns: 1fr;
+  }
+  .ccr-process-steps {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .ccr-bonus-card {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .ccr-bonus-img {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+  .ccr-offer-card {
+    padding: 32px 24px;
+  }
+  .ccr-sticky-bar {
+    display: block;
+  }
+  body {
+    padding-bottom: 72px;
+  }
+}
+
+@media (max-width: 520px) {
+  .ccr-container {
+    padding: 0 16px;
+  }
+  .ccr-hero {
+    padding: 72px 0 56px;
+  }
+  .ccr-hero h1 {
+    font-size: 28px;
+  }
+  .ccr-hero h1 .ccr-hero-accent {
+    font-size: 22px;
+  }
+  .ccr-hero-body {
+    font-size: 15px;
+  }
+  .ccr-section-dark,
+  .ccr-section-light {
+    padding: 56px 0;
+  }
+  .ccr-offer,
+  .ccr-cases,
+  .ccr-evidence,
+  .ccr-bonuses,
+  .ccr-testimonials,
+  .ccr-faq,
+  .ccr-process {
+    padding: 56px 0;
+  }
+  .ccr-cases-grid {
+    grid-template-columns: 1fr;
+  }
+  .ccr-evidence-grid {
+    grid-template-columns: 1fr;
+  }
+  .ccr-numbers-value {
+    font-size: 32px;
+  }
+  .ccr-cases-title,
+  .ccr-evidence-title,
+  .ccr-bonuses-title,
+  .ccr-testimonials-title,
+  .ccr-faq-title,
+  .ccr-process-title,
+  .ccr-offer-title {
+    font-size: 24px;
+  }
+  .ccr-offer-price {
+    font-size: 32px;
+  }
+  .ccr-btn-primary {
+    font-size: 15px;
+    padding: 16px 28px;
+    width: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .ccr-container {
+    padding: 0 12px;
+  }
+  .ccr-hero h1 {
+    font-size: 24px;
+  }
+  .ccr-hero h1 .ccr-hero-accent {
+    font-size: 19px;
+  }
+  .ccr-numbers-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .ccr-numbers-value {
+    font-size: 28px;
+  }
+  .ccr-offer-card {
+    padding: 24px 16px;
+  }
+  .ccr-offer-title {
+    font-size: 20px;
+  }
+  .ccr-offer-checks li {
+    font-size: 13px;
+  }
+  .ccr-bonus-card {
+    padding: 20px;
+  }
+  .ccr-review-card {
+    padding: 20px;
+  }
+}
+</style>
+<!-- ==============================
+     1. HERO
+     ============================== -->
+<section class="ccr-hero ccr-fade-in">
+  <div class="ccr-container">
+    <div class="ccr-hero-grid">
+      <div class="ccr-hero-content">
+        <div class="ccr-hero-tag">FASCICOLO IRRISOLTO</div>
+        <h1>
+          Sei omicidi non furono mai risolti.
+          <span class="ccr-hero-accent">Stasera, tutto cambia.</span>
+        </h1>
+        <p class="ccr-hero-body">
+          Apra il fascicolo. Legga gli interrogatori. Esamini le prove. Nomini il colpevole, rompa il sigillo e scopra se aveva ragione.
+        </p>
+        <ul class="ccr-hero-checks">
+          <li>7 fascicoli investigativi completi, prove incluse</li>
+          <li>Da solo, in coppia o con un massimo di 6 persone</li>
+          <li>Stampi tutto o risolva direttamente sullo schermo</li>
+          <li>Nessuna attesa. Cominci stasera stessa.</li>
+        </ul>
+        <a href="#ccr-offer" class="ccr-btn-primary">PRENDA IN CARICO IL CASO &darr;</a>
+      </div>
+      <div class="ccr-hero-img">
+        <!-- IMG: hero -->
+        <img src="https://files.catbox.moe/jd0f1c.webp" alt="Fascicolo investigativo su scrivania" loading="eager">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     2. STATS TICKER
+     ============================== -->
+<div class="ccr-ticker" aria-hidden="true">
+  <div class="ccr-ticker-track">
+    <span class="ccr-ticker-item">4,9 &#9733;<span class="ccr-ticker-dot"></span></span>
+    <span class="ccr-ticker-item">200+ INVESTIGATORI<span class="ccr-ticker-dot"></span></span>
+    <span class="ccr-ticker-item">MINUTI ALLA CONSEGNA<span class="ccr-ticker-dot"></span></span>
+    <span class="ccr-ticker-item">PAGAMENTO SICURO<span class="ccr-ticker-dot"></span></span>
+    <span class="ccr-ticker-item">4,9 &#9733;<span class="ccr-ticker-dot"></span></span>
+    <span class="ccr-ticker-item">200+ INVESTIGATORI<span class="ccr-ticker-dot"></span></span>
+    <span class="ccr-ticker-item">MINUTI ALLA CONSEGNA<span class="ccr-ticker-dot"></span></span>
+    <span class="ccr-ticker-item">PAGAMENTO SICURO<span class="ccr-ticker-dot"></span></span>
+  </div>
+</div>
+
+<!-- ==============================
+     3. NUMBERS
+     ============================== -->
+<section class="ccr-numbers ccr-fade-in">
+  <div class="ccr-container">
+    <div class="ccr-numbers-grid">
+      <div class="ccr-numbers-item">
+        <div class="ccr-numbers-value">7</div>
+        <div class="ccr-numbers-label">CASI DA RISOLVERE</div>
+      </div>
+      <div class="ccr-numbers-item">
+        <div class="ccr-numbers-value">1&ndash;6</div>
+        <div class="ccr-numbers-label">INVESTIGATORI</div>
+      </div>
+      <div class="ccr-numbers-item">
+        <div class="ccr-numbers-value">12h+</div>
+        <div class="ccr-numbers-label">DI INDAGINI</div>
+      </div>
+      <div class="ccr-numbers-item">
+        <div class="ccr-numbers-value">240+</div>
+        <div class="ccr-numbers-label">PAGINE DI PROVE</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     4. OFFER BOX (primary)
+     ============================== -->
+<section class="ccr-offer ccr-fade-in" id="ccr-offer">
+  <div class="ccr-container">
+    <div class="ccr-offer-card">
+      <div class="ccr-offer-eyebrow">LA RACCOLTA COMPLETA</div>
+      <h2 class="ccr-offer-title">Ogni fascicolo rimasto aperto. Una sera dopo l'altra.</h2>
+      <div class="ccr-offer-product-name">I Casi Irrisolti</div>
+      <div class="ccr-offer-rating"><span class="ccr-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4,9 da 200+ investigatori</div>
+
+      <div class="ccr-offer-product-img">
+        <!-- IMG: product -->
+        <img src="https://files.catbox.moe/5qojlk.png" alt="I Casi Irrisolti - La raccolta completa" loading="lazy">
+      </div>
+
+      <ul class="ccr-offer-checks">
+        <li>7 fascicoli investigativi completi, prove incluse</li>
+        <li>240+ pagine di rapporti, interrogatori e prove</li>
+        <li>12h+ di lavoro investigativo su tutti e sette i casi</li>
+        <li>Da 1 a 6 giocatori, da soli, in coppia o con amici</li>
+        <li>Soluzioni sigillate, una per ogni caso</li>
+        <li>Tabellone sospettati e protocollo investigativo da compilare</li>
+        <li>Guida per l'ospite, accompagna per tutta la serata</li>
+        <li>Download immediato, da stampare o giocare su schermo</li>
+        <li>Nessuna scadenza. Stasera o tra sei mesi, il fascicolo aspetta</li>
+        <li class="ccr-offer-bonus">BONUS &mdash; Il fascicolo bonus, il settimo caso, solo nella raccolta</li>
+        <li class="ccr-offer-bonus">BONUS &mdash; Il manuale dell'investigatore, leggere i fascicoli come un professionista</li>
+      </ul>
+
+      <div class="ccr-offer-price-row">
+        <span class="ccr-offer-original-price">{{original_price}}</span>
+        <span class="ccr-offer-price">{{price}}</span>
+        <span class="ccr-offer-savings">Risparmia {{savings}}</span>
+      </div>
+
+      <a href="/checkout" class="ccr-offer-cta">AGGIUNGI AL CARRELLO</a>
+      <div class="ccr-offer-secure">&#128274; Pagamento sicuro.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     5. PROCESS
+     ============================== -->
+<section class="ccr-process ccr-fade-in">
+  <div class="ccr-container">
+    <div class="ccr-process-header">
+      <div class="ccr-tag ccr-tag-dark">L'ANDAMENTO</div>
+      <h2 class="ccr-process-title">Non sta leggendo una storia. Sta conducendo l'indagine.</h2>
+      <p class="ccr-process-subtitle">Ogni fascicolo &egrave; un'indagine reale, ricostruita su carta. Quello che aveva la polizia, lo ha Lei. N&eacute; pi&ugrave;, n&eacute; meno.</p>
+    </div>
+
+    <div class="ccr-process-img">
+      <!-- IMG: process -->
+      <img src="https://files.catbox.moe/aj1z8z.webp" alt="Prove investigative sul tavolo" loading="lazy">
+    </div>
+
+    <div class="ccr-process-steps">
+      <div class="ccr-step">
+        <div class="ccr-step-number">01</div>
+        <h3 class="ccr-step-title">Aprire il fascicolo</h3>
+        <p class="ccr-step-body">Rapporto di polizia, autopsia, foto della scena del crimine, lettere private. Tutto finisce sul Suo tavolo in una volta sola.</p>
+      </div>
+      <div class="ccr-step">
+        <div class="ccr-step-number">02</div>
+        <h3 class="ccr-step-title">Leggere gli interrogatori</h3>
+        <p class="ccr-step-body">Sei sospettati. Ognuno di loro nasconde qualcosa. Solo uno ha ucciso.</p>
+      </div>
+      <div class="ccr-step">
+        <div class="ccr-step-number">03</div>
+        <h3 class="ccr-step-title">Nominare il colpevole</h3>
+        <p class="ccr-step-body">Movente, mezzo, opportunit&agrave;. Scriva la Sua accusa prima di continuare a leggere.</p>
+      </div>
+      <div class="ccr-step">
+        <div class="ccr-step-number">04</div>
+        <h3 class="ccr-step-title">Rompere il sigillo</h3>
+        <p class="ccr-step-body">Apra la soluzione e veda il caso risolto indizio per indizio. O aveva ragione, oppure Le &egrave; sfuggito quel singolo dettaglio decisivo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     6. CASES GALLERY
+     ============================== -->
+<section class="ccr-cases ccr-fade-in">
+  <div class="ccr-container">
+    <div class="ccr-cases-header">
+      <div class="ccr-tag">I FASCICOLI</div>
+      <h2 class="ccr-cases-title">Sei assassini. Nessuno &egrave; mai stato catturato.</h2>
+      <p class="ccr-cases-subtitle">Ogni caso &egrave; a s&eacute;. Da sessanta a novanta minuti, un colpevole, un tentativo di identificarlo.</p>
+    </div>
+
+    <div class="ccr-cases-grid">
+      <!-- CASE 001 -->
+      <div class="ccr-case-card">
+        <div class="ccr-case-img">
+          <!-- IMG: case-001 -->
+          <img src="https://files.catbox.moe/5n9jby.webp" alt="Morte nella Vigna" loading="lazy">
+          <span class="ccr-case-badge ccr-case-badge-star">&#11088; IRRISOLTO</span>
+        </div>
+        <div class="ccr-case-content">
+          <div class="ccr-case-number">FASCICOLO 001</div>
+          <h3 class="ccr-case-title">Morte nella Vigna</h3>
+          <p class="ccr-case-desc">Il proprietario di una tenuta vinicola giace morto tra le botti. Tre eredi, e un testamento riscritto una settimana prima.</p>
+          <div class="ccr-case-meta">
+            <span>TOSCANA, 1994</span>
+            <span class="ccr-case-difficulty">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 002 -->
+      <div class="ccr-case-card">
+        <div class="ccr-case-img">
+          <!-- IMG: case-002 -->
+          <img src="https://files.catbox.moe/wutxgz.webp" alt="Baita 13" loading="lazy">
+          <span class="ccr-case-badge">IRRISOLTO</span>
+        </div>
+        <div class="ccr-case-content">
+          <div class="ccr-case-number">FASCICOLO 002</div>
+          <h3 class="ccr-case-title">Baita 13</h3>
+          <p class="ccr-case-desc">Cinque amici, un fine settimana in montagna. Al mattino uno non si sveglia pi&ugrave;, e nella neve nessuna traccia conduce alla baita.</p>
+          <div class="ccr-case-meta">
+            <span>COLORADO, 2011</span>
+            <span class="ccr-case-difficulty">&#9733;&#9733;&#9734;&#9734;&#9734;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 003 -->
+      <div class="ccr-case-card">
+        <div class="ccr-case-img">
+          <!-- IMG: case-003 -->
+          <img src="https://files.catbox.moe/3ptdu8.webp" alt="Capolinea Sconosciuto" loading="lazy">
+          <span class="ccr-case-badge">IRRISOLTO</span>
+        </div>
+        <div class="ccr-case-content">
+          <div class="ccr-case-number">FASCICOLO 003</div>
+          <h3 class="ccr-case-title">Capolinea Sconosciuto</h3>
+          <p class="ccr-case-desc">Uno scompartimento chiuso dall'interno. Un passeggero morto. E un biglietto che non &egrave; mai stato venduto a nessuno.</p>
+          <div class="ccr-case-meta">
+            <span>VIENNA, 1967</span>
+            <span class="ccr-case-difficulty">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 004 -->
+      <div class="ccr-case-card">
+        <div class="ccr-case-img">
+          <!-- IMG: case-004 -->
+          <img src="https://files.catbox.moe/9yu99w.webp" alt="Il Guardiano del Faro" loading="lazy">
+          <span class="ccr-case-badge">IRRISOLTO</span>
+        </div>
+        <div class="ccr-case-content">
+          <div class="ccr-case-number">FASCICOLO 004</div>
+          <h3 class="ccr-case-title">Il Guardiano del Faro</h3>
+          <p class="ccr-case-desc">Isolato dalla tempesta, nessun modo di salire sullo scoglio n&eacute; di scenderne. Eppure qualcuno lo ha raggiunto.</p>
+          <div class="ccr-case-meta">
+            <span>CORNOVAGLIA, 1983</span>
+            <span class="ccr-case-difficulty">&#9733;&#9733;&#9733;&#9734;&#9734;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 005 -->
+      <div class="ccr-case-card">
+        <div class="ccr-case-img">
+          <!-- IMG: case-005 -->
+          <img src="https://files.catbox.moe/aheq9s.webp" alt="Un Posto a Tavola" loading="lazy">
+          <span class="ccr-case-badge">IRRISOLTO</span>
+        </div>
+        <div class="ccr-case-content">
+          <div class="ccr-case-number">FASCICOLO 005</div>
+          <h3 class="ccr-case-title">Un Posto a Tavola</h3>
+          <p class="ccr-case-desc">Una cena di famiglia, sette ospiti, un veleno lento. Tutti hanno mangiato lo stesso piatto, e solo il padrone di casa &egrave; morto.</p>
+          <div class="ccr-case-meta">
+            <span>BOSTON, 2003</span>
+            <span class="ccr-case-difficulty">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- CASE 006 -->
+      <div class="ccr-case-card">
+        <div class="ccr-case-img">
+          <!-- IMG: case-006 -->
+          <img src="https://files.catbox.moe/i014sx.webp" alt="L'Incendio della Galleria" loading="lazy">
+          <span class="ccr-case-badge">IRRISOLTO</span>
+        </div>
+        <div class="ccr-case-content">
+          <div class="ccr-case-number">FASCICOLO 006</div>
+          <h3 class="ccr-case-title">L'Incendio della Galleria</h3>
+          <p class="ccr-case-desc">Un incendio doloso ha distrutto la galleria e lasciato un cadavere. I quadri bruciati erano assicurati. Quelli salvati erano falsi.</p>
+          <div class="ccr-case-meta">
+            <span>BERLINO, 2016</span>
+            <span class="ccr-case-difficulty">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ccr-cases-cta">
+      <a href="#ccr-offer" class="ccr-btn-primary">AVVIARE L'INDAGINE &darr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     7. EVIDENCE DETAIL
+     ============================== -->
+<section class="ccr-evidence ccr-fade-in">
+  <div class="ccr-container">
+    <div class="ccr-evidence-header">
+      <div class="ccr-tag">IN OGNI FASCICOLO</div>
+      <h2 class="ccr-evidence-title">Tutto ci&ograve; che aveva la polizia. Nient'altro.</h2>
+      <p class="ccr-evidence-subtitle">Nessun suggerimento. Nessun aiutino. Nessuna app che dice quando si scotta. Solo i documenti di un'indagine reale, e ci&ograve; che Lei ne ricava.</p>
+    </div>
+
+    <div class="ccr-evidence-grid">
+      <!-- DOC 01 -->
+      <div class="ccr-doc-card">
+        <div class="ccr-doc-img">
+          <!-- IMG: doc-police -->
+          <img src="https://files.catbox.moe/72aljx.webp" alt="Il rapporto di polizia" loading="lazy">
+        </div>
+        <div class="ccr-doc-content">
+          <div class="ccr-doc-label">DOC 01</div>
+          <h3 class="ccr-doc-title">Il rapporto di polizia</h3>
+          <p class="ccr-doc-desc">Chi ha trovato il corpo, a che ora, e cosa ha annotato il primo agente prima che qualcuno avesse tempo di inventarsi una storia.</p>
+        </div>
+      </div>
+
+      <!-- DOC 02 -->
+      <div class="ccr-doc-card">
+        <div class="ccr-doc-img">
+          <!-- IMG: doc-interrogation -->
+          <img src="https://files.catbox.moe/n6jx4q.webp" alt="Sei interrogatori" loading="lazy">
+        </div>
+        <div class="ccr-doc-content">
+          <div class="ccr-doc-label">DOC 02</div>
+          <h3 class="ccr-doc-title">Sei interrogatori</h3>
+          <p class="ccr-doc-desc">Ogni sospettato prende la parola. Ognuno di loro mente su qualcosa. L'arte sta nel capire quale bugia conta.</p>
+        </div>
+      </div>
+
+      <!-- DOC 03 -->
+      <div class="ccr-doc-card">
+        <div class="ccr-doc-img">
+          <!-- IMG: doc-photos -->
+          <img src="https://files.catbox.moe/fg4orx.webp" alt="Le foto della scena del crimine" loading="lazy">
+        </div>
+        <div class="ccr-doc-content">
+          <div class="ccr-doc-label">DOC 03</div>
+          <h3 class="ccr-doc-title">Le foto della scena del crimine</h3>
+          <p class="ccr-doc-desc">Scattate come le scatta la polizia. Il dettaglio che ribalta il caso &egrave; da qualche parte in queste foto, in bella vista.</p>
+        </div>
+      </div>
+
+      <!-- DOC 04 -->
+      <div class="ccr-doc-card">
+        <div class="ccr-doc-img">
+          <!-- IMG: doc-autopsy -->
+          <img src="https://files.catbox.moe/whwi25.webp" alt="Il referto autoptico" loading="lazy">
+        </div>
+        <div class="ccr-doc-content">
+          <div class="ccr-doc-label">DOC 04</div>
+          <h3 class="ccr-doc-title">Il referto autoptico</h3>
+          <p class="ccr-doc-desc">Ora del decesso, causa della morte, e quella piccola contraddizione medica che distrugge l'alibi di qualcuno.</p>
+        </div>
+      </div>
+
+      <!-- DOC 05 -->
+      <div class="ccr-doc-card">
+        <div class="ccr-doc-img">
+          <!-- IMG: doc-evidence -->
+          <img src="https://files.catbox.moe/v4r8ln.webp" alt="Le prove" loading="lazy">
+        </div>
+        <div class="ccr-doc-content">
+          <div class="ccr-doc-label">DOC 05</div>
+          <h3 class="ccr-doc-title">Le prove</h3>
+          <p class="ccr-doc-desc">Lettere, ricevute, tabulati telefonici, un diario che nessuno avrebbe dovuto leggere. Qui si nasconde il movente.</p>
+        </div>
+      </div>
+
+      <!-- DOC 06 - SEALED -->
+      <div class="ccr-doc-card ccr-doc-sealed">
+        <div class="ccr-doc-img">
+          <!-- IMG: doc-solution -->
+          <img src="https://files.catbox.moe/78d50c.webp" alt="La soluzione sigillata" loading="lazy">
+        </div>
+        <div class="ccr-doc-content">
+          <div class="ccr-doc-label">SIGILLATO</div>
+          <h3 class="ccr-doc-title">La soluzione</h3>
+          <p class="ccr-doc-desc">Sigillata, e per una buona ragione. La apra solo dopo aver nominato il Suo colpevole, e veda l'intero caso spiegato indizio per indizio.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="ccr-evidence-note">Stampi tutto e lo disponga sul tavolo, oppure resti sullo schermo. In entrambi i casi, il fascicolo &egrave; completo.</p>
+
+    <div class="ccr-evidence-cta">
+      <a href="#ccr-offer" class="ccr-btn-primary">NOMINARE IL COLPEVOLE &darr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     8. BONUSES
+     ============================== -->
+<section class="ccr-bonuses ccr-fade-in">
+  <div class="ccr-container">
+    <!-- Marquee -->
+    <div class="ccr-marquee" aria-hidden="true">
+      <div class="ccr-marquee-track">
+        <span class="ccr-marquee-item">INCLUSO GRATIS</span>
+        <span class="ccr-marquee-item">NON VENDUTO SEPARATAMENTE</span>
+        <span class="ccr-marquee-item">INCLUSO GRATIS</span>
+        <span class="ccr-marquee-item">NON VENDUTO SEPARATAMENTE</span>
+        <span class="ccr-marquee-item">INCLUSO GRATIS</span>
+        <span class="ccr-marquee-item">NON VENDUTO SEPARATAMENTE</span>
+        <span class="ccr-marquee-item">INCLUSO GRATIS</span>
+        <span class="ccr-marquee-item">NON VENDUTO SEPARATAMENTE</span>
+      </div>
+    </div>
+
+    <div class="ccr-bonuses-header">
+      <div class="ccr-tag">DUE BONUS</div>
+      <h2 class="ccr-bonuses-title">Due cose che non trover&agrave; da nessun'altra parte.</h2>
+      <p class="ccr-bonuses-subtitle">Uno Le insegna a lavorare su un fascicolo. L'altro &egrave; il fascicolo che nessuno pu&ograve; comprare. Entrambi appartengono alla raccolta, e solo alla raccolta.</p>
+    </div>
+
+    <!-- BONUS 01 -->
+    <div class="ccr-bonus-card">
+      <div class="ccr-bonus-img">
+        <!-- IMG: bonus-handbook -->
+        <img src="https://files.catbox.moe/li9euo.webp" alt="Il Manuale dell'Investigatore" loading="lazy">
+      </div>
+      <div class="ccr-bonus-body">
+        <div class="ccr-bonus-label">BONUS 01</div>
+        <h3 class="ccr-bonus-title">Il Manuale dell'Investigatore</h3>
+        <p class="ccr-bonus-desc">Nessuno nasce sapendo leggere un fascicolo investigativo. Questo manuale trasforma una pila di carte in un'indagine, scritto per chi non ha mai fatto nulla di simile.</p>
+        <ul class="ccr-bonus-checks">
+          <li>Leggere una deposizione e trovare la bugia</li>
+          <li>Costruire una cronologia che spezza un alibi</li>
+          <li>Movente, mezzo, opportunit&agrave;: verificare tutti e tre</li>
+          <li>Le trappole che ogni caso nasconde, e come riconoscerle</li>
+          <li>Come condurre la serata, se &egrave; Lei l'ospite</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- BONUS 02 -->
+    <div class="ccr-bonus-card">
+      <div class="ccr-bonus-img">
+        <!-- IMG: bonus-sealed -->
+        <img src="https://files.catbox.moe/xijirt.webp" alt="Il Fascicolo Sigillato" loading="lazy">
+      </div>
+      <div class="ccr-bonus-body">
+        <div class="ccr-bonus-label">BONUS 02 <span class="ccr-bonus-sealed-badge">SIGILLATO</span></div>
+        <h3 class="ccr-bonus-title">Il Fascicolo Sigillato</h3>
+        <p class="ccr-bonus-desc">Un settimo caso, il pi&ugrave; difficile che abbiamo mai scritto. Non &egrave; in vendita, non lo &egrave; mai stato e non lo sar&agrave; mai. L'unico modo per accedervi &egrave; la raccolta completa.</p>
+        <ul class="ccr-bonus-checks">
+          <li>Un fascicolo completo, come gli altri sei</li>
+          <li>Difficolt&agrave; cinque su cinque, senza piet&agrave;</li>
+          <li>Per investigatori che hanno risolto i primi sei</li>
+          <li>Perfino la sigla del caso &egrave; oscurata</li>
+          <li>Solo nella raccolta. Mai venduto separatamente.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="ccr-bonuses-footer">Sei casi sono il motivo per cui &egrave; qui. Questi due sono ci&ograve; che resta.</p>
+    <div class="ccr-bonuses-cta">
+      <a href="#ccr-offer" class="ccr-btn-primary">ASSICURARSI TUTTI E SETTE I FASCICOLI &darr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     9. TESTIMONIALS
+     ============================== -->
+<section class="ccr-testimonials ccr-fade-in">
+  <div class="ccr-container">
+    <!-- Marquee -->
+    <div class="ccr-marquee" aria-hidden="true">
+      <div class="ccr-marquee-track">
+        <span class="ccr-marquee-item">REGISTRO PROVE</span>
+        <span class="ccr-marquee-item">DEPOSIZIONI VERIFICATE</span>
+        <span class="ccr-marquee-item">REGISTRO PROVE</span>
+        <span class="ccr-marquee-item">DEPOSIZIONI VERIFICATE</span>
+        <span class="ccr-marquee-item">REGISTRO PROVE</span>
+        <span class="ccr-marquee-item">DEPOSIZIONI VERIFICATE</span>
+        <span class="ccr-marquee-item">REGISTRO PROVE</span>
+        <span class="ccr-marquee-item">DEPOSIZIONI VERIFICATE</span>
+      </div>
+    </div>
+
+    <div class="ccr-testimonials-header">
+      <div class="ccr-tag">IL VERDETTO</div>
+      <h2 class="ccr-testimonials-title">Hanno aperto il fascicolo. Ecco cosa &egrave; successo dopo.</h2>
+      <div class="ccr-testimonials-rating">
+        <span class="ccr-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4,9 <span>200+ INVESTIGATORI</span>
+      </div>
+    </div>
+
+    <div class="ccr-reviews-grid">
+      <!-- Review 1 -->
+      <div class="ccr-review-card">
+        <div class="ccr-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <h3 class="ccr-review-headline">&laquo;Abbiamo discusso per un'ora&raquo;</h3>
+        <p class="ccr-review-body">Mio marito era convinto che fosse il fratello. Io ero sicura che fosse la moglie. Abbiamo sparso tutto sul tavolo della cucina e non abbiamo toccato il telefono neanche una volta. Nessuno dei due aveva ragione, il che ha reso tutto peggiore. E migliore.</p>
+        <div class="ccr-review-author">Francesca T.</div>
+        <div class="ccr-review-meta">ACQUISTO VERIFICATO &middot; FASCICOLO 005 &middot; CASO CHIUSO</div>
+      </div>
+
+      <!-- Review 2 -->
+      <div class="ccr-review-card">
+        <div class="ccr-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <h3 class="ccr-review-headline">&laquo;Sbagliato di una riga&raquo;</h3>
+        <p class="ccr-review-body">Ho nominato il mio sospettato, molto soddisfatto di me stesso, poi ho aperto la soluzione. L'indizio era nel referto autoptico e io l'avevo completamente sorvolato. Ho riletto l'intero fascicolo solo per vedere quanto bene mi avevano ingannato. Molto bene, &egrave; la risposta.</p>
+        <div class="ccr-review-author">Marco R.</div>
+        <div class="ccr-review-meta">ACQUISTO VERIFICATO &middot; FASCICOLO 003 &middot; RISOLTO</div>
+      </div>
+
+      <!-- Review 3 -->
+      <div class="ccr-review-card">
+        <div class="ccr-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <h3 class="ccr-review-headline">&laquo;Ha sostituito il nostro venerd&igrave; sera&raquo;</h3>
+        <p class="ccr-review-body">Prima scorrevamo la piattaforma streaming e alla fine non guardavamo nulla. Adesso il venerd&igrave; &egrave; un caso. Siamo al fascicolo tre e la mia unica critica &egrave; che finiranno.</p>
+        <div class="ccr-review-author">Elena N.</div>
+        <div class="ccr-review-meta">ACQUISTO VERIFICATO &middot; LA RACCOLTA &middot; RISOLTO</div>
+      </div>
+
+      <!-- Review 4 -->
+      <div class="ccr-review-card">
+        <div class="ccr-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <h3 class="ccr-review-headline">&laquo;Stampato, e non me ne pento&raquo;</h3>
+        <p class="ccr-review-body">Foto sparpagliate, sospettati appuntati su una lavagna, fili tesi. I miei figli pensavano che avessi perso il senno. Poi si sono seduti e hanno partecipato.</p>
+        <div class="ccr-review-author">Antonio K.</div>
+        <div class="ccr-review-meta">ACQUISTO VERIFICATO &middot; FASCICOLO 002 &middot; CASO CHIUSO</div>
+      </div>
+
+      <!-- Review 5 -->
+      <div class="ccr-review-card">
+        <div class="ccr-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <h3 class="ccr-review-headline">&laquo;Davvero difficile, e questo &egrave; il punto&raquo;</h3>
+        <p class="ccr-review-body">Leggo costantemente true crime e pensavo di passarci attraverso senza problemi. Non &egrave; andata cos&igrave;. Gli interrogatori sono scritti cos&igrave; bene che ogni sospettato sembra colpevole per almeno dieci minuti.</p>
+        <div class="ccr-review-author">Giulia A.</div>
+        <div class="ccr-review-meta">ACQUISTO VERIFICATO &middot; FASCICOLO 006 &middot; CASO CHIUSO</div>
+      </div>
+
+      <!-- Review 6 -->
+      <div class="ccr-review-card">
+        <div class="ccr-review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <h3 class="ccr-review-headline">&laquo;Scaricato e giocato la sera stessa&raquo;</h3>
+        <p class="ccr-review-body">Comprato d'impulso dopo cena, venti minuti dopo era tutto sul tavolo. Nessun pacco da aspettare, niente da montare. Solo un fascicolo, una penna e una lunga discussione con mia sorella.</p>
+        <div class="ccr-review-author">Chiara M.</div>
+        <div class="ccr-review-meta">ACQUISTO VERIFICATO &middot; FASCICOLO 001 &middot; RISOLTO</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     10. OFFER BOX (2nd instance)
+     ============================== -->
+<section class="ccr-offer ccr-fade-in" id="ccr-offer-2">
+  <div class="ccr-container">
+    <div class="ccr-offer-card">
+      <div class="ccr-offer-eyebrow">LA RACCOLTA COMPLETA</div>
+      <h2 class="ccr-offer-title">Ogni fascicolo rimasto aperto. Una sera dopo l'altra.</h2>
+      <div class="ccr-offer-product-name">I Casi Irrisolti</div>
+      <div class="ccr-offer-rating"><span class="ccr-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> 4,9 da 200+ investigatori</div>
+
+      <div class="ccr-offer-product-img">
+        <!-- IMG: product -->
+        <img src="https://files.catbox.moe/5qojlk.png" alt="I Casi Irrisolti - La raccolta completa" loading="lazy">
+      </div>
+
+      <ul class="ccr-offer-checks">
+        <li>7 fascicoli investigativi completi, prove incluse</li>
+        <li>240+ pagine di rapporti, interrogatori e prove</li>
+        <li>12h+ di lavoro investigativo su tutti e sette i casi</li>
+        <li>Da 1 a 6 giocatori, da soli, in coppia o con amici</li>
+        <li>Soluzioni sigillate, una per ogni caso</li>
+        <li>Tabellone sospettati e protocollo investigativo da compilare</li>
+        <li>Guida per l'ospite, accompagna per tutta la serata</li>
+        <li>Download immediato, da stampare o giocare su schermo</li>
+        <li>Nessuna scadenza. Stasera o tra sei mesi, il fascicolo aspetta</li>
+        <li class="ccr-offer-bonus">BONUS &mdash; Il fascicolo bonus, il settimo caso, solo nella raccolta</li>
+        <li class="ccr-offer-bonus">BONUS &mdash; Il manuale dell'investigatore, leggere i fascicoli come un professionista</li>
+      </ul>
+
+      <div class="ccr-offer-price-row">
+        <span class="ccr-offer-original-price">{{original_price}}</span>
+        <span class="ccr-offer-price">{{price}}</span>
+        <span class="ccr-offer-savings">Risparmia {{savings}}</span>
+      </div>
+
+      <a href="/checkout" class="ccr-offer-cta">AGGIUNGI AL CARRELLO</a>
+      <div class="ccr-offer-secure">&#128274; Pagamento sicuro.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     11. FAQ
+     ============================== -->
+<section class="ccr-faq ccr-fade-in">
+  <div class="ccr-container">
+    <!-- Marquee -->
+    <div class="ccr-marquee" aria-hidden="true">
+      <div class="ccr-marquee-track">
+        <span class="ccr-marquee-item">NOTE INVESTIGATIVE</span>
+        <span class="ccr-marquee-item">DOMANDE APERTE</span>
+        <span class="ccr-marquee-item">NOTE INVESTIGATIVE</span>
+        <span class="ccr-marquee-item">DOMANDE APERTE</span>
+        <span class="ccr-marquee-item">NOTE INVESTIGATIVE</span>
+        <span class="ccr-marquee-item">DOMANDE APERTE</span>
+        <span class="ccr-marquee-item">NOTE INVESTIGATIVE</span>
+        <span class="ccr-marquee-item">DOMANDE APERTE</span>
+      </div>
+    </div>
+
+    <div class="ccr-faq-header">
+      <div class="ccr-tag">PRIMA DI APRIRE IL FASCICOLO</div>
+      <h2 class="ccr-faq-title">Tutto ci&ograve; che stava per chiedere.</h2>
+    </div>
+
+    <div class="ccr-faq-list">
+      <div class="ccr-faq-item">
+        <button class="ccr-faq-question" type="button">Devo stampare qualcosa?</button>
+        <div class="ccr-faq-answer">
+          <div class="ccr-faq-answer-inner">No. Pu&ograve; giocare sullo schermo &mdash; telefono, tablet, computer. Se preferisce la carta, pu&ograve; stampare tutto a casa o in copisteria. Funziona in entrambi i modi.</div>
+        </div>
+      </div>
+
+      <div class="ccr-faq-item">
+        <button class="ccr-faq-question" type="button">Quante persone possono giocare?</button>
+        <div class="ccr-faq-answer">
+          <div class="ccr-faq-answer-inner">Da una a sei. Funziona perfettamente da soli, in coppia o in gruppo. Ogni caso &egrave; progettato per tutte e tre le modalit&agrave;.</div>
+        </div>
+      </div>
+
+      <div class="ccr-faq-item">
+        <button class="ccr-faq-question" type="button">&Egrave; davvero risolvibile, o c'&egrave; una fregatura?</button>
+        <div class="ccr-faq-answer">
+          <div class="ccr-faq-answer-inner">Ogni caso ha una soluzione unica, logica e raggiungibile con le prove fornite. Nessun trucco, nessun colpo di scena senza indizi. Se sbaglia, la soluzione Le mostra esattamente cosa Le &egrave; sfuggito.</div>
+        </div>
+      </div>
+
+      <div class="ccr-faq-item">
+        <button class="ccr-faq-question" type="button">Quanto dura un caso?</button>
+        <div class="ccr-faq-answer">
+          <div class="ccr-faq-answer-inner">Da sessanta a novanta minuti, a seconda del caso e del ritmo del gruppo. La raccolta completa offre oltre dodici ore di indagini.</div>
+        </div>
+      </div>
+
+      <div class="ccr-faq-item">
+        <button class="ccr-faq-question" type="button">Posso giocare lo stesso caso due volte?</button>
+        <div class="ccr-faq-answer">
+          <div class="ccr-faq-answer-inner">Ogni caso ha una sola soluzione, quindi la sorpresa pi&ugrave; grande &egrave; alla prima partita. Per questo la raccolta contiene sette casi diversi: c'&egrave; sempre un nuovo mistero che aspetta.</div>
+        </div>
+      </div>
+
+      <div class="ccr-faq-item">
+        <button class="ccr-faq-question" type="button">Non ho mai fatto nulla di simile. Sar&ograve; perso?</button>
+        <div class="ccr-faq-answer">
+          <div class="ccr-faq-answer-inner">No. Il Manuale dell'Investigatore, incluso nella raccolta, La guida passo dopo passo. &Egrave; scritto per chi &egrave; alla prima esperienza.</div>
+        </div>
+      </div>
+
+      <div class="ccr-faq-item">
+        <button class="ccr-faq-question" type="button">Sono omicidi veri?</button>
+        <div class="ccr-faq-answer">
+          <div class="ccr-faq-answer-inner">No. Ogni caso &egrave; interamente inventato. Personaggi, luoghi e circostanze sono di fantasia. Le tecniche investigative sono realistiche, i crimini no.</div>
+        </div>
+      </div>
+
+      <div class="ccr-faq-item">
+        <button class="ccr-faq-question" type="button">Quando lo ricevo?</button>
+        <div class="ccr-faq-answer">
+          <div class="ccr-faq-answer-inner">Immediatamente. Dopo il pagamento riceve un'email con il link per il download. Nessuna attesa, nessuna spedizione.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==============================
+     MOBILE STICKY BAR
+     ============================== -->
+<div class="ccr-sticky-bar" id="ccr-sticky-bar">
+  <a href="#ccr-offer">PRENDA IN CARICO IL CASO &darr;</a>
+</div>
+
+<!-- ==============================
+     SCRIPTS
+     ============================== -->
+<script>
+(function() {
+  'use strict';
+
+  // Add JS class to html for progressive enhancement
+  document.documentElement.classList.add('ccr-js');
+
+  // --- IntersectionObserver fade-in ---
+  try {
+    var fadeEls = document.querySelectorAll('.ccr-fade-in');
+    if ('IntersectionObserver' in window && fadeEls.length) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('ccr-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+      fadeEls.forEach(function(el) {
+        observer.observe(el);
+      });
+
+      // Fallback: show all after 2.5s
+      setTimeout(function() {
+        fadeEls.forEach(function(el) {
+          el.classList.add('ccr-visible');
+        });
+      }, 2500);
+    } else {
+      // No IO support: show everything
+      fadeEls.forEach(function(el) {
+        el.classList.add('ccr-visible');
+      });
+    }
+  } catch (e) {
+    // Fallback: show everything
+    var all = document.querySelectorAll('.ccr-fade-in');
+    all.forEach(function(el) { el.classList.add('ccr-visible'); });
+  }
+
+  // --- FAQ Accordion ---
+  try {
+    var faqItems = document.querySelectorAll('.ccr-faq-item');
+    faqItems.forEach(function(item) {
+      var btn = item.querySelector('.ccr-faq-question');
+      if (btn) {
+        btn.addEventListener('click', function() {
+          var isOpen = item.classList.contains('ccr-faq-open');
+          // Close all
+          faqItems.forEach(function(fi) { fi.classList.remove('ccr-faq-open'); });
+          // Toggle clicked
+          if (!isOpen) {
+            item.classList.add('ccr-faq-open');
+          }
+        });
+      }
+    });
+  } catch (e) {}
+
+  // --- Sticky bar show/hide based on scroll ---
+  try {
+    var stickyBar = document.getElementById('ccr-sticky-bar');
+    var offerSection = document.getElementById('ccr-offer');
+    if (stickyBar && offerSection) {
+      var stickyObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            stickyBar.style.transform = 'translateY(100%)';
+            stickyBar.style.transition = 'transform 0.3s ease';
+          } else {
+            stickyBar.style.transform = 'translateY(0)';
+            stickyBar.style.transition = 'transform 0.3s ease';
+          }
+        });
+      }, { threshold: 0.1 });
+      stickyObserver.observe(offerSection);
+    }
+  } catch (e) {}
+
+  // --- Smooth scroll for anchor links ---
+  try {
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(e) {
+        var target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  } catch (e) {}
+
+  // --- localStorage wrapper (for future use) ---
+  function ccrGetStorage(key) {
+    try { return localStorage.getItem(key); } catch (e) { return null; }
+  }
+  function ccrSetStorage(key, val) {
+    try { localStorage.setItem(key, val); } catch (e) {}
+  }
+
+})();
+</script>
