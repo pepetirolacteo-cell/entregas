@@ -706,7 +706,7 @@ h3{font-size:26px}
 <div class="hero-visual">
 <span class="badge-float">225 páginas</span>
 <!-- REEMPLAZAR IMAGEN 1: mockup del libro abierto sobre una mesa con la guitarra apoyada al lado -->
-<img alt="Portada de El Mástil al Descubierto" class="main" id="heroMain" src="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436050880_chatgpt-image-22-ago-2026-07-00-12-p-m.webp"/>
+<img alt="Portada de Guitarra sin Misterio" class="main" id="heroMain" src="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436050880_chatgpt-image-22-ago-2026-07-00-12-p-m.webp"/>
 <div aria-label="Vistas del libro" class="thumbs" role="tablist">
 <button aria-selected="true" data-full="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436050880_chatgpt-image-22-ago-2026-07-00-12-p-m.webp" role="tab"><img alt="Portada" src="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436050880_chatgpt-image-22-ago-2026-07-00-12-p-m.webp"/></button>
 <button aria-selected="false" data-full="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436220910_img-5298.webp" role="tab"><img alt="Página con el diagrama del mástil" src="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436220910_img-5298.webp"/></button>
@@ -1012,10 +1012,10 @@ h3{font-size:26px}
 <div class="offer">
 <div class="offer-head">
 <!-- REEMPLAZAR IMAGEN 15: mockup del PACK COMPLETO (el libro + los 5 bonos apilados: cuaderno impreso, hojas de trucos, póster). Es la imagen que hace entender de un vistazo que la oferta es un paquete, no un PDF suelto. -->
-<img alt="El Mástil al Descubierto: el libro y los cinco bonos" src="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436050880_chatgpt-image-22-ago-2026-07-00-12-p-m.webp"/>
+<img alt="Guitarra sin Misterio: el libro y los cinco bonos" src="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436050880_chatgpt-image-22-ago-2026-07-00-12-p-m.webp"/>
 <div>
 <span class="offer-badge">El paquete completo</span>
-<h3>El Mástil al Descubierto + los 5 bonos</h3>
+<h3>Guitarra sin Misterio + los 5 bonos</h3>
 <p>225 páginas, 11 módulos y 55 ejercicios, más las seis herramientas que hacen que se te pegue. Todo digital, todo tuyo hoy.</p>
 </div>
 </div>
@@ -1054,12 +1054,12 @@ h3{font-size:26px}
 <section class="sec sec--alt">
 <div class="wrap">
 <div class="col rv">
-<h2>Así enseña un libro tradicional.<br/>Así enseña El Mástil al Descubierto.</h2>
+<h2>Así enseña un libro tradicional.<br/>Así enseña Guitarra sin Misterio.</h2>
 </div>
 <div class="vs rv">
 <div class="vs-head">
 <div>📕 Libro tradicional</div>
-<div>📗 El Mástil al Descubierto</div>
+<div>📗 Guitarra sin Misterio</div>
 </div>
 <div class="vs-row"><div>Texto denso, difícil de digerir</div><div>Explicaciones visuales y claras</div></div>
 <div class="vs-row"><div>Escrito para pianistas</div><div>Construido específicamente para guitarra</div></div>
@@ -1387,7 +1387,7 @@ h3{font-size:26px}
 <p class="lead" style="margin-top:18px">El libro te da el sistema. Los bonos hacen que se te pegue.</p>
 </div>
 <ul class="stack rv">
-<li><span class="ic">📘</span><span class="txt"><b>El libro — El Mástil al Descubierto</b><p>225 páginas · 11 módulos</p></span><span class="val">32 €</span></li>
+<li><span class="ic">📘</span><span class="txt"><b>El libro — Guitarra sin Misterio</b><p>225 páginas · 11 módulos</p></span><span class="val">32 €</span></li>
 <li><span class="ic">✏️</span><span class="txt"><b>Cuaderno de práctica</b><p>40 páginas imprimibles</p></span><span class="val">13 €</span></li>
 <li><span class="ic">🗺️</span><span class="txt"><b>12 hojas de trucos + póster</b><p>Alta resolución, A4 y A2</p></span><span class="val">14 €</span></li>
 <li><span class="ic">🎼</span><span class="txt"><b>100 progresiones listas</b><p>Por género y por emoción</p></span><span class="val">18 €</span></li>
@@ -1424,7 +1424,7 @@ h3{font-size:26px}
 <div class="faq rv">
 <details>
 <summary>¿En qué se diferencia de los vídeos gratis de YouTube?</summary>
-<div class="a">En YouTube hay miles de vídeos sueltos que explican conceptos aislados. Lo que no hay es un orden. El Mástil al Descubierto es un sistema donde cada módulo se apoya en el anterior: en vez de veinte piezas sueltas, terminas con un mapa completo. Y cada concepto está aplicado al mástil, no explicado en abstracto.</div>
+<div class="a">En YouTube hay miles de vídeos sueltos que explican conceptos aislados. Lo que no hay es un orden. Guitarra sin Misterio es un sistema donde cada módulo se apoya en el anterior: en vez de veinte piezas sueltas, terminas con un mapa completo. Y cada concepto está aplicado al mástil, no explicado en abstracto.</div>
 </details>
 <details>
 <summary>Soy principiante total. ¿Es muy avanzado para mí?</summary>
@@ -1479,10 +1479,10 @@ h3{font-size:26px}
 <div class="offer">
 <div class="offer-head">
 <!-- REEMPLAZAR IMAGEN 15 (la misma de arriba): mockup del PACK COMPLETO (el libro + los 5 bonos apilados: cuaderno impreso, hojas de trucos, póster). Es la imagen que hace entender de un vistazo que la oferta es un paquete, no un PDF suelto. -->
-<img alt="El Mástil al Descubierto: el libro y los cinco bonos" src="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436050880_chatgpt-image-22-ago-2026-07-00-12-p-m.webp"/>
+<img alt="Guitarra sin Misterio: el libro y los cinco bonos" src="https://pepetirolacteo-cell.github.io/entregas/img/mastil-revelado-es/1787436050880_chatgpt-image-22-ago-2026-07-00-12-p-m.webp"/>
 <div>
 <span class="offer-badge">El paquete completo</span>
-<h3>El Mástil al Descubierto + los 5 bonos</h3>
+<h3>Guitarra sin Misterio + los 5 bonos</h3>
 <p>225 páginas, 11 módulos y 55 ejercicios, más las seis herramientas que hacen que se te pegue. Todo digital, todo tuyo hoy.</p>
 </div>
 </div>
@@ -1526,7 +1526,7 @@ h3{font-size:26px}
      ============================================================ -->
 <footer class="foot">
 <div class="wrap">
-<p class="legal">© <span id="year"></span> El Mástil al Descubierto. Todos los derechos reservados.</p>
+<p class="legal">© <span id="year"></span> Guitarra sin Misterio. Todos los derechos reservados.</p>
 </div>
 </footer>
 <!-- ============================================================
