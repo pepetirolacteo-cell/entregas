@@ -1,36 +1,159 @@
-<!DOCTYPE html>
-<!--
-  Pagina di consegna PROVVISORIA (Fase 7 di /modelar).
-  Pubblicata su questa URL definitiva. In Fase 12 si sostituisce il CONTENUTO con l'indice reale.
-  L'URL non cambia mai.
--->
+<!doctype html>
 <html lang="it">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex, nofollow">
-<title>Il tuo accesso</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Il Tuo Ordine — La Schiscetta Felice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  html, body { margin:0; background:#FAF7F2; color:#2B2522; font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; }
-  .wrap { max-width:560px; margin:0 auto; padding:64px 20px; text-align:center; }
-  .badge { display:inline-block; font-size:12px; letter-spacing:.08em; text-transform:uppercase; background:#EFE6DA; padding:6px 12px; border-radius:99px; }
-  h1 { font-size:28px; line-height:1.2; margin:18px 0 10px; }
-  p { font-size:17px; line-height:1.55; color:#5B514B; }
-  .card { background:#fff; border:1px solid #EAE0D5; border-radius:16px; padding:24px 20px; margin-top:28px; }
-  .dot { display:inline-block; width:10px; height:10px; border-radius:50%; background:#1F9D55; margin-right:8px; animation:p 1.6s infinite; }
-  @keyframes p { 50% { opacity:.3; } }
-  @media (prefers-reduced-motion: reduce) { .dot { animation:none; } }
+:root{--bg:#FDF8F0;--paper:#ffffff;--ink:#1D3D3D;--ink-soft:#5a6b66;--accent:#4f8a26;--accent-dark:#1A3C34;--line:#EDE4D0;--yellow:#F5C518}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--ink)}
+body{font-family:'Inter',-apple-system,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:'Playfair Display',Georgia,serif;line-height:1.2}
+a{text-decoration:none;color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:32px 16px 60px}
+.top{text-align:center;padding:40px 0 32px}
+.badge{display:inline-block;background:#eaf3df;color:var(--accent);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:99px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}
+.top h1{font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:10px;color:var(--accent-dark)}
+.top p{color:var(--ink-soft);font-size:.95rem;max-width:480px;margin:0 auto}
+.label{font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.sec{margin-top:32px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:20px 22px;margin-bottom:12px;display:flex;gap:16px;align-items:center}
+.icon{flex:none;width:48px;height:48px;border-radius:12px;background:#f3f8ec;display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.info{flex:1}
+.info h3{font-size:1rem;margin-bottom:2px;color:var(--accent-dark)}
+.info p{font-size:.85rem;color:var(--ink-soft)}
+.dl a{display:inline-flex;align-items:center;gap:6px;background:var(--accent-dark);color:#fff;font-weight:700;font-size:.82rem;padding:10px 18px;border-radius:99px;letter-spacing:.02em}
+.dl a:hover{filter:brightness(1.15)}
+.next{text-align:center;margin-top:40px;background:#f3f8ec;border-radius:16px;padding:28px 20px}
+.next h3{font-size:1.1rem;margin-bottom:8px;color:var(--accent-dark)}
+.next p{font-size:.9rem;max-width:420px;margin:0 auto;color:var(--ink-soft)}
+.foot{text-align:center;color:var(--ink-soft);font-size:.8rem;padding:24px 0 0;border-top:1px solid var(--line);margin-top:48px}
+@media(max-width:520px){.card{flex-direction:column;text-align:center}.dl a{width:100%;justify-content:center}}
 </style>
 </head>
 <body>
-  <div class="wrap">
-    <span class="badge">Acquisto confermato</span>
-    <h1>La Schiscetta Felice · Oltre 200 Ricette Testate + 17 Guide Bonus Incluse</h1>
-    <p>Grazie! Stiamo finendo di preparare il tuo materiale. Questa stessa pagina si aggiornerà con tutti i tuoi file.</p>
-    <div class="card">
-      <p><span class="dot"></span><strong>Salva questo link</strong></p>
-      <p>È il tuo accesso a vita. Torna tra qualche ora e troverai il prodotto principale e tutti i bonus.</p>
-    </div>
-  </div>
+<div class="wrap">
+
+<div class="top">
+<span class="badge">&#10003; Ordine confermato</span>
+<h1>Il tuo materiale &egrave; pronto.</h1>
+<p>Scarica tutto qui sotto. Questi file sono tuoi per sempre &mdash; salvali sul tuo dispositivo per accedere in qualsiasi momento.</p>
+</div>
+
+<div class="sec">
+<div class="label">Prodotto principale</div>
+<div class="card">
+<div class="icon">📖</div>
+<div class="info"><h3>Guida La Schiscetta Felice</h3><p>24 ricette reali per colazione, merenda, pranzo e cena, con 4 menu settimanali pronti e lista della spesa.</p></div>
+<div class="dl"><a href="guida-la-schiscetta-felice.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="label">I tuoi 7 bonus</div>
+<div class="card">
+<div class="icon">🥪</div>
+<div class="info"><h3>Panini e Pizze senza Zucchero né Glutine</h3><p>Versioni sane dei piatti che i bambini amano di più, senza zucchero, senza glutine e pronte in pochi minuti.</p></div>
+<div class="dl"><a href="panini-e-pizze-senza-zucchero-ne-glutine.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🧊</div>
+<div class="info"><h3>Guida Pratica di Organizzazione e Congelamento delle Ricette</h3><p>Impara a preparare tutto in una volta e ad avere la settimana pronta in meno di 30 minuti.</p></div>
+<div class="dl"><a href="guida-pratica-di-organizzazione-e-congelamento-delle-ricette.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🌾</div>
+<div class="info"><h3>Ricette Speciali per Bambini con Allergie</h3><p>Ricette sicure, buone e adattate alle allergie più comuni: latte, uovo, soia e arachidi.</p></div>
+<div class="dl"><a href="ricette-speciali-per-bambini-con-allergie.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🍪</div>
+<div class="info"><h3>Ricette di Dolci Deliziosi e Sani</h3><p>Sostituisci i dolci di pacco con dolci sani fatti con ingredienti naturali, senza sensi di colpa.</p></div>
+<div class="dl"><a href="ricette-di-dolci-deliziosi-e-sani.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🍽️</div>
+<div class="info"><h3>Manuale Anti-Capricci a Tavola</h3><p>Tecniche semplici di abitudine alimentare con calma, già usate e approvate da mamme di bambini davvero difficili.</p></div>
+<div class="dl"><a href="manuale-anti-capricci-a-tavola.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🥤</div>
+<div class="info"><h3>Succhi Sani e Facili da Fare</h3><p>Ricette pratiche di succhi naturali, nutrienti e buoni per rallegrare la giornata di tuo figlio.</p></div>
+<div class="dl"><a href="succhi-sani-e-facili-da-fare.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🧺</div>
+<div class="info"><h3>Guida Pratica di Preparazione delle Merende</h3><p>Impara a montare merende varie, equilibrate e piene di gusto, senza perdere tempo a pensare cosa preparare ogni giorno.</p></div>
+<div class="dl"><a href="guida-pratica-di-preparazione-delle-merende.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+</div>
+
+<div class="sec">
+<div class="label">I tuoi 10 libri extra</div>
+<div class="card">
+<div class="icon">🥦</div>
+<div class="info"><h3>Verdure che Mangiano con Gusto</h3><p>Ricette che trasformano le verdure nel momento preferito del pasto, non in quello temuto.</p></div>
+<div class="dl"><a href="verdure-che-mangiano-con-gusto.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🛡️</div>
+<div class="info"><h3>Rafforza le Defese</h3><p>Ricette pensate per sostenere il sistema immunitario dei bambini con ingredienti naturali.</p></div>
+<div class="dl"><a href="rafforza-le-defese.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🍓</div>
+<div class="info"><h3>Frutta che Mangiano con Gusto</h3><p>Idee divertenti per far amare la frutta ai bambini, ogni giorno.</p></div>
+<div class="dl"><a href="frutta-che-mangiano-con-gusto.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">💰</div>
+<div class="info"><h3>Merende Economiche</h3><p>Spuntini sani e gustosi che non pesano sul budget familiare.</p></div>
+<div class="dl"><a href="merende-economiche.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🎒</div>
+<div class="info"><h3>Merende da Portare</h3><p>Idee pratiche per la scuola o le uscite, facili da trasportare e senza bisogno del frigo.</p></div>
+<div class="dl"><a href="merende-da-portare.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">💪</div>
+<div class="info"><h3>Per Crescere Forte</h3><p>Ricette ricche di proteine e nutrienti essenziali per lo sviluppo dei bambini.</p></div>
+<div class="dl"><a href="per-crescere-forte.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🧠</div>
+<div class="info"><h3>Per la Concentrazione a Scuola</h3><p>Ricette con ingredienti che favoriscono l'energia mentale e la concentrazione durante le ore di scuola.</p></div>
+<div class="dl"><a href="per-la-concentrazione-a-scuola.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">🍂</div>
+<div class="info"><h3>Ricette per Ogni Stagione</h3><p>Un piatto per ogni stagione, per cucinare sempre con ingredienti di stagione, più buoni e più economici.</p></div>
+<div class="dl"><a href="ricette-per-ogni-stagione.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">⚽</div>
+<div class="info"><h3>Energia per gli Sportivi</h3><p>Ricette pensate per i bambini attivi, che hanno bisogno di energia prima e dopo lo sport.</p></div>
+<div class="dl"><a href="energia-per-gli-sportivi.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+<div class="card">
+<div class="icon">👧</div>
+<div class="info"><h3>Ricette per Ogni Età (2-12)</h3><p>Come adattare le stesse ricette della guida alle diverse fasi di crescita del tuo bambino.</p></div>
+<div class="dl"><a href="ricette-per-ogni-eta-2-12.pdf" download>&#11015; Scarica PDF</a></div>
+</div>
+</div>
+
+<div class="next">
+<h3>Prossimo passo</h3>
+<p>Inizia dalla Guida principale e scegli una ricetta per oggi. Poi esplora i bonus in base a quello che ti serve di pi&ugrave; in questo momento.</p>
+</div>
+
+<div class="foot">
+<p>&copy; La Schiscetta Felice &middot; Solo per uso personale. Non &egrave; consentita la rivendita o ridistribuzione.</p>
+</div>
+
+</div>
 </body>
 </html>
