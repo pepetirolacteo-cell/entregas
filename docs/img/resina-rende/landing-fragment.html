@@ -1,0 +1,557 @@
+<style>
+  html, body { background: #FAF6EF; margin: 0; }
+  html.js .rr-reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  html.js .rr-reveal.rr-in { opacity: 1; transform: translateY(0); }
+  html:not(.js) .rr-reveal { opacity: 1; transform: none; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .rr-cta-pulse { animation: none !important; }
+  }
+
+  .rr-wrap {
+    --rr-bg: #FAF6EF;
+    --rr-bg-alt: #F3E8D2;
+    --rr-text: #2B2B2B;
+    --rr-accent: #D4A24C;
+    --rr-accent-dark: #1A6B5C;
+    --rr-border: #E8D2A0;
+    --rr-urgencia: #E07856;
+    --rr-exito: #1A6B5C;
+    --rr-exito-dark: #123F37;
+    --rr-jewel: #2E5EAA;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--rr-bg);
+    color: var(--rr-text);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  .rr-wrap * { box-sizing: border-box; }
+  .rr-wrap img { max-width: 100%; display: block; }
+  .rr-section { padding: 64px 20px; position: relative; }
+  .rr-inner { max-width: 1080px; margin: 0 auto; }
+  .rr-center { text-align: center; }
+  .rr-eyebrow-sm { display: inline-block; color: var(--rr-accent-dark); font-weight: 800; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+  .rr-h2 { font-size: 34px; line-height: 1.15; margin: 0 0 16px; font-weight: 800; }
+  .rr-p { font-size: 18px; line-height: 1.65; margin: 0 0 12px; }
+  .rr-muted { color: #5B5346; }
+  .rr-photo { border-radius: 22px; box-shadow: 0 20px 44px -16px rgba(43,33,24,.35); border: 6px solid #fff; }
+
+  .rr-dark { background: var(--rr-accent-dark); color: #fff; }
+  .rr-dark .rr-muted { color: #d7e8e2; }
+  .rr-olive { background: var(--rr-exito-dark); color: #fff; }
+  .rr-olive .rr-muted { color: #cfe3dc; }
+  .rr-alt { background: var(--rr-bg-alt); }
+
+  .rr-hero { padding: 44px 20px 48px; background: linear-gradient(180deg, var(--rr-bg-alt) 0%, var(--rr-bg) 60%); }
+  .rr-hero-inner { max-width: 600px; margin: 0 auto; text-align: center; }
+  .rr-eyebrow { display: inline-block; background: var(--rr-accent-dark); color: #fff; font-weight: 700; font-size: 13px; letter-spacing: .04em; padding: 6px 14px; border-radius: 999px; margin-bottom: 18px; text-transform: uppercase; }
+  .rr-hero h1 { font-size: 40px; line-height: 1.1; font-weight: 800; margin: 0 0 16px; }
+  .rr-hero .rr-sub { font-size: 18px; color: #5B5346; margin: 0 0 26px; }
+  .rr-hero-img-wrap { position: relative; margin: 0 auto 26px; max-width: 380px; }
+  .rr-hero-img-wrap::before { content: ""; position: absolute; inset: -8%; background: radial-gradient(60% 60% at 50% 45%, rgba(212,162,76,.35), transparent 70%); z-index: 0; filter: blur(4px); }
+  .rr-hero-img-wrap img { position: relative; z-index: 1; width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 20px; }
+  .rr-hero-bullets { list-style: none; padding: 0; margin: 22px auto 0; max-width: 320px; display: grid; gap: 10px; text-align: left; }
+  .rr-hero-bullets li { font-size: 15px; display: flex; gap: 8px; align-items: flex-start; }
+  .rr-hero-bullets .rr-check { color: var(--rr-exito); font-weight: 900; flex: none; }
+
+  .rr-stats-grid { max-width: 1080px; margin: 36px auto 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .rr-stat-card { background: #fff; border: 1px solid var(--rr-border); border-radius: 14px; padding: 18px 10px; text-align: center; }
+  .rr-stat-num { font-family: Georgia, 'Times New Roman', serif; font-size: 28px; font-weight: 700; color: var(--rr-accent-dark); line-height: 1; }
+  .rr-stat-label { font-size: 12px; color: #5B5346; margin-top: 6px; line-height: 1.3; }
+
+  .rr-btn { display: inline-block; background: var(--rr-urgencia); color: #fff; font-weight: 800; font-size: 18px; padding: 18px 34px; border-radius: 12px; text-decoration: none; border: none; cursor: pointer; box-shadow: 0 10px 24px rgba(224,120,86,.4); }
+  .rr-btn-arrow::after { content: " \2193"; }
+  .rr-cta-pulse { animation: rr-pulse 2.2s ease-in-out infinite; }
+  @keyframes rr-pulse { 0%,100% { transform: scale(1);} 50% { transform: scale(1.035);} }
+
+  .rr-pain-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 32px; }
+  .rr-pain-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); border-radius: 16px; padding: 24px; text-align: center; }
+  .rr-pain-card .rr-icon-circle { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,.16); display: flex; align-items: center; justify-content: center; font-size: 22px; margin: 0 auto 14px; }
+  .rr-pain-card h3 { font-size: 17px; margin: 0 0 8px; }
+  .rr-pain-card p { font-size: 14px; margin: 0; color: #d7e8e2; line-height: 1.55; }
+
+  .rr-pages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+  .rr-page-card img { border-radius: 16px; box-shadow: 0 16px 34px -14px rgba(43,33,24,.3); border: 5px solid #fff; aspect-ratio: 2/3; object-fit: cover; }
+  .rr-page-label { display: inline-block; background: var(--rr-accent-dark); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; margin: 14px 0 8px; }
+  .rr-page-card h3 { font-size: 17px; margin: 0 0 6px; }
+  .rr-page-card p { font-size: 14px; color: #5B5346; margin: 0; }
+
+  .rr-resource-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px; }
+  .rr-resource-card { background: #fff; border: 1px solid var(--rr-border); border-radius: 16px; padding: 22px; text-align: center; }
+  .rr-resource-card .rr-icon-circle { width: 44px; height: 44px; border-radius: 12px; background: var(--rr-bg-alt); display: flex; align-items: center; justify-content: center; font-size: 20px; margin: 0 auto 12px; }
+  .rr-resource-card h3 { font-size: 16px; margin: 0 0 6px; }
+  .rr-resource-card p { font-size: 14px; color: #5B5346; margin: 0; line-height: 1.5; }
+
+  .rr-banner { position: relative; border-radius: 26px; overflow: hidden; max-width: 1080px; margin: 0 auto; }
+  .rr-banner img { width: 100%; aspect-ratio: 21/9; object-fit: cover; }
+  .rr-banner-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(18,39,34,.74) 0%, rgba(18,39,34,.15) 55%, transparent 80%); display: flex; align-items: center; }
+  .rr-banner-text { color: #fff; max-width: 440px; padding: 0 0 0 40px; }
+  .rr-banner-text h3 { font-size: 25px; margin: 0 0 8px; line-height: 1.25; }
+  .rr-banner-text p { margin: 0; opacity: .92; font-size: 15px; }
+
+  .rr-split { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; align-items: center; }
+  .rr-split-media img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+  .rr-logro-list { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 14px; }
+  .rr-logro-list li { display: flex; gap: 14px; align-items: flex-start; }
+  .rr-logro-list .rr-icon { font-size: 24px; flex: none; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 12px; border: 1px solid var(--rr-border); }
+  .rr-logro-list strong { display: block; font-size: 16px; margin-bottom: 2px; }
+  .rr-logro-list span { font-size: 14px; color: #5B5346; }
+
+  .rr-ad-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 28px; }
+  .rr-ad-card { border-radius: 18px; padding: 26px; }
+  .rr-ad-antes { background: #F3DCD2; border: 1px solid #E3B6A4; }
+  .rr-ad-despues { background: #DCEAE4; border: 1px solid #B3D4C7; }
+  .rr-ad-card h3 { margin: 0 0 12px; font-size: 20px; color: #2B2B2B; }
+  .rr-ad-card ul { margin: 0; padding-left: 20px; font-size: 16px; line-height: 1.6; color: #2B2B2B; }
+
+  .rr-cost-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 32px; }
+  .rr-cost-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.2); border-radius: 18px; padding: 26px; }
+  .rr-cost-card h3 { margin: 0 0 12px; font-size: 19px; }
+  .rr-cost-card ul { margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.7; color: #cfe3dc; }
+
+  .rr-bonus-list { max-width: 680px; margin: 32px auto 0; text-align: left; display: grid; gap: 20px; }
+  .rr-bonus-card { background: #fff; border: 1px solid var(--rr-border); border-radius: 18px; overflow: hidden; }
+  .rr-bonus-cover { display: block; overflow: hidden; border-radius: 14px 14px 0 0; }
+  .rr-bonus-txt { padding: 20px 22px; }
+  .rr-bonus-txt b { display: block; font-size: 17px; line-height: 1.35; margin-bottom: 8px; }
+  .rr-bonus-txt > span { display: block; font-size: 14px; color: #5B5346; line-height: 1.55; }
+  .rr-bonus-valor { display: inline-block; margin-top: 10px; font-size: 14px; font-weight: 700; color: var(--rr-exito); }
+  .rr-bonus-valor s { color: #8a8273; font-weight: 400; margin-right: 4px; }
+  .rr-bonus-total { background: var(--rr-accent-dark); color: #fff; border: none; text-align: center; padding: 28px 22px; }
+  .rr-bonus-total b { color: #fff; font-size: 19px; }
+  .rr-bonus-total .rr-bonus-valor { color: #f6d98a; font-size: 16px; }
+  .rr-bonus-total .rr-bonus-valor s { color: #d7e8e2; }
+
+  .rr-quote-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 32px; }
+  .rr-quote-card { background: #fff; border: 1px solid var(--rr-border); border-radius: 18px; padding: 24px; text-align: left; }
+  .rr-quote-card .rr-stars { color: var(--rr-accent); font-size: 15px; margin-bottom: 10px; }
+  .rr-quote-card p { font-size: 15px; line-height: 1.6; color: #2B2B2B; margin: 0 0 12px; font-style: italic; }
+  .rr-quote-card b { font-size: 14px; color: var(--rr-accent-dark); }
+
+  .rr-offer { scroll-margin-top: 24px; }
+  .rr-offer-inner { max-width: 620px; margin: 0 auto; text-align: center; }
+  .rr-ribbon { display: inline-block; background: #fff; color: var(--rr-accent-dark); font-weight: 800; font-size: 13px; letter-spacing: .04em; padding: 6px 16px; border-radius: 999px; margin-bottom: 20px; text-transform: uppercase; }
+  .rr-price-box { background: #fff; color: var(--rr-text); border-radius: 20px; padding: 32px 24px; margin: 24px 0; }
+  .rr-savings { display: inline-block; background: var(--rr-urgencia); color: #fff; font-weight: 800; font-size: 14px; padding: 5px 12px; border-radius: 999px; margin-bottom: 10px; }
+  .rr-old-price { text-decoration: line-through; color: #8a8273; font-size: 20px; margin: 0; }
+  .rr-new-price { font-family: Georgia, 'Times New Roman', serif; font-size: 60px; font-weight: 700; margin: 4px 0; color: var(--rr-accent-dark); }
+  .rr-access { font-weight: 700; margin: 0 0 18px; }
+  .rr-bullets { text-align: left; list-style: none; padding: 0; margin: 0 0 22px; display: grid; gap: 10px; }
+  .rr-bullets li { font-size: 16px; }
+  .rr-bonus-box-offer { background: var(--rr-bg-alt); border: 2px dashed var(--rr-accent); border-radius: 14px; padding: 16px 18px; margin: 0 0 22px; text-align: left; }
+  .rr-bonus-box-offer b { display: block; font-size: 15px; margin-bottom: 8px; color: var(--rr-accent-dark); }
+  .rr-bonus-box-offer ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+  .rr-bonus-box-offer li { font-size: 14px; color: #5B5346; }
+  .rr-bonus-box-offer .rr-bonus-total-val { margin-top: 8px; font-size: 14px; font-weight: 700; color: var(--rr-exito); }
+  .rr-trust { margin-top: 18px; font-size: 13px; color: #e8f0ec; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  .rr-garantia-box { max-width: 640px; margin: 28px auto 0; background: #fff; border: 2px dashed var(--rr-exito); border-radius: 18px; padding: 30px; text-align: center; }
+  .rr-seal { width: 56px; height: 56px; border-radius: 50%; background: var(--rr-exito); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 26px; margin: 0 auto 12px; }
+
+  .rr-faq { max-width: 640px; margin: 32px auto 0; display: grid; gap: 10px; text-align: left; }
+  .rr-faq-item { background: #fff; border: 1px solid var(--rr-border); border-radius: 14px; overflow: hidden; }
+  .rr-faq-item summary { list-style: none; cursor: pointer; padding: 18px 50px 18px 20px; font-size: 16px; font-weight: 700; position: relative; }
+  .rr-faq-item summary::-webkit-details-marker { display: none; }
+  .rr-faq-item summary::after { content: "+"; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); font-size: 24px; font-weight: 400; color: var(--rr-accent-dark); transition: transform .25s ease; line-height: 1; }
+  .rr-faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  .rr-faq-item p { margin: 0; padding: 0 20px 18px; font-size: 15px; line-height: 1.55; color: #5B5346; }
+
+  .rr-final .rr-inner { max-width: 620px; }
+
+  .rr-stickybar { position: fixed; left: 0; right: 0; bottom: 0; background: #fff; border-top: 1px solid var(--rr-border); padding: 10px 16px; display: none; z-index: 40; box-shadow: 0 -8px 20px rgba(43,33,24,.12); }
+  .rr-stickybar .rr-btn { width: 100%; text-align: center; font-size: 16px; padding: 14px; }
+
+  @media (max-width: 860px) {
+    .rr-pain-grid { grid-template-columns: 1fr; }
+    .rr-pages-grid { grid-template-columns: 1fr; max-width: 320px; margin-left: auto; margin-right: auto; }
+    .rr-resource-grid { grid-template-columns: 1fr 1fr; }
+    .rr-split { grid-template-columns: 1fr; gap: 24px; }
+    .rr-cost-grid { grid-template-columns: 1fr; }
+    .rr-quote-grid { grid-template-columns: 1fr; }
+    .rr-banner-text { padding-left: 24px; max-width: 80%; }
+  }
+  @media (max-width: 520px) {
+    .rr-hero h1 { font-size: 28px; }
+    .rr-hero .rr-sub { font-size: 16px; }
+    .rr-h2 { font-size: 26px; }
+    .rr-resource-grid { grid-template-columns: 1fr 1fr; }
+    .rr-stats-grid { grid-template-columns: 1fr 1fr; }
+    .rr-ad-grid { grid-template-columns: 1fr; }
+    .rr-new-price { font-size: 48px; }
+    .rr-section { padding: 44px 16px; }
+    .rr-stickybar { display: block; }
+    .rr-wrap { padding-bottom: 70px; }
+    .rr-banner img { aspect-ratio: 4/5; }
+    .rr-banner-overlay { background: linear-gradient(180deg, rgba(18,39,34,.1) 30%, rgba(18,39,34,.82) 100%); align-items: flex-end; }
+    .rr-banner-text { padding: 0 20px 24px; max-width: 100%; }
+  }
+  @media (max-width: 380px) {
+    .rr-hero h1 { font-size: 24px; }
+    .rr-new-price { font-size: 40px; }
+    .rr-btn { font-size: 16px; padding: 15px 22px; }
+  }
+</style>
+<div class="rr-wrap">
+
+  <!-- HERO -->
+  <section class="rr-hero">
+    <div class="rr-hero-inner">
+      <span class="rr-eyebrow">Oferta de lançamento · Portugal</span>
+      <h1>Mais de 20.000 Mulheres Já Complementam o Rendimento com Artesanato em Resina</h1>
+      <p class="rr-sub">Trabalhas quando tu queres — durante a sesta, depois de deitar os miúdos, ao domingo com um café — e vendes peças que as pessoas pagam com gosto.</p>
+      <div class="rr-hero-img-wrap">
+        <img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/hero.png" alt="Mulher a fazer peças de resina em casa, pousos de copo azul-cobalto prontos ao lado">
+      </div>
+      <a href="#rr-offer" class="rr-btn rr-btn-arrow rr-cta-pulse">Quero começar</a>
+      <ul class="rr-hero-bullets">
+        <li><span class="rr-check">✓</span> Curso completo + 7 bónus incluídos</li>
+        <li><span class="rr-check">✓</span> Explicado do zero, sem jeito artístico necessário</li>
+        <li><span class="rr-check">✓</span> Pago único, acesso vitalício</li>
+      </ul>
+    </div>
+    <div class="rr-stats-grid">
+      <div class="rr-stat-card"><div class="rr-stat-num">12</div><div class="rr-stat-label">técnicas passo a passo</div></div>
+      <div class="rr-stat-card"><div class="rr-stat-num">7</div><div class="rr-stat-label">bónus de brinde</div></div>
+      <div class="rr-stat-card"><div class="rr-stat-num">60</div><div class="rr-stat-label">dias de garantia</div></div>
+      <div class="rr-stat-card"><div class="rr-stat-num">&#8734;</div><div class="rr-stat-label">acesso vitalício</div></div>
+    </div>
+  </section>
+
+  <!-- DOR -->
+  <section class="rr-section rr-dark">
+    <div class="rr-inner rr-center">
+      <span class="rr-eyebrow-sm" style="color:#f6d98a;">O caminho que a maioria evita</span>
+      <h2 class="rr-h2">Se andas a pensar num segundo emprego, há uma alternativa mais digna</h2>
+      <p class="rr-p rr-muted" style="max-width:560px;margin-left:auto;margin-right:auto;">Andar a ver anúncios de emprego à meia-noite, calcular se vale a pena sacrificar as noites por um salário mínimo, temer entrevistas humilhantes — não precisa de ser assim.</p>
+      <div class="rr-pain-grid">
+        <div class="rr-pain-card rr-reveal"><div class="rr-icon-circle">🌙</div><h3>Noites a ver anúncios</h3><p>À procura de um segundo trabalho que nunca compensa o sacrifício.</p></div>
+        <div class="rr-pain-card rr-reveal"><div class="rr-icon-circle">😔</div><h3>Entrevistas humilhantes</h3><p>Perguntam se aguentas ficar de pé 4 horas, com metade da tua idade a decidir.</p></div>
+        <div class="rr-pain-card rr-reveal"><div class="rr-icon-circle">😴</div><h3>Semanas de 56 horas</h3><p>O corpo e o espírito não aguentam — e o extra mal dá para as despesas.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MIRA POR DENTRO -->
+  <section class="rr-section">
+    <div class="rr-inner rr-center">
+      <span class="rr-eyebrow-sm">Olha por dentro</span>
+      <h2 class="rr-h2">Cada técnica, explicada em detalhe</h2>
+      <p class="rr-p rr-muted">Nada de imagens bonitas sem explicação. É assim que o curso é por dentro.</p>
+      <div class="rr-pages-grid">
+        <div class="rr-page-card rr-reveal">
+          <img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/preview-pagina-1.png" alt="Página: O Que É a Resina Epóxi">
+          <span class="rr-page-label">Página 3</span>
+          <h3>O Que É a Resina Epóxi</h3>
+          <p>Os fundamentos, sem complicação, para começares com confiança.</p>
+        </div>
+        <div class="rr-page-card rr-reveal">
+          <img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/preview-pagina-7.png" alt="Página: Técnica Joias em Resina">
+          <span class="rr-page-label">Página 9</span>
+          <h3>Técnica: Joias em Resina</h3>
+          <p>Passo a passo ilustrado para brincos e pulseiras com acabamento de joalharia.</p>
+        </div>
+        <div class="rr-page-card rr-reveal">
+          <img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/preview-pagina-12.png" alt="Página: Como Definir o Preço">
+          <span class="rr-page-label">Página 14</span>
+          <h3>Como Definir o Preço</h3>
+          <p>A fórmula para nunca mais venderes bonito mas barato demais.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUE INCLUI -->
+  <section class="rr-section rr-alt">
+    <div class="rr-inner rr-center">
+      <span class="rr-eyebrow-sm">O que inclui o teu curso</span>
+      <h2 class="rr-h2">Um caminho completo, de principiante a vendedora</h2>
+      <div class="rr-resource-grid">
+        <div class="rr-resource-card rr-reveal"><div class="rr-icon-circle">🧪</div><h3>Fundamentos</h3><p>Materiais, proporções e como misturar sem errar.</p></div>
+        <div class="rr-resource-card rr-reveal"><div class="rr-icon-circle">✨</div><h3>Técnica</h3><p>Evitar bolhas e conseguir um acabamento profissional.</p></div>
+        <div class="rr-resource-card rr-reveal"><div class="rr-icon-circle">💍</div><h3>Projetos</h3><p>Pousos, porta-chaves, joias e flores preservadas.</p></div>
+        <div class="rr-resource-card rr-reveal"><div class="rr-icon-circle">💶</div><h3>Vender</h3><p>Fotografar, onde publicar e como definir o preço certo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANNER TRANSICAO -->
+  <section class="rr-section" style="padding-top:0;">
+    <div class="rr-banner rr-reveal">
+      <img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/banner-transicao.png" alt="Mãos a verter resina num molde pequeno em casa, à noite">
+      <div class="rr-banner-overlay">
+        <div class="rr-banner-text">
+          <h3>Não precisas de um atelier</h3>
+          <p>É só a tua mesa de cozinha, um pouco de resina e 8 a 10 horas por semana.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- O QUE VAIS CONSEGUIR -->
+  <section class="rr-section">
+    <div class="rr-inner rr-split">
+      <div class="rr-split-text">
+        <span class="rr-eyebrow-sm">O resultado</span>
+        <h2 class="rr-h2">O que vais conseguir</h2>
+        <ul class="rr-logro-list">
+          <li><span class="rr-icon">🏡</span><div><strong>Rendimento sem sair de casa</strong><span>Transformar algumas horas livres numa fonte de rendimento real.</span></div></li>
+          <li><span class="rr-icon">💆</span><div><strong>Saúde mental que melhora</strong><span>Um tempo criativo e terapêutico só teu, enquanto ganhas dinheiro.</span></div></li>
+          <li><span class="rr-icon">💶</span><div><strong>Primeira venda em dias</strong><span>Um método comprovado para recuperares o investimento rapidamente.</span></div></li>
+          <li><span class="rr-icon">🎁</span><div><strong>Peças que as pessoas pedem</strong><span>De presentes a encomendas — um negócio que cresce com recomendações.</span></div></li>
+        </ul>
+      </div>
+      <div class="rr-split-media rr-reveal">
+        <img class="rr-photo" src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/split-logro.png" alt="Peças de resina embaladas prontas para vender, com caderno de encomendas ao lado">
+      </div>
+    </div>
+  </section>
+
+  <!-- ANTES / DESPOIS -->
+  <section class="rr-section rr-alt">
+    <div class="rr-inner">
+      <h2 class="rr-h2 rr-center">Antes e depois de seguires o curso</h2>
+      <div class="rr-ad-grid">
+        <div class="rr-ad-card rr-ad-antes rr-reveal">
+          <h3>🚫 Sem o curso</h3>
+          <ul>
+            <li>Candidatas-te a segundos empregos que te destroem o corpo</li>
+            <li>Peças que saem pegajosas ou cheias de bolhas</li>
+            <li>Não sabes o que cobrar nem onde vender</li>
+          </ul>
+        </div>
+        <div class="rr-ad-card rr-ad-despues rr-reveal">
+          <h3>✅ Com o curso</h3>
+          <ul>
+            <li>Rendimento extra a partir da tua mesa de cozinha</li>
+            <li>Peças com acabamento profissional, sem desperdício</li>
+            <li>Preço certo e um canal de venda que funciona</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTO -->
+  <section class="rr-section rr-olive">
+    <div class="rr-inner rr-center">
+      <span class="rr-eyebrow-sm" style="color:#9fd9c4;">Números simples</span>
+      <h2 class="rr-h2">Mesmo dinheiro, muito menos tempo</h2>
+      <div class="rr-cost-grid">
+        <div class="rr-cost-card rr-reveal">
+          <h3>😮‍💨 O caminho cansativo</h3>
+          <ul>
+            <li>Trabalho principal (40h) + segundo emprego (16h) = 56 horas por semana</li>
+            <li>5 horas de sono por noite, corpo ao limite</li>
+            <li>Um extra que mal cobre as despesas</li>
+          </ul>
+        </div>
+        <div class="rr-cost-card rr-reveal">
+          <h3>✨ O caminho da resina</h3>
+          <ul>
+            <li>8 a 10 horas por semana, quando tu decides</li>
+            <li>Zero desgaste físico, zero chefe a vigiar</li>
+            <li>Mesmo rendimento mensal, 75% menos tempo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BONUS -->
+  <section class="rr-section">
+    <div class="rr-inner rr-center">
+      <span class="rr-eyebrow-sm">Incluídos sem custo extra</span>
+      <h2 class="rr-h2">7 bónus que ninguém te conta</h2>
+      <p class="rr-p rr-muted" style="max-width:600px;margin-left:auto;margin-right:auto;">Cada bónus resolve um problema concreto que aparece assim que começas a vender.</p>
+      <div class="rr-bonus-list">
+        <div class="rr-bonus-card rr-reveal">
+          <div class="rr-bonus-cover"><img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/bonus-1-cover.png" alt="Guia de Vendas Copia-e-Cola"></div>
+          <div class="rr-bonus-txt">
+            <b>📱 BÓNUS 1 — Guia de Vendas Copia-e-Cola</b>
+            <span>Textos prontos a usar em redes sociais, grupos, Etsy e feiras — tiram-te da cabeça vazia à frente do ecrã.</span>
+            <span class="rr-bonus-valor">incluído</span>
+          </div>
+        </div>
+        <div class="rr-bonus-card rr-reveal">
+          <div class="rr-bonus-cover"><img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/bonus-2-cover.png" alt="Guia de Preços"></div>
+          <div class="rr-bonus-txt">
+            <b>💶 BÓNUS 2 — Guia de Preços</b>
+            <span>A fórmula exata para nunca mais cobrares só o custo dos materiais.</span>
+            <span class="rr-bonus-valor">incluído</span>
+          </div>
+        </div>
+        <div class="rr-bonus-card rr-reveal">
+          <div class="rr-bonus-cover"><img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/bonus-3-cover.png" alt="Resolução de Problemas"></div>
+          <div class="rr-bonus-txt">
+            <b>🔧 BÓNUS 3 — Resolução de Problemas</b>
+            <span>Bolhas, peças pegajosas ou turvas — a causa e a solução de cada uma.</span>
+            <span class="rr-bonus-valor">incluído</span>
+          </div>
+        </div>
+        <div class="rr-bonus-card rr-reveal">
+          <div class="rr-bonus-cover"><img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/bonus-4-cover.png" alt="Preservação de Flores em Resina"></div>
+          <div class="rr-bonus-txt">
+            <b>🌸 BÓNUS 4 — Preservação de Flores em Resina</b>
+            <span>Transforma flores de casamentos ou datas especiais em peças que duram para sempre.</span>
+            <span class="rr-bonus-valor">incluído</span>
+          </div>
+        </div>
+        <div class="rr-bonus-card rr-reveal">
+          <div class="rr-bonus-cover"><img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/bonus-5-cover.png" alt="Lista de Materiais e Fornecedores"></div>
+          <div class="rr-bonus-txt">
+            <b>🧰 BÓNUS 5 — Lista de Materiais e Fornecedores</b>
+            <span>O que comprar primeiro, por prioridade, sem gastar mais do que precisas.</span>
+            <span class="rr-bonus-valor">incluído</span>
+          </div>
+        </div>
+        <div class="rr-bonus-card rr-reveal">
+          <div class="rr-bonus-cover"><img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/bonus-6-cover.png" alt="Projetos Para Iniciantes"></div>
+          <div class="rr-bonus-txt">
+            <b>🎨 BÓNUS 6 — Projetos Para Iniciantes</b>
+            <span>5 projetos simples, pela ordem certa, para praticares sem te sentires perdida.</span>
+            <span class="rr-bonus-valor">incluído</span>
+          </div>
+        </div>
+        <div class="rr-bonus-card rr-reveal">
+          <div class="rr-bonus-cover"><img src="https://pepetirolacteo-cell.github.io/entregas/img/resina-rende/bonus-7-cover.png" alt="Certificado Digital"></div>
+          <div class="rr-bonus-txt">
+            <b>🏅 BÓNUS 7 — Certificado Digital</b>
+            <span>O teu certificado de conclusão, personalizado com o teu nome.</span>
+            <span class="rr-bonus-valor">incluído</span>
+          </div>
+        </div>
+        <div class="rr-bonus-card rr-bonus-total">
+          <div class="rr-bonus-txt">
+            <b>🎁 Os 7 vêm juntos</b>
+            <span style="color:#d7e8e2;">Todos incluídos no curso completo, sem custo extra.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTEMUNHOS -->
+  <section class="rr-section rr-alt">
+    <div class="rr-inner rr-center">
+      <span class="rr-eyebrow-sm">Já estão a vender</span>
+      <h2 class="rr-h2">O que dizem quem já começou</h2>
+      <div class="rr-quote-grid">
+        <div class="rr-quote-card rr-reveal">
+          <div class="rr-stars">★★★★★</div>
+          <p>"Depois de 24 anos em contabilidade, quase fui a uma entrevista para trabalhar à noite numa loja. Agora faço peças lindas em resina e ganho o triplo do que esse trabalho pagava."</p>
+          <b>Catarina P. — Compradora verificada</b>
+        </div>
+        <div class="rr-quote-card rr-reveal">
+          <div class="rr-stars">★★★★★</div>
+          <p>"Pela primeira vez em anos, tenho vontade de chegar à noite a casa. Não parece trabalho. Parece terapia que ainda por cima paga."</p>
+          <b>Marta G. — Compradora verificada</b>
+        </div>
+        <div class="rr-quote-card rr-reveal">
+          <div class="rr-stars">★★★★★</div>
+          <p>"Há quatro meses nem sabia por onde começar... agora faço peças que nunca pensei que conseguiria criar. Recomendo mesmo."</p>
+          <b>Daniela R. — Compradora verificada</b>
+        </div>
+        <div class="rr-quote-card rr-reveal">
+          <div class="rr-stars">★★★★★</div>
+          <p>"Já tinha a candidatura para um armazém preenchida. Uma amiga mostrou-me quanto ganhava com resina. Decidi experimentar primeiro — isto salvou-me a sanidade e as costas."</p>
+          <b>Sara T. — Compradora verificada</b>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFERTA -->
+  <section class="rr-section rr-dark rr-offer" id="rr-offer">
+    <div class="rr-offer-inner">
+      <span class="rr-ribbon">Oferta de lançamento</span>
+      <h2 class="rr-h2" style="color:#fff;">Resina Rende — Curso Completo</h2>
+      <div class="rr-price-box">
+        <span class="rr-savings">Desconto de lançamento</span>
+        <p class="rr-old-price">{{original_price}}</p>
+        <p class="rr-new-price">{{price}}</p>
+        <p class="rr-access">Pago único · Acesso vitalício</p>
+        <ul class="rr-bullets">
+          <li>✓ Curso completo, acesso imediato após a compra</li>
+          <li>✓ 12 técnicas passo a passo, do zero ao avançado</li>
+          <li>✓ Como fotografar, vender e definir o preço certo</li>
+          <li>✓ Explicado do zero, sem jeito artístico necessário</li>
+        </ul>
+        <div class="rr-bonus-box-offer">
+          <b>🎁 7 bónus incluídos</b>
+          <ul>
+            <li>📱 Guia de Vendas Copia-e-Cola</li>
+            <li>💶 Guia de Preços</li>
+            <li>🔧 Resolução de Problemas</li>
+            <li>🌸 Preservação de Flores em Resina</li>
+            <li>🧰 Lista de Materiais e Fornecedores</li>
+            <li>🎨 Projetos Para Iniciantes</li>
+            <li>🏅 Certificado Digital</li>
+          </ul>
+          <div class="rr-bonus-total-val">Tudo incluído, sem custo extra</div>
+        </div>
+        <a href="/checkout" class="rr-btn rr-cta-pulse" style="width:100%;">Quero o meu curso por {{price}}</a>
+      </div>
+      <div class="rr-trust">
+        <span>🔒 Pagamento seguro</span>
+        <span>⚡ Acesso imediato</span>
+        <span>🛡️ Garantia de 60 dias</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- GARANTIA -->
+  <section class="rr-section">
+    <div class="rr-inner rr-center">
+      <h2 class="rr-h2">Garantia de 60 dias</h2>
+      <div class="rr-garantia-box">
+        <div class="rr-seal">🛡️</div>
+        <p class="rr-p">Se em 60 dias sentires que o curso não é para ti, devolvemos o teu dinheiro. Sem perguntas, sem complicações.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="rr-section rr-alt">
+    <div class="rr-inner" style="max-width:720px;">
+      <h2 class="rr-h2 rr-center">Perguntas frequentes</h2>
+      <div class="rr-faq">
+        <details class="rr-faq-item"><summary>Quanto custam os materiais para começar?</summary><p>Podes começar com um investimento pequeno — o Bónus 5 mostra-te exatamente o que comprar primeiro, por prioridade.</p></details>
+        <details class="rr-faq-item"><summary>Preciso de um espaço de trabalho dedicado?</summary><p>Não. A tua mesa de cozinha, bem protegida, é suficiente para começares.</p></details>
+        <details class="rr-faq-item"><summary>A resina é tóxica?</summary><p>Como qualquer produto químico, pede cuidado básico: luvas, ventilação e seguir a ficha técnica. O curso explica tudo isto na primeira técnica.</p></details>
+        <details class="rr-faq-item"><summary>E se eu não tiver jeito artístico nenhum?</summary><p>O curso foi feito exatamente para quem nunca fez artesanato. Segues o passo a passo e o resultado sai profissional.</p></details>
+        <details class="rr-faq-item"><summary>E se tiver dúvidas depois de entrar no curso?</summary><p>Tens acesso a todo o material para reveres sempre que precisares, ao teu ritmo.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="rr-section rr-final">
+    <div class="rr-inner rr-center">
+      <h2 class="rr-h2">A tua renda extra pode começar esta semana</h2>
+      <p class="rr-p rr-muted">Todo o caminho organizado, passo a passo, para começares sem aprenderes tudo à custa de erros.</p>
+      <a href="#rr-offer" class="rr-btn rr-btn-arrow rr-cta-pulse">Quero começar</a>
+    </div>
+  </section>
+
+  <div class="rr-stickybar">
+    <a href="#rr-offer" class="rr-btn">Quero o meu curso agora</a>
+  </div>
+
+</div>
+<script>
+  document.documentElement.classList.add('js');
+  (function () {
+    try {
+      var els = document.querySelectorAll('.rr-reveal');
+      if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('rr-in'); }); return; }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('rr-in'); io.unobserve(en.target); } });
+      }, { threshold: 0.15 });
+      els.forEach(function (e) { io.observe(e); });
+      setTimeout(function () { els.forEach(function (e) { e.classList.add('rr-in'); }); }, 2500);
+    } catch (e) {
+      document.querySelectorAll('.rr-reveal').forEach(function (e) { e.classList.add('rr-in'); });
+    }
+  })();
+</script>
