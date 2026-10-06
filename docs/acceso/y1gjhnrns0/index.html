@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Lettura Anima Gemella</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#8800A3;--gold:#C9A84C;--dark:#1a0a20;--light:#FEF5FF;--text:#2d1b33;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Merriweather',serif;background:#fff;color:var(--text);line-height:1.9;}
+.container{max-width:720px;margin:0 auto;padding:0 20px;}
+
+/* HEADER */
+.hero{background:linear-gradient(135deg,#1a0a20 0%,#3d1252 40%,#8800A3 100%);padding:60px 20px 50px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 20%,rgba(201,168,76,.15) 0%,transparent 50%),radial-gradient(circle at 70% 80%,rgba(136,0,163,.3) 0%,transparent 50%);}
+.hero *{position:relative;z-index:1;}
+.hero img.logo{height:60px;margin-bottom:16px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));}
+.hero h1{font-family:'Cinzel',serif;color:#fff;font-size:clamp(28px,5vw,42px);line-height:1.2;margin-bottom:12px;text-shadow:0 2px 20px rgba(136,0,163,.5);}
+.hero .subtitle{font-family:'Merriweather',serif;color:rgba(255,255,255,.85);font-size:clamp(14px,2.5vw,18px);font-style:italic;font-weight:300;}
+.stars{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;animation:twinkle 3s infinite;}
+@keyframes twinkle{0%,100%{opacity:.2}50%{opacity:1}}
+
+/* NAV */
+.card-nav{background:var(--dark);padding:16px 20px;position:sticky;top:0;z-index:100;border-bottom:2px solid var(--gold);}
+.card-nav .container{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.card-nav .container::-webkit-scrollbar{display:none;}
+.nav-pill{font-family:'Cinzel',serif;font-size:11px;padding:6px 14px;border-radius:20px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.12);white-space:nowrap;cursor:pointer;text-decoration:none;transition:all .2s;}
+.nav-pill:hover,.nav-pill:focus{background:rgba(136,0,163,.3);color:#fff;border-color:var(--primary);}
+
+/* INTRO */
+.intro{padding:50px 20px;background:var(--light);}
+.intro h2{font-family:'Cinzel',serif;color:var(--primary);font-size:clamp(22px,4vw,30px);text-align:center;margin-bottom:24px;}
+.intro p{margin-bottom:16px;font-size:16px;}
+.intro .how-to{background:#fff;border:1px solid #e8d4ee;border-radius:16px;padding:24px;margin-top:24px;}
+.intro .how-to h3{font-family:'Cinzel',serif;color:var(--primary);margin-bottom:12px;font-size:18px;}
+.intro .how-to ol{padding-left:20px;}
+.intro .how-to li{margin-bottom:8px;font-size:15px;}
+
+/* CARD SECTION */
+.card-section{padding:50px 20px 60px;border-bottom:1px solid #f0e6f5;}
+.card-section:nth-child(even){background:#fdfaff;}
+.card-header{text-align:center;margin-bottom:32px;}
+.card-number{font-family:'Cinzel',serif;color:var(--gold);font-size:13px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px;}
+.card-title{font-family:'Cinzel',serif;color:var(--primary);font-size:clamp(24px,4vw,34px);margin-bottom:6px;}
+.card-keywords{font-style:italic;color:#8b6e96;font-size:14px;margin-bottom:20px;}
+.card-img-wrap{width:200px;height:320px;margin:0 auto 30px;border-radius:12px;overflow:hidden;box-shadow:0 12px 40px rgba(136,0,163,.25);border:3px solid var(--gold);}
+.card-img-wrap img{width:100%;height:100%;object-fit:cover;}
+.card-emoji{font-size:80px;margin:0 auto 24px;text-align:center;filter:drop-shadow(0 4px 8px rgba(0,0,0,.1));}
+.reading{max-width:620px;margin:0 auto;}
+.reading h3{font-family:'Cinzel',serif;color:var(--primary);font-size:18px;margin:28px 0 12px;padding-top:16px;border-top:1px solid #f0e6f5;}
+.reading h3:first-child{border-top:none;padding-top:0;}
+.reading p{margin-bottom:14px;font-size:16px;text-align:justify;}
+.reading .highlight{background:linear-gradient(to right,rgba(136,0,163,.08),transparent);border-left:3px solid var(--primary);padding:14px 18px;border-radius:0 8px 8px 0;margin:20px 0;font-style:italic;}
+
+/* ZODIAC */
+.zodiac-section{padding:50px 20px;background:linear-gradient(180deg,#1a0a20,#2d1245);color:#fff;}
+.zodiac-section h2{font-family:'Cinzel',serif;color:var(--gold);text-align:center;font-size:clamp(22px,4vw,30px);margin-bottom:32px;}
+.zodiac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;max-width:720px;margin:0 auto;}
+.zodiac-card{background:rgba(255,255,255,.06);border:1px solid rgba(201,168,76,.2);border-radius:12px;padding:18px;transition:transform .2s;}
+.zodiac-card:hover{transform:translateY(-2px);}
+.zodiac-card .sign-icon{font-size:28px;margin-bottom:6px;}
+.zodiac-card h3{font-family:'Cinzel',serif;color:var(--gold);font-size:16px;margin-bottom:8px;}
+.zodiac-card p{color:rgba(255,255,255,.8);font-size:14px;line-height:1.7;}
+
+/* CLOSING */
+.closing{padding:50px 20px;background:var(--light);text-align:center;}
+.closing h2{font-family:'Cinzel',serif;color:var(--primary);font-size:clamp(22px,4vw,28px);margin-bottom:20px;}
+.closing p{max-width:560px;margin:0 auto 14px;font-size:16px;}
+.closing .sign-off{font-family:'Cinzel',serif;color:var(--primary);font-size:20px;margin-top:28px;}
+
+/* FOOTER */
+footer{background:var(--dark);color:rgba(255,255,255,.5);text-align:center;padding:24px 20px;font-size:12px;font-family:'Inter',sans-serif;}
+
+@media(max-width:480px){
+  .hero{padding:40px 16px 36px;}
+  .card-section{padding:36px 16px 44px;}
+  .card-img-wrap{width:160px;height:260px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars" id="stars"></div>
+  <img class="logo" src="https://aekpgsbqjzqntlbucbts.supabase.co/storage/v1/object/public/store-resources/ee9dc4df-ce02-470f-b2f4-8dcaa940396d/1791242044857_logo.webp" alt="Società Spirituale">
+  <h1>Lettura Anima Gemella</h1>
+  <p class="subtitle">La tua guida completa ai Tarocchi dell'Amore</p>
+</div>
+
+<!-- NAV -->
+<nav class="card-nav">
+  <div class="container">
+    <a class="nav-pill" href="#amanti">Gli Amanti</a>
+    <a class="nav-pill" href="#stella">La Stella</a>
+    <a class="nav-pill" href="#sole">Il Sole</a>
+    <a class="nav-pill" href="#luna">La Luna</a>
+    <a class="nav-pill" href="#imperatrice">L'Imperatrice</a>
+    <a class="nav-pill" href="#asso">Asso di Coppe</a>
+    <a class="nav-pill" href="#due">Due di Coppe</a>
+    <a class="nav-pill" href="#temperanza">La Temperanza</a>
+    <a class="nav-pill" href="#forza">La Forza</a>
+    <a class="nav-pill" href="#ruota">La Ruota</a>
+  </div>
+</nav>
+
+<!-- INTRO -->
+<section class="intro">
+  <div class="container">
+    <h2>Benvenuta nella Tua Lettura Personale</h2>
+    <p>Questa lettura dei Tarocchi dell'Amore è stata creata appositamente per te, basandosi sulle energie che hai attirato durante il quiz. La carta che hai scelto non è stata una coincidenza: è stata un richiamo della tua anima, un messaggio dall'universo che ora sei pronta a ricevere.</p>
+    <p>Ogni carta racchiude un significato profondo sulla tua vita sentimentale, sul tipo di anima gemella che ti sta cercando, e sul percorso che dovrai intraprendere per riconoscerla quando apparirà davanti a te.</p>
+    <div class="how-to">
+      <h3>Come Leggere la Tua Guida</h3>
+      <ol>
+        <li><strong>Trova la tua carta</strong> — Scorri fino alla carta che hai scelto durante il quiz. Quella è la tua lettura principale.</li>
+        <li><strong>Leggi con calma</strong> — Ogni parola è stata scritta per te. Prenditi il tempo necessario, preferibilmente in un momento di quiete.</li>
+        <li><strong>Esplora le altre carte</strong> — Le altre carte ti offriranno prospettive complementari sul tuo cammino amoroso.</li>
+        <li><strong>Consulta il tuo segno</strong> — In fondo troverai un messaggio specifico per il tuo segno zodiacale.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 1: GLI AMANTI -->
+<section class="card-section" id="amanti">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano VI</div>
+      <h2 class="card-title">Gli Amanti</h2>
+      <div class="card-keywords">Unione · Scelta · Amore Divino</div>
+      <div class="card-img-wrap"><img src="img/gli-amanti.png" alt="Gli Amanti"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>Gli Amanti rappresentano la forma più pura di connessione tra due anime. Se questa carta ti ha chiamata, significa che l'universo sta già orchestrando l'incontro con la tua anima gemella. Non si tratta di un amore qualunque: è una connessione che trascende il tempo e lo spazio, un legame che le vostre anime hanno stretto molto prima di questa vita terrena.</p>
+      <p>Questa carta ti dice che sei pronta. Hai fatto il lavoro interiore necessario, anche se forse non te ne rendi conto. Le esperienze passate, anche quelle dolorose, ti hanno preparata per questo momento di apertura totale.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La persona destinata a te è qualcuno che riconoscerai a livello istintivo. Non sarà un fuoco d'artificio esplosivo — sarà piuttosto una sensazione di <em>ritorno a casa</em>. Quando i vostri sguardi si incroceranno, sentirai una familiarità inspiegabile, come se vi foste già conosciuti in un'altra dimensione.</p>
+      <div class="highlight">La tua anima gemella potrebbe presentarsi in un momento in cui non la stai cercando attivamente. Sarà proprio quando avrai smesso di inseguire l'amore che l'amore busserà alla tua porta.</div>
+      <p>Questa persona condivide con te valori profondi, anche se in superficie potreste sembrare molto diversi. È nella profondità delle conversazioni notturne, nei silenzi condivisi senza imbarazzo, che riconoscerai il legame.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>Nei prossimi mesi, presta attenzione ai segni: numeri ricorrenti (soprattutto l'11:11), sogni vividi in cui senti una presenza amorevole, e sincronicità che sembrano troppo precise per essere casuali. L'universo ti sta guidando, ma devi rimanere aperta e ricettiva.</p>
+      <p>Il consiglio più importante: non accontentarti di meno di quello che meriti. Gli Amanti ti ricordano che l'amore vero non richiede che tu rinunci a te stessa. Anzi, con la persona giusta, diventerai ancora più te stessa.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 2: LA STELLA -->
+<section class="card-section" id="stella">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano XVII</div>
+      <h2 class="card-title">La Stella</h2>
+      <div class="card-keywords">Speranza · Ispirazione · Destino Luminoso</div>
+      <div class="card-img-wrap"><img src="img/la-stella.png" alt="La Stella"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>La Stella è la carta della speranza rinnovata dopo un periodo di oscurità. Se ti ha chiamata, significa che stai emergendo da un ciclo di delusioni amorose o di solitudine che ti ha fatto dubitare dell'amore. Ma ora, una luce nuova sta sorgendo nel tuo cielo sentimentale.</p>
+      <p>Questa carta è tra le più potenti per la lettura dell'anima gemella: indica che il destino ha già scritto il vostro incontro nelle stelle. Non è questione di "se", ma di "quando".</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La persona che l'universo ha scelto per te è qualcuno che porta luce nella vita degli altri. Potrebbe essere un artista, un guaritore, qualcuno che lavora con le persone, o semplicemente una persona la cui gentilezza illumina ogni stanza in cui entra.</p>
+      <div class="highlight">La tua anima gemella ha attraversato un percorso di guarigione simile al tuo. Entrambi conoscete il dolore, ed è proprio questa comprensione reciproca che renderà il vostro legame indistruttibile.</div>
+      <p>Vi riconoscerete attraverso un senso di pace profonda. Dove altre relazioni portavano ansia e incertezza, questa porterà una calma che non hai mai provato prima. Sentirai di poter essere completamente vulnerabile senza paura.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>La Stella ti chiede di coltivare la fede — non in senso religioso, ma la fiducia profonda che tutto si sta muovendo nella giusta direzione. Quando i dubbi arrivano (e arriveranno), ricorda questa lettura. Ricorda che le stelle hanno parlato per te.</p>
+      <p>Presta attenzione ai sogni: la tua anima gemella potrebbe apparirti nei sogni prima ancora che nella realtà. Tieni un diario dei sogni accanto al letto e annota le immagini ricorrenti.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 3: IL SOLE -->
+<section class="card-section" id="sole">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano XIX</div>
+      <h2 class="card-title">Il Sole</h2>
+      <div class="card-keywords">Gioia · Vitalità · Amore Radioso</div>
+      <div class="card-img-wrap"><img src="img/il-sole.png" alt="Il Sole"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>Il Sole è la carta più luminosa e positiva dei Tarocchi. Se ti ha chiamata, il messaggio è chiaro: un amore pieno di gioia, risate e vitalità ti sta aspettando. Non un amore complicato o tormentato — un amore che ti farà sentire viva come non mai.</p>
+      <p>Il Sole porta con sé la promessa di chiarezza. Finalmente capirai perché le relazioni precedenti non hanno funzionato: dovevano farti spazio per qualcosa di molto più grande.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La tua anima gemella è una persona solare, ottimista, con un'energia contagiosa. Qualcuno che sa ridere di cuore, che affronta la vita con entusiasmo, e che ti farà riscoprire parti di te stessa che avevi dimenticato.</p>
+      <div class="highlight">Questo amore avrà una qualità quasi infantile nella sua purezza — non nel senso di immaturità, ma nella capacità di meravigliarsi, di giocare, di godersi i piccoli momenti senza pensare al domani.</div>
+      <p>Fisicamente, potresti riconoscere la tua anima gemella dal suo sorriso. Sarà un sorriso che ti scioglie il cuore, che ti fa sentire al sicuro, che ti dice "con me puoi essere te stessa".</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>Il Sole ti invita a uscire dalla tua zona di comfort. L'amore potrebbe trovarti in un contesto inaspettato: un viaggio, un nuovo hobby, un evento sociale a cui quasi non volevi andare. Dì "sì" alle opportunità, anche quando la voce interiore ti dice di restare nella tua routine.</p>
+      <p>Coltiva la tua gioia personale: l'anima gemella viene attratta dalla tua luce, non dalla tua mancanza. Più brilli da sola, più velocemente la troverai.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 4: LA LUNA -->
+<section class="card-section" id="luna">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano XVIII</div>
+      <h2 class="card-title">La Luna</h2>
+      <div class="card-keywords">Intuizione · Mistero · Connessione Profonda</div>
+      <div class="card-img-wrap"><img src="img/la-luna.png" alt="La Luna"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>La Luna parla il linguaggio dell'inconscio, dei sogni, delle emozioni più profonde. Se questa carta ti ha scelta, significa che la tua connessione con la tua anima gemella esiste già a livello energetico — forse nei sogni, forse nelle sensazioni inspiegabili che provi in certi momenti della giornata.</p>
+      <p>La Luna ti dice che non tutto deve essere razionale. Il tuo cuore sa cose che la tua mente non può ancora comprendere. Fidati di quelle sensazioni.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La persona destinata a te è qualcuno di profondamente intuitivo e sensibile. Potrebbe avere un interesse per la spiritualità, l'arte, la musica o qualsiasi forma di espressione che tocca l'anima. Non è una persona superficiale — cerca la verità in ogni cosa.</p>
+      <div class="highlight">La vostra connessione sarà telepatica. Vi capirete con uno sguardo, saprete cosa sta pensando l'altro senza parlare, e sognerete l'uno dell'altra anche prima di incontrarvi.</div>
+      <p>Questa relazione ti sfiderà a guardare le tue ombre — le paure, le insicurezze, i traumi non elaborati. Ma non per ferirti: per guarirti. La tua anima gemella sarà lo specchio che ti permette di vedere chi sei veramente.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>Nelle notti di luna piena, prenditi un momento per meditare. Chiudi gli occhi e invia un messaggio d'amore alla tua anima gemella, ovunque si trovi. A livello energetico, lo riceverà. Molte persone riportano di aver "sentito" la propria anima gemella per la prima volta durante una meditazione lunare.</p>
+      <p>Non avere fretta: la Luna ti insegna che i cicli hanno il loro ritmo. Il momento giusto arriverà, e quando arriverà, non avrai alcun dubbio.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 5: L'IMPERATRICE -->
+<section class="card-section" id="imperatrice">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano III</div>
+      <h2 class="card-title">L'Imperatrice</h2>
+      <div class="card-keywords">Abbondanza · Femminilità · Amore Fertile</div>
+      <div class="card-img-wrap"><img src="img/l-imperatrice.png" alt="L'Imperatrice"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>L'Imperatrice è la Madre dell'Amore nei Tarocchi. Se ti ha chiamata, il messaggio è potente: sei nella fase della tua vita in cui l'amore non solo arriverà, ma fiorirà in modo abbondante. Questa carta porta con sé la promessa di un amore ricco, nutriente, che cresce e si espande nel tempo.</p>
+      <p>L'Imperatrice ti ricorda il tuo valore. Sei degna di un amore che ti adora, che ti rispetta, che celebra la tua essenza femminile in tutte le sue sfumature.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La persona che l'universo sta preparando per te è qualcuno che ti farà sentire protetta e valorizzata. Qualcuno che vede la tua bellezza — non solo quella fisica, ma quella dell'anima — e che ne rimane incantato ogni giorno di più.</p>
+      <div class="highlight">Questa persona porta con sé un senso di stabilità e sicurezza. Con lei, sentirai che finalmente puoi abbassare le difese, smettere di fingere, e mostrare anche le parti di te che normalmente nascondi.</div>
+      <p>L'Imperatrice indica spesso un partner che desidera costruire qualcosa di concreto: una casa, una famiglia, un progetto di vita insieme. Non è un amore passeggero — è un amore che mette radici.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>Connettiti con la natura. Cammina a piedi nudi sull'erba, cura delle piante, passa del tempo all'aria aperta. L'Imperatrice ti dice che l'energia della terra ti aiuterà ad attrarre l'amore. Non è solo simbolico: quando siamo in armonia con la natura, la nostra energia si allinea con quella dell'abbondanza.</p>
+      <p>Cura te stessa come cureresti la persona che ami di più al mondo. Perché, in fondo, quella persona sei tu.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 6: ASSO DI COPPE -->
+<section class="card-section" id="asso">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano Minore</div>
+      <h2 class="card-title">Asso di Coppe</h2>
+      <div class="card-keywords">Nuovo Inizio · Emozione Pura · Dono Divino</div>
+      <div class="card-img-wrap"><img src="img/asso-di-coppe.png" alt="Asso di Coppe"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>L'Asso di Coppe è la carta del nuovo inizio emotivo per eccellenza. Se ti ha scelta, l'universo ti sta offrendo un calice traboccante d'amore — e tu devi solo avere il coraggio di prenderlo. Questa carta annuncia l'arrivo di un amore nuovo, fresco, che cancella le cicatrici del passato.</p>
+      <p>È un dono divino, letteralmente. L'Asso è la mano che scende dal cielo per offrirti qualcosa che non ti aspetti. L'amore arriverà come una sorpresa, quando meno te lo aspetti.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La persona destinata a te porta con sé un'energia di novità e freschezza. Potrebbe essere qualcuno che entra nella tua vita in modo completamente inaspettato — forse da una città diversa, da un contesto sociale diverso, o da un mondo che non conoscevi.</p>
+      <div class="highlight">Il primo incontro sarà memorabile. Non necessariamente per qualcosa di drammatico, ma per la sensazione che qualcosa di importante sta iniziando. Come la prima nota di una canzone che diventerà la colonna sonora della tua vita.</div>
+      <p>Questa persona ha un cuore aperto e generoso. Si innamorerà di te con una purezza disarmante, senza calcoli, senza giochi. E ti chiederà di fare lo stesso.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>L'Asso di Coppe ti chiede di lasciar andare il passato. Ogni rancore, ogni rimpianto, ogni "e se" che ancora porti con te è un peso che rallenta l'arrivo del nuovo amore. Scrivi una lettera a tutte le relazioni passate — non per inviarla, ma per liberare quelle energie.</p>
+      <p>Preparati al nuovo. Rinnova qualcosa nella tua vita: il guardaroba, la disposizione della casa, le tue abitudini mattutine. L'universo risponde alla tua intenzione di cambiamento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 7: DUE DI COPPE -->
+<section class="card-section" id="due">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano Minore</div>
+      <h2 class="card-title">Due di Coppe</h2>
+      <div class="card-keywords">Partnership · Reciprocità · Amore Equilibrato</div>
+      <div class="card-img-wrap"><img src="img/due-di-coppe.png" alt="Due di Coppe"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>Il Due di Coppe è la carta dell'unione perfetta — due persone che si incontrano in piena parità, offrendo e ricevendo amore in egual misura. Se ti ha scelta, il messaggio è che il tuo amore sarà basato sul rispetto reciproco, sull'equilibrio, sulla partnership vera.</p>
+      <p>Non più relazioni in cui dai tutto e ricevi poco, o in cui ti perdi nell'altro dimenticando te stessa. Il Due di Coppe promette un amore maturo, consapevole, dove entrambi crescono insieme.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La persona che l'universo ha in serbo per te è qualcuno che ti vede come una pari. Non vuole dominarti né essere dominato — vuole camminare al tuo fianco, mano nella mano, verso un futuro costruito insieme.</p>
+      <div class="highlight">Riconoscerai la tua anima gemella dalla sensazione di equilibrio: per la prima volta in una relazione, sentirai che dare e ricevere sono perfettamente bilanciati. Non dovrai mai chiederti "mi ama quanto lo amo io?"</div>
+      <p>Questa persona potrebbe entrare nella tua vita attraverso un contesto professionale, un progetto condiviso, o un interesse comune. Il Due di Coppe spesso indica che l'amore nasce dalla collaborazione e dalla stima reciproca.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>Lavora sulla tua autostima. Il Due di Coppe arriva solo quando sei pronta a ricevere amore senza sentirti in debito, e a darlo senza aspettarti nulla in cambio. Paradossalmente, è proprio quando smetti di tenere il conto che l'equilibrio si crea naturalmente.</p>
+      <p>Circondati di relazioni sane — amicizie, rapporti familiari — che riflettano il tipo di amore che desideri. L'universo ti darà di più di quello che già hai.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 8: LA TEMPERANZA -->
+<section class="card-section" id="temperanza">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano XIV</div>
+      <h2 class="card-title">La Temperanza</h2>
+      <div class="card-keywords">Pazienza · Armonia · Amore Divino</div>
+      <div class="card-img-wrap"><img src="img/la-temperanza.png" alt="La Temperanza"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>La Temperanza è la carta dell'angelo custode dell'amore. Se ti ha scelta, sappi che forze angeliche stanno lavorando dietro le quinte per portarti verso la tua anima gemella. Ogni "coincidenza" che hai vissuto ultimamente è stata orchestrata dall'alto.</p>
+      <p>Questa carta ti chiede pazienza — non la pazienza passiva dell'attesa, ma quella attiva della preparazione. Stai diventando la versione migliore di te stessa, e quando sarai pronta, l'amore arriverà con una grazia che ti lascerà senza fiato.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La persona destinata a te è qualcuno di spiritualmente evoluto, anche se potrebbe non definirsi "spirituale". Ha una calma interiore, una saggezza naturale, una capacità di vedere oltre le apparenze che ti affascinerà profondamente.</p>
+      <div class="highlight">Il vostro amore sarà un processo alchemico: due individui che, unendosi, creano qualcosa di completamente nuovo e superiore alla somma delle parti. Come l'angelo della Temperanza che mescola l'acqua tra due calici, anche voi mescolerete le vostre energie creando qualcosa di sacro.</div>
+      <p>Questa persona potrebbe avere una differenza d'età con te, o provenire da un background culturale diverso. La Temperanza ci ricorda che l'armonia nasce spesso dall'unione degli opposti.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>Pratica la moderazione in tutte le cose. La Temperanza ti chiede di trovare il tuo centro, di non oscillare tra estremi emotivi. Quando sei in equilibrio, diventi un magnete per l'amore autentico.</p>
+      <p>Un rituale potente: versa lentamente dell'acqua da un bicchiere all'altro, visualizzando l'energia dell'amore che scorre verso di te. Fallo ogni sera prima di dormire per 21 giorni.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 9: LA FORZA -->
+<section class="card-section" id="forza">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano XI</div>
+      <h2 class="card-title">La Forza</h2>
+      <div class="card-keywords">Coraggio · Passione · Amore Indomabile</div>
+      <div class="card-img-wrap"><img src="img/la-forza.png" alt="La Forza"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>La Forza è la carta del coraggio del cuore. Se ti ha chiamata, il messaggio è potente: l'amore che ti aspetta è un amore che richiede coraggio. Non perché sarà difficile, ma perché sarà così intenso, così trasformativo, che ti chiederà di abbandonare tutte le tue difese.</p>
+      <p>Questa carta ti dice che hai già la forza necessaria. Non la forza bruta, ma quella gentile — la forza di chi sa aprire il cuore anche dopo che è stato ferito, di chi sa fidarsi anche dopo essere stata tradita.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La persona destinata a te è qualcuno di intenso e appassionato. Ha una presenza magnetica, un'energia che si nota quando entra in una stanza. Ma sotto quella forza esteriore, c'è una dolcezza che mostra solo a poche persone — e tu sarai una di quelle.</p>
+      <div class="highlight">Questo amore sarà una danza tra forza e tenerezza. La tua anima gemella ti sfiderà a crescere, ti spingerà oltre i tuoi limiti, ma lo farà sempre con amore. E tu farai lo stesso per lei.</div>
+      <p>La connessione fisica sarà potente. La Forza indica un'attrazione che trascende il mentale — vi sentirete attratti a livello quasi magnetico, come se i vostri corpi si riconoscessero prima ancora delle vostre menti.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>La Forza ti chiede di affrontare le tue paure con dolcezza. Non combatterle — accogli, come la donna che accarezza il leone invece di temerlo. Ogni paura che superi con gentilezza è un passo verso il tuo grande amore.</p>
+      <p>Fai qualcosa che ti spaventa ogni settimana. Non deve essere qualcosa di enorme — anche solo parlare con uno sconosciuto, iscriverti a un corso, dire ciò che pensi veramente. Ogni atto di coraggio apre un po' di più la porta dell'amore.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CARD 10: LA RUOTA DELLA FORTUNA -->
+<section class="card-section" id="ruota">
+  <div class="container">
+    <div class="card-header">
+      <div class="card-number">Arcano X</div>
+      <h2 class="card-title">La Ruota della Fortuna</h2>
+      <div class="card-keywords">Destino · Cambiamento · Svolta Amorosa</div>
+      <div class="card-img-wrap"><img src="img/la-ruota.png" alt="La Ruota della Fortuna"></div>
+    </div>
+    <div class="reading">
+      <h3>Il Messaggio della Carta</h3>
+      <p>La Ruota della Fortuna è la carta del destino in movimento. Se ti ha scelta, il messaggio è inequivocabile: una grande svolta nella tua vita sentimentale è già in corso. La ruota sta girando, e sta girando a tuo favore. Quello che sembrava impossibile diventa non solo possibile, ma inevitabile.</p>
+      <p>Questa carta rappresenta i cicli della vita. Se hai attraversato un periodo di solitudine o di relazioni insoddisfacenti, sappi che quel ciclo sta per chiudersi. Un nuovo capitolo sta per aprirsi — e sarà il più bello della tua storia.</p>
+
+      <h3>La Tua Anima Gemella</h3>
+      <p>La Ruota indica che l'incontro con la tua anima gemella avverrà attraverso un colpo del destino — qualcosa che non avresti mai potuto pianificare. Un cambio di città, un evento casuale, un ritardo che ti porta nel posto giusto al momento giusto.</p>
+      <div class="highlight">La tua anima gemella potrebbe essere qualcuno che è già nella tua vita, ma che non hai mai visto sotto una luce romantica. La Ruota spesso rivela ciò che era sempre stato davanti ai nostri occhi.</div>
+      <p>Questa persona porterà un cambiamento radicale nella tua vita — non solo sentimentale, ma esistenziale. Con lei, tutto cambierà: la tua visione del futuro, le tue priorità, persino il tuo modo di vedere te stessa.</p>
+
+      <h3>Il Percorso Davanti a Te</h3>
+      <p>Accetta il cambiamento. La Ruota ti chiede di non aggrapparti a ciò che conosci, ma di fidarti del movimento della vita. Le cose che perdi fanno spazio a cose migliori — sempre.</p>
+      <p>Un rituale della Ruota: scrivi su un foglio tutto ciò che vuoi lasciar andare. Brucialo in sicurezza (una candela e un piatto resistente al calore sono sufficienti). Poi scrivi su un altro foglio ciò che desideri chiamare nella tua vita. Mettilo sotto il cuscino per una luna piena intera.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ZODIAC SECTION -->
+<section class="zodiac-section" id="zodiaco">
+  <div class="container">
+    <h2>Il Messaggio del Tuo Segno</h2>
+    <div class="zodiac-grid">
+      <div class="zodiac-card">
+        <div class="sign-icon">♈</div>
+        <h3>Ariete</h3>
+        <p>La tua anima gemella ammira il tuo fuoco interiore. Arriverà quando imparerai a rallentare: l'amore vero non si conquista — si accoglie.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♉</div>
+        <h3>Toro</h3>
+        <p>Il tuo bisogno di sicurezza verrà finalmente soddisfatto. La persona giusta ti offrirà una stabilità che non hai mai conosciuto, senza toglierti la libertà.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♊</div>
+        <h3>Gemelli</h3>
+        <p>La tua anima gemella parlerà la tua stessa lingua — letteralmente e metaforicamente. Vi perderete in conversazioni infinite che nutrono entrambe le anime.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♋</div>
+        <h3>Cancro</h3>
+        <p>Il tuo cuore sensibile troverà il suo rifugio sicuro. La tua anima gemella capirà le tue emozioni senza che tu debba spiegarle — e questo sarà il dono più grande.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♌</div>
+        <h3>Leone</h3>
+        <p>Meriti un amore che ti celebra, non uno che ti ridimensiona. La tua anima gemella sarà il tuo più grande fan — e tu sarai il suo.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♍</div>
+        <h3>Vergine</h3>
+        <p>Smetti di cercare la perfezione e trovaerai l'amore perfetto per te. La tua anima gemella amerà anche i tuoi difetti — li troverà adorabili.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♎</div>
+        <h3>Bilancia</h3>
+        <p>L'equilibrio che cerchi in ogni cosa lo troverai finalmente in una persona. La tua anima gemella completerà ogni tua mancanza con grazia naturale.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♏</div>
+        <h3>Scorpione</h3>
+        <p>L'intensità che porti dentro troverà la sua corrispondenza. La tua anima gemella non avrà paura della tua profondità — anzi, si immergerà con te.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♐</div>
+        <h3>Sagittario</h3>
+        <p>La tua anima gemella condividerà la tua sete di avventura. Insieme esplorerete non solo il mondo, ma le profondità dell'anima dell'altro.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♑</div>
+        <h3>Capricorno</h3>
+        <p>La tua dedizione sarà finalmente ricambiata. La tua anima gemella costruirà con te, mattone dopo mattone, qualcosa di eterno.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♒</div>
+        <h3>Acquario</h3>
+        <p>La tua unicità è il tuo superpotere nell'amore. La tua anima gemella ti amerà proprio per ciò che ti rende diversa da tutti gli altri.</p>
+      </div>
+      <div class="zodiac-card">
+        <div class="sign-icon">♓</div>
+        <h3>Pesci</h3>
+        <p>Il tuo amore senza confini troverà finalmente qualcuno degno di riceverlo. La tua anima gemella proteggerà la tua sensibilità come il tesoro che è.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING -->
+<section class="closing">
+  <div class="container">
+    <h2>Il Tuo Viaggio Continua</h2>
+    <p>Questa lettura non è una previsione — è una mappa. Le carte ti hanno mostrato la direzione, ma sei tu che devi camminare. Ogni giorno, con ogni scelta, con ogni atto d'amore verso te stessa, ti stai avvicinando alla tua anima gemella.</p>
+    <p>Ricorda: l'universo non ti avrebbe mostrato questa lettura se non fossi già pronta. Il fatto che tu sia qui, che tu abbia avuto il coraggio di cercare risposte, è già la prova che il tuo cuore è aperto.</p>
+    <p>La tua anima gemella ti sta cercando con la stessa intensità con cui tu stai cercando lei. Non arrenderti. Non smettere di credere. Il vostro incontro è scritto nelle stelle.</p>
+    <p class="sign-off">Con amore e luce,<br>Società Spirituale ✨</p>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 Società Spirituale · Tutti i diritti riservati</p>
+  <p style="margin-top:6px;">Questa lettura è strettamente personale e riservata.</p>
+</footer>
+
+<script>
+// Animated stars
+const starsEl=document.getElementById('stars');
+for(let i=0;i<40;i++){const s=document.createElement('div');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*3+'s';s.style.animationDuration=(2+Math.random()*3)+'s';starsEl.appendChild(s);}
+
+// Smooth scroll
+document.querySelectorAll('.nav-pill').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth',block:'start'});});});
+</script>
+</body>
+</html>
