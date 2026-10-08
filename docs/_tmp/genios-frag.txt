@@ -534,7 +534,7 @@ footer .fine{color:var(--paper-mute);font-size:.75rem;max-width:62ch;line-height
 </div>
 <h3>L'Esprit des 6 Plus Grands G&#233;nies</h3>
 <p class="sub">Collection num&#233;rique &#183; 6 livres en PDF</p>
-<div class="price"><span class="old" id="offer-old">{{original_price}}</span><span class="off">&#8722;{{savings}}</span></div>
+<div class="price"><span class="old" id="offer-old">{{original_price}}</span><span class="off">&#8722;57%</span></div>
 <div class="price-now"><span class="cur"></span><span class="val" id="offer-price">{{price}}</span></div>
 <p class="price-sub">Paiement unique &#183; <span id="offer-currency-note">EUR &#183; paiement unique</span></p>
 <ul class="incl-list">
