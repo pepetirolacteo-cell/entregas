@@ -1,0 +1,1242 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Win Them Back</title></head><body><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style>
+/* ===== CSS VARIABLES — DOBIERZ KOLORY PER LANDING ===== */
+/* Domyslna paleta: CHARCOAL + COPPER FIRE (meska sila, alfa, ogien)
+   Zmien hex-y na palete pasujaca do produktu+awatara+emocji.
+   NIE uzywaj automatycznego presetu D/M. */
+:root {
+  --accent: #8B4A5A;       /* dusty rose deep: gradient text, eyebrow, bordery */
+  --cta: #B76E79;          /* dusty rose: CTA buttony, ribbon, highlight */
+  --cta-hover: #8B4A5A;
+  --bg-alt: #FDF7F4;       /* cream blush: tlo sekcji alt */
+  --bg-warm: rgba(183, 110, 121, 0.08);  /* warm rose tint */
+  --bg-dark: #2A1820;      /* deep warm wine: tlo sekcji dark */
+  --text: #4A2C36;
+  --text-muted: #6B4750;
+  --font-heading: 'Playfair Display', 'Sora', serif;
+  --font-body: 'Nunito Sans', 'Segoe UI', sans-serif;
+  --font-accent: 'Space Grotesk', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { overflow-x: hidden; }
+img { max-width: 100%; height: auto; }
+a { text-decoration: none; color: inherit; }
+
+.eb-container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+.eb-container-narrow { max-width: 740px; margin: 0 auto; padding: 0 24px; }
+.eb-container-wide { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+.eb-section-white { background: #FFFFFF; padding: 80px 0; }
+.eb-section-alt { background: var(--bg-alt); padding: 80px 0; }
+.eb-section-warm { background: var(--bg-warm); padding: 80px 0; }
+.eb-section-dark {
+  background: var(--bg-dark);
+  background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
+  padding: 80px 0; color: #fff; position: relative; overflow: hidden;
+}
+.eb-section-dark::before {
+  content: ''; position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 400px;
+  background: radial-gradient(ellipse, rgba(183, 110, 121, 0.32) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
+}
+.eb-section-dark > .eb-container,
+.eb-section-dark > .eb-container-narrow,
+.eb-section-dark > .eb-container-wide { position: relative; z-index: 1; }
+
+h1 { font-family: var(--font-heading); font-size: 30px; font-weight: 700; line-height: 1.2; color: var(--text); }
+h2 { font-family: var(--font-heading); font-size: 26px; font-weight: 700; line-height: 1.3; color: var(--text); margin-bottom: 24px; }
+h3 { font-family: 'Sora', 'Segoe UI', sans-serif; font-size: 18px; font-weight: 600; line-height: 1.3; color: var(--text); margin-bottom: 8px; }
+p { margin-bottom: 20px; font-family: var(--font-body); font-size: 18px; line-height: 1.75; color: var(--text); }
+.eb-text-muted { font-size: 15px; color: var(--text-muted); }
+
+.eb-eyebrow { text-transform: uppercase; font-size: 13px; letter-spacing: 2.5px; color: var(--accent); font-family: var(--font-accent); font-weight: 700; margin-bottom: 8px; }
+
+.eb-divider-accent { width: 60px; height: 3px; background: var(--accent); border-radius: 2px; margin: 32px auto; }
+.eb-divider-dots { color: var(--accent); opacity: 0.4; font-size: 24px; letter-spacing: 12px; text-align: center; margin: 32px auto; }
+
+/* ===== CTA ===== */
+.eb-cta-btn {
+  display: inline-block; background: var(--cta); color: #FFFFFF !important;
+  font-family: var(--font-body); font-weight: 700; font-size: 16px;
+  text-transform: uppercase; letter-spacing: 0.5px; padding: 20px 48px;
+  border-radius: 50px; border: none; cursor: pointer; transition: all 0.25s ease;
+  text-align: center; min-width: 300px; text-decoration: none; position: relative; z-index: 1;
+}
+.eb-cta-btn::before {
+  content: ''; position: absolute; inset: -4px; border-radius: inherit;
+  background: var(--cta); opacity: 0; z-index: -1; animation: pulseRing 2.5s ease-out infinite;
+}
+@keyframes pulseRing { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(1.12); opacity: 0; } }
+.eb-cta-btn:hover { background: var(--cta-hover); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(183, 110, 121, 0.4); }
+.eb-cta-trust { font-size: 14px; color: var(--text-muted); margin-top: 12px; text-align: center; font-family: var(--font-body); }
+.eb-cta-trust i { color: var(--accent); margin-right: 4px; }
+
+.eb-social-proof { display: inline-flex; align-items: center; gap: 16px; font-size: 14px; font-family: var(--font-body); background: var(--bg-alt); border-radius: 50px; padding: 8px 20px; margin-bottom: 24px; }
+.eb-social-proof .eb-stars { color: #D08C9A; }
+.eb-social-proof .eb-rating { font-weight: 700; }
+
+.eb-split-card { width: 200px; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); background: #fff; display: inline-block; text-align: left; }
+.eb-split-card .eb-split-photo { width: 100%; height: 220px; object-fit: contain; object-position: center; display: block; }
+.eb-split-card .eb-split-info { padding: 14px; }
+.eb-split-card .eb-split-badge { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-accent); font-size: 10px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.eb-split-card .eb-split-badge i { font-size: 12px; }
+.eb-split-card .eb-split-name { font-family: var(--font-heading); font-size: 17px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 4px; }
+.eb-split-card .eb-split-sub { font-size: 12px; color: var(--text-muted); line-height: 1.4; margin-bottom: 0; }
+.eb-split-card .eb-split-stars { margin-top: 8px; color: #D08C9A; font-size: 12px; }
+.eb-split-card .eb-split-stars span { color: var(--text-muted); margin-left: 4px; }
+
+.eb-split-card-lg { width: 280px; border-radius: 20px; overflow: hidden; box-shadow: 0 12px 40px rgba(234, 88, 12, 0.25); background: #fff; text-align: left; }
+.eb-split-card-lg .eb-split-photo { width: 100%; height: 280px; object-fit: contain; object-position: center; display: block; }
+.eb-split-card-lg .eb-split-info { padding: 20px; }
+.eb-split-card-lg .eb-split-badge { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-accent); font-size: 11px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.eb-split-card-lg .eb-split-badge i { font-size: 13px; }
+.eb-split-card-lg .eb-split-name { font-family: var(--font-heading); font-size: 22px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 4px; }
+.eb-split-card-lg .eb-split-sub { font-size: 13px; color: var(--text-muted); line-height: 1.4; margin-bottom: 0; }
+.eb-split-card-lg .eb-split-stars { margin-top: 10px; color: #D08C9A; font-size: 13px; }
+.eb-split-card-lg .eb-split-stars span { color: var(--text-muted); margin-left: 4px; }
+
+.eb-mood-photo { width: 100%; max-width: 560px; margin: 32px auto; display: block; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+/* ===== OFFER BOX ===== */
+.eb-offer-box { background: #fff; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); border-top: 4px solid var(--accent); max-width: 640px; margin: 0 auto; padding: 40px; text-align: center; }
+.eb-offer-box .eb-price-old { font-size: 20px; color: #DC2626; text-decoration: line-through; margin-right: 12px; }
+.eb-offer-box .eb-price-new { font-family: var(--font-accent); font-size: 56px; font-weight: 700; color: #16A34A; }
+.eb-offer-box .eb-badge-save { display: inline-block; background: var(--cta); color: #fff; font-family: var(--font-accent); font-size: 14px; font-weight: 700; padding: 4px 14px; border-radius: 50px; margin-top: 8px; }
+.eb-offer-rating { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 16px; }
+.eb-offer-rating .eb-stars { color: #D08C9A; font-size: 16px; }
+.eb-offer-rating .eb-rating-text { font-size: 14px; color: var(--text-muted); font-family: var(--font-body); }
+.eb-benefit-list { list-style: none; text-align: left; margin: 24px 0; }
+.eb-benefit-list li { font-size: 17px; line-height: 1.9; margin-bottom: 12px; padding-left: 28px; position: relative; font-family: var(--font-body); }
+.eb-benefit-list li i { position: absolute; left: 0; top: 6px; color: #16A34A; font-size: 16px; }
+.eb-guarantee-line { font-size: 15px; color: var(--text-muted); margin: 8px 0; font-family: var(--font-body); }
+.eb-guarantee-line i { color: var(--accent); margin-right: 6px; }
+
+.eb-section-dark .eb-offer-box { background: rgba(255,255,255,0.06); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.08); border-top: 4px solid var(--accent); box-shadow: 0 8px 40px rgba(0,0,0,0.3); }
+.eb-section-dark .eb-offer-box .eb-price-new { color: #34D399; }
+.eb-section-dark .eb-benefit-list li { color: rgba(255,255,255,0.9); }
+.eb-section-dark .eb-benefit-list li i { color: #34D399; }
+.eb-section-dark .eb-guarantee-line { color: rgba(255,255,255,0.6); }
+.eb-section-dark .eb-offer-rating .eb-rating-text { color: rgba(255,255,255,0.6); }
+.eb-section-dark h2, .eb-section-dark h3 { color: #fff; }
+.eb-section-dark p { color: rgba(255,255,255,0.85); }
+.eb-section-dark .eb-eyebrow { color: #D08C9A; }
+.eb-section-dark .eb-offer-box .eb-price-old { color: #F87171; text-decoration: line-through; }
+.eb-section-dark .eb-offer-box p { color: rgba(255,255,255,0.7); }
+
+/* ===== TIMER ===== */
+.eb-timer-wrap { text-align: center; margin-bottom: 24px; }
+.eb-timer-label { font-family: var(--font-accent); font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); margin-bottom: 8px; }
+.eb-timer { display: inline-flex; gap: 8px; font-family: var(--font-accent); }
+.eb-timer-block { background: var(--bg-alt); border-radius: 10px; padding: 10px 14px; text-align: center; min-width: 60px; }
+.eb-timer-number { font-size: 28px; font-weight: 700; color: var(--accent); line-height: 1; }
+.eb-timer-unit { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 4px; }
+.eb-section-dark .eb-timer-block { background: rgba(255,255,255,0.08); }
+.eb-section-dark .eb-timer-number { color: #D08C9A; }
+.eb-section-dark .eb-timer-unit { color: rgba(255,255,255,0.5); }
+.eb-section-dark .eb-timer-label { color: #D08C9A; }
+
+.eb-results-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px; }
+.eb-result-card { background: var(--bg-alt); border-radius: 20px; padding: 28px; }
+.eb-result-card i { font-size: 28px; color: var(--accent); margin-bottom: 12px; display: block; }
+
+.eb-consequence-card { border-left: 4px solid #DC2626; padding: 20px 24px; background: #fff; border-radius: 0 12px 12px 0; box-shadow: 0 2px 12px rgba(0,0,0,0.04); margin-bottom: 16px; }
+.eb-consequence-card h3 { display: flex; align-items: center; gap: 10px; color: var(--text); margin-bottom: 8px; }
+.eb-consequence-card h3 i { color: #DC2626; font-size: 18px; }
+.eb-consequence-card p { margin-bottom: 0; font-size: 16px; color: var(--text-muted); }
+
+.eb-process-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 32px; }
+.eb-process-card { background: #fff; border-radius: 20px; padding: 28px; border-top: 3px solid var(--cta); box-shadow: 0 2px 20px rgba(183, 110, 121, 0.10); }
+.eb-process-card .eb-step-number { font-family: var(--font-accent); font-size: 36px; font-weight: 700; color: var(--accent); line-height: 1; margin-bottom: 8px; }
+
+.eb-chapter { background: #fff; border-radius: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); padding: 28px; margin-bottom: 32px; border: 1px solid rgba(0,0,0,0.05); position: relative; }
+.eb-section-white .eb-chapter { background: var(--bg-alt); box-shadow: none; border: 1px solid rgba(0,0,0,0.04); }
+.eb-chapter-header { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px; }
+.eb-chapter-number { font-family: var(--font-accent); font-size: 14px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+.eb-tools-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
+.eb-tool-item { display: flex; align-items: flex-start; gap: 12px; font-size: 16px; font-family: var(--font-body); }
+.eb-tool-item i { color: var(--accent); margin-top: 4px; flex-shrink: 0; }
+.eb-tool-item strong { color: var(--text); }
+.eb-chapter-closing { font-style: italic; color: var(--text-muted); font-size: 15px; margin-top: 16px; margin-bottom: 0; font-family: var(--font-body); }
+
+/* ===== BONUS CHAPTER ===== */
+.eb-chapter-bonus {
+  border: 3px solid var(--cta) !important;
+  background: linear-gradient(135deg, #FDF7F4 0%, #FAEEEA 100%) !important;
+  box-shadow: 0 12px 40px rgba(183, 110, 121, 0.20) !important;
+  position: relative;
+  margin-top: 48px !important;
+}
+.eb-chapter-bonus::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 6px;
+  background: linear-gradient(90deg, var(--cta), #D08C9A, var(--cta));
+  border-radius: 18px 18px 0 0;
+}
+.eb-chapter-bonus .eb-bonus-badge {
+  position: absolute; top: -18px; left: 24px;
+  background: var(--cta); color: #fff;
+  font-family: var(--font-accent); font-weight: 800; font-size: 13px;
+  padding: 8px 18px; border-radius: 8px;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  box-shadow: 0 6px 16px rgba(139, 74, 90, 0.5);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.eb-chapter-bonus .eb-bonus-ribbon {
+  position: absolute; top: -18px; right: 24px;
+  background: #DC2626; color: #fff;
+  font-family: var(--font-accent); font-weight: 700; font-size: 11px;
+  padding: 6px 14px; border-radius: 8px;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.35);
+  animation: pulseRibbon 2s ease-in-out infinite;
+}
+@keyframes pulseRibbon {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.eb-chapter-bonus .eb-chapter-number { color: var(--cta) !important; font-weight: 800 !important; }
+.eb-chapter-bonus .eb-bonus-value {
+  display: inline-block;
+  background: rgba(220, 38, 38, 0.1);
+  color: #DC2626;
+  font-family: var(--font-accent); font-weight: 700; font-size: 13px;
+  padding: 4px 12px; border-radius: 50px;
+  margin-bottom: 8px;
+}
+.eb-chapter-bonus .eb-chapter-closing {
+  background: rgba(183, 110, 121, 0.12);
+  border-left: 4px solid var(--cta);
+  padding: 14px 18px;
+  border-radius: 0 8px 8px 0;
+  font-style: normal;
+  color: var(--text);
+  font-weight: 600;
+}
+@media (max-width: 767px) {
+  .eb-chapter-bonus .eb-bonus-ribbon { right: 12px; top: -16px; font-size: 10px; padding: 5px 10px; }
+  .eb-chapter-bonus .eb-bonus-badge { left: 12px; top: -16px; font-size: 11px; padding: 6px 12px; }
+}
+
+.eb-id-card { border-left: 4px solid #DC2626; padding: 20px 24px; background: #fff; color: #18181B; border-radius: 0 12px 12px 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-bottom: 12px; display: flex; align-items: flex-start; gap: 14px; font-size: 17px; font-family: var(--font-body); line-height: 1.65; max-width: 740px; margin-left: auto; margin-right: auto; }
+.eb-id-card i { color: #DC2626; font-size: 20px; flex-shrink: 0; margin-top: 3px; }
+
+.eb-vision-text { font-family: var(--font-heading); font-size: 20px; line-height: 1.65; font-style: italic; }
+.eb-vision-text p { font-family: var(--font-heading); font-size: 20px; line-height: 1.65; font-style: italic; }
+
+.eb-comparison-box { background: var(--bg-alt); border-radius: 16px; padding: 28px 32px; margin: 32px 0; font-family: var(--font-body); }
+.eb-comparison-box .eb-comp-item { font-size: 17px; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.06); display: flex; align-items: center; gap: 12px; }
+.eb-comparison-box .eb-comp-item:last-child { border-bottom: none; }
+.eb-comparison-box .eb-comp-item i.fa-xmark { color: #DC2626; font-size: 18px; }
+.eb-comparison-box .eb-comp-item i.fa-check { color: #16A34A; font-size: 18px; }
+.eb-comparison-box .eb-comp-highlight { background: rgba(234, 88, 12, 0.1); border-radius: 10px; padding: 12px 16px; font-weight: 700; color: var(--cta); }
+
+.eb-guarantee-badge { width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #C9919D, #8B4A5A); border: 4px solid #6B3845; box-shadow: 0 4px 16px rgba(183, 110, 121, 0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; flex-shrink: 0; margin: 0 auto; }
+.eb-guarantee-badge-sm { width: 90px; height: 90px; border-width: 3px; }
+.eb-guarantee-badge .eb-gb-top { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; line-height: 1; }
+.eb-guarantee-badge .eb-gb-number { font-size: 32px; font-weight: 800; line-height: 1.1; }
+.eb-guarantee-badge-sm .eb-gb-number { font-size: 24px; }
+.eb-guarantee-badge .eb-gb-bottom { font-size: 11px; text-transform: uppercase; line-height: 1; }
+.eb-guarantee-badge-sm .eb-gb-top, .eb-guarantee-badge-sm .eb-gb-bottom { font-size: 9px; }
+
+.eb-offer-sidebyside { display: flex; align-items: center; gap: 40px; max-width: 900px; margin: 0 auto; }
+.eb-offer-sidebyside .eb-offer-mockup { flex: 0 0 35%; text-align: center; }
+.eb-offer-sidebyside .eb-offer-content { flex: 1; }
+
+.eb-discovery-card { max-width: 740px; margin: 0 auto 24px; padding: 32px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.06); }
+.eb-discovery-card:nth-child(odd) { background: #fff; }
+.eb-discovery-card:nth-child(even) { background: var(--bg-alt); }
+.eb-discovery-card .eb-disc-number { font-family: var(--font-accent); font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+.eb-discovery-card h3 { font-size: 20px; margin-bottom: 16px; }
+.eb-discovery-card p { font-size: 16px; margin-bottom: 14px; }
+.eb-discovery-card p:last-child { margin-bottom: 0; }
+
+.eb-faq-item { border-bottom: 1px solid rgba(0,0,0,0.08); }
+.eb-faq-question { font-family: var(--font-heading); font-size: 18px; font-weight: 600; padding: 20px 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; user-select: none; }
+.eb-faq-question .eb-faq-toggle { font-size: 24px; color: var(--accent); transition: transform 0.3s ease; flex-shrink: 0; margin-left: 16px; }
+.eb-faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+.eb-faq-answer-inner { padding: 0 0 20px; font-size: 16px; line-height: 1.75; color: var(--text-muted); font-family: var(--font-body); }
+.eb-faq-item.active .eb-faq-toggle { transform: rotate(45deg); }
+
+.eb-pull-quote { font-size: 22px; font-family: var(--font-heading); line-height: 1.5; border-left: 4px solid var(--accent); padding: 16px 0 16px 24px; margin: 32px 0; color: var(--text); font-style: italic; }
+
+.eb-highlight-box { background: var(--bg-alt); border-radius: 16px; padding: 24px 28px; margin: 28px 0; }
+.eb-highlight-box-warm { background: var(--bg-warm); border-radius: 16px; padding: 24px 28px; margin: 28px 0; }
+
+.eb-payment-icons { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 16px; flex-wrap: wrap; }
+.eb-payment-icons .eb-pay-label { font-size: 12px; color: var(--text-muted); width: 100%; text-align: center; margin-bottom: 4px; font-family: var(--font-body); }
+.eb-payment-icons i { font-size: 28px; color: var(--text-muted); }
+.eb-pay-badge { display: inline-block; padding: 4px 10px; border: 1px solid rgba(0,0,0,0.15); border-radius: 4px; font-size: 11px; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; font-family: var(--font-accent); }
+.eb-section-dark .eb-payment-icons i { color: rgba(255,255,255,0.5); }
+.eb-section-dark .eb-pay-badge { border-color: rgba(255,255,255,0.2); color: rgba(255,255,255,0.5); }
+.eb-section-dark .eb-pay-label { color: rgba(255,255,255,0.4); }
+
+.eb-gradient-text { background: linear-gradient(135deg, #B76E79, #8B4A5A); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; display: inline-block; }
+.eb-hero-accent { background: linear-gradient(135deg, #B76E79, #8B4A5A); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; display: inline-block; }
+
+.eb-value-stack { max-width: 640px; margin: 0 auto 32px; text-align: left; }
+.eb-value-stack-item { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: var(--font-body); font-size: 16px; line-height: 1.65; color: rgba(255,255,255,0.85); }
+.eb-value-stack-item:last-child { border-bottom: none; }
+.eb-value-stack-item i { color: #34D399; margin-top: 4px; flex-shrink: 0; font-size: 15px; }
+.eb-value-stack-total { max-width: 640px; margin: 0 auto 40px; text-align: center; padding: 24px; background: rgba(255,255,255,0.06); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); }
+.eb-value-stack-total .eb-vs-old { font-size: 22px; color: #F87171; text-decoration: line-through; font-family: var(--font-accent); }
+.eb-value-stack-total .eb-vs-new { font-size: 42px; font-weight: 700; color: #34D399; font-family: var(--font-accent); display: block; margin-top: 4px; }
+.eb-value-stack-total .eb-vs-label { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.5); font-family: var(--font-accent); margin-bottom: 8px; }
+
+.eb-fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+.eb-fade-in.eb-visible { opacity: 1; transform: translateY(0); }
+
+/* ===== STICKY TOP BAR ===== */
+.eb-top-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 9998; background: var(--bg-dark); color: #fff; padding: 0 16px; display: flex; align-items: center; justify-content: center; gap: 18px; flex-wrap: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.25); border-bottom: 2px solid var(--cta); font-family: var(--font-body); height: 56px; }
+.eb-top-bar__label { font-family: var(--font-accent); font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #D08C9A; font-weight: 700; white-space: nowrap; }
+.eb-top-bar__timer { display: inline-flex; gap: 4px; font-family: var(--font-accent); font-weight: 700; font-size: 15px; color: #fff; align-items: center; }
+.eb-top-bar__timer span.t-box { background: rgba(183,110,121,0.22); padding: 4px 7px; border-radius: 6px; min-width: 32px; text-align: center; }
+.eb-top-bar__cta { background: var(--cta); color: #fff !important; font-family: var(--font-body); font-weight: 700; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; padding: 9px 18px !important; border-radius: 50px; text-decoration: none; transition: background 0.2s; cursor: pointer; white-space: nowrap; min-width: unset !important; width: auto !important; line-height: 1.2; }
+.eb-top-bar__cta:hover { background: var(--cta-hover); }
+.eb-top-bar__cta::before { display: none !important; }
+body { padding-top: 56px; }
+@media (max-width: 767px) {
+  .eb-top-bar { padding: 0 10px; gap: 8px; height: 48px; border-bottom-width: 1px; }
+  .eb-top-bar__label { display: none; }
+  .eb-top-bar__timer { font-size: 13px; gap: 3px; }
+  .eb-top-bar__timer span.t-box { padding: 2px 6px; min-width: 24px; font-size: 12px; line-height: 1.3; }
+  .eb-top-bar__cta { font-size: 11px !important; padding: 7px 14px !important; }
+  body { padding-top: 48px; }
+}
+@media (max-width: 380px) {
+  .eb-top-bar { gap: 6px; padding: 0 8px; }
+  .eb-top-bar__timer { font-size: 12px; }
+  .eb-top-bar__timer span.t-box { padding: 2px 5px; min-width: 22px; font-size: 11px; }
+  .eb-top-bar__cta { font-size: 10px !important; padding: 6px 11px !important; letter-spacing: 0.3px; }
+}
+
+/* ===== CHAPTERS PREVIEW LIST ===== */
+.eb-preview-list { max-width: 720px; margin: 0 auto 48px; padding: 28px 32px; background: var(--bg-warm); border-radius: 20px; border-left: 4px solid var(--cta); }
+.eb-preview-list h3 { font-family: var(--font-heading); font-size: 18px; margin-bottom: 18px; color: var(--text); }
+.eb-preview-list-item { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.06); font-size: 16px; line-height: 1.65; font-family: var(--font-body); color: var(--text); }
+.eb-preview-list-item:last-child { border-bottom: none; }
+.eb-preview-list-item i { color: var(--cta); font-size: 14px; margin-top: 5px; flex-shrink: 0; }
+.eb-preview-list-item strong { color: var(--accent); font-weight: 700; }
+.eb-preview-list-item .eb-pl-tag { display: inline-block; font-size: 12px; color: var(--cta); font-family: var(--font-accent); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-left: 4px; }
+@media (max-width: 767px) {
+  .eb-preview-list { padding: 20px 18px; }
+  .eb-preview-list-item { font-size: 14px; }
+}
+
+/* ===== CHAPTER SUBTITLE ===== */
+.eb-chapter-subtitle { font-size: 15px; color: var(--text-muted); margin-bottom: 0; font-family: var(--font-body); line-height: 1.55; }
+
+/* ===== OBJECTION BREAKER ===== */
+.eb-objection-box { max-width: 720px; margin: 0 auto; padding: 32px 36px; background: var(--bg-alt); border-radius: 20px; border-top: 4px solid var(--cta); }
+.eb-objection-box p { font-size: 17px; line-height: 1.75; margin-bottom: 16px; }
+.eb-objection-box p:last-child { margin-bottom: 0; }
+.eb-objection-box p strong { color: var(--accent); }
+
+/* ===== P.S. SECTIONS ===== */
+.eb-ps-section { background: #FFFFFF; padding: 60px 0; border-top: 1px solid rgba(0,0,0,0.06); }
+.eb-ps-section .eb-container-narrow { max-width: 640px; }
+.eb-ps-label { font-family: var(--font-heading); font-size: 24px; font-weight: 800; color: var(--text); margin-bottom: 20px; }
+.eb-ps-section p { font-size: 17px; line-height: 1.75; color: var(--text); margin-bottom: 18px; }
+.eb-ps-section p:last-child { margin-bottom: 0; }
+.eb-ps-section a.eb-ps-link { color: var(--cta); text-decoration: underline; font-weight: 600; cursor: pointer; }
+
+@media (min-width: 768px) {
+  h1 { font-size: 42px; }
+  h2 { font-size: 36px; }
+  h3 { font-size: 20px; }
+  .eb-section-white, .eb-section-alt, .eb-section-warm, .eb-section-dark { padding: 100px 0; }
+  .eb-results-grid { grid-template-columns: 1fr 1fr; }
+  .eb-process-grid { grid-template-columns: 1fr 1fr; }
+  .eb-tools-grid { grid-template-columns: 1fr 1fr 1fr; }
+  .eb-cta-btn { min-width: 380px; }
+  .eb-vision-text, .eb-vision-text p { font-size: 22px; }
+}
+@media (min-width: 1024px) {
+  h1 { font-size: 48px; letter-spacing: -0.02em; }
+  .eb-results-grid { grid-template-columns: 1fr 1fr 1fr; }
+}
+@media (max-width: 767px) {
+  .eb-section-white, .eb-section-alt, .eb-section-warm, .eb-section-dark { padding: 48px 0; }
+  .eb-hero-section { padding-top: 16px !important; padding-bottom: 24px !important; }
+  .eb-hero-section h1 { font-size: 22px; line-height: 1.25; margin-bottom: 12px !important; }
+  .eb-hero-section .eb-author-block { margin-bottom: 14px !important; gap: 9px !important; padding: 4px 12px 4px 4px !important; flex-direction: row !important; align-items: center !important; text-align: left !important; }
+  .eb-hero-section .eb-author-block img { width: 36px !important; height: 36px !important; }
+  .eb-hero-section .eb-author-block span { font-size: 12px !important; text-align: left !important; line-height: 1.25 !important; }
+  .eb-hero-section .eb-author-block i.fa-circle-check { font-size: 14px !important; }
+  .eb-hero-section > .eb-container-narrow > p:not(.eb-eyebrow) { font-size: 15px !important; line-height: 1.55 !important; margin-bottom: 18px !important; text-align: center !important; }
+  .eb-hero-section h1 { font-size: 21px !important; line-height: 1.3 !important; }
+  .eb-hero-section img[alt*="Hero"] { max-width: 220px !important; margin-bottom: 0 !important; }
+  .eb-hero-section .eb-fade-in[style*="margin-bottom: 18px"] { margin-bottom: 14px !important; }
+  .eb-container, .eb-container-narrow, .eb-container-wide { padding: 0 16px; }
+  h1 { font-size: 22px; line-height: 1.3; }
+  h2 { font-size: 23px; margin-bottom: 16px; }
+  h3 { font-size: 17px; }
+  p { font-size: 16px; }
+  .eb-cta-btn { width: 100%; padding: 18px 24px; min-width: unset; font-size: 15px; }
+  .eb-social-proof { font-size: 12px; gap: 10px; padding: 6px 14px; flex-wrap: wrap; justify-content: center; }
+  .eb-split-card { width: 180px; }
+  .eb-split-card .eb-split-photo { height: 200px; }
+  .eb-split-card-lg { width: 220px; }
+  .eb-split-card-lg .eb-split-photo { height: 240px; }
+  .eb-split-card-lg .eb-split-name { font-size: 18px; }
+  .eb-offer-box { padding: 24px 16px; border-radius: 16px; }
+  .eb-offer-box .eb-price-new { font-size: 40px; }
+  .eb-offer-box .eb-price-old { font-size: 16px; }
+  .eb-benefit-list li { font-size: 15px; line-height: 1.7; margin-bottom: 10px; padding-left: 26px; }
+  .eb-benefit-list li i { font-size: 14px; top: 4px; }
+  .eb-offer-sidebyside { flex-direction: column; gap: 24px; }
+  .eb-offer-sidebyside .eb-offer-mockup { flex: unset; }
+  .eb-id-card { font-size: 15px; padding: 16px 18px; gap: 10px; }
+  .eb-consequence-card { padding: 16px 18px; }
+  .eb-chapter { padding: 20px; }
+  .eb-chapter-header { flex-direction: column; gap: 12px; }
+  .eb-result-card { padding: 20px; }
+  .eb-process-card { padding: 20px; }
+  .eb-discovery-card { padding: 24px 20px; }
+  .eb-comparison-box { padding: 20px 18px; }
+  .eb-pull-quote { font-size: 18px; padding: 12px 0 12px 18px; }
+  .eb-guarantee-badge { width: 90px; height: 90px; border-width: 3px; }
+  .eb-guarantee-badge .eb-gb-number { font-size: 24px; }
+  .eb-guarantee-badge .eb-gb-top, .eb-guarantee-badge .eb-gb-bottom { font-size: 9px; }
+  .eb-timer-number { font-size: 22px; }
+  .eb-timer-block { min-width: 50px; padding: 8px 10px; }
+  .eb-vision-text, .eb-vision-text p { font-size: 18px; }
+}
+
+.eb-sticky-cta { display: none; }
+@media (max-width: 767px) {
+  .eb-sticky-cta {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+    background: rgba(15, 23, 42, 0.97); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    padding: 12px 16px; align-items: center; justify-content: space-between; gap: 12px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.2); border-top: 1px solid rgba(255,255,255,0.08);
+    transform: translateY(100%); transition: transform 0.35s ease;
+  }
+  .eb-sticky-cta.eb-sticky-visible { transform: translateY(0); }
+  .eb-sticky-cta .eb-sticky-price { font-family: var(--font-accent); color: #fff; white-space: nowrap; }
+  .eb-sticky-cta .eb-sticky-price .eb-sp-old { font-size: 13px; color: #F87171; text-decoration: line-through; display: block; line-height: 1; }
+  .eb-sticky-cta .eb-sticky-price .eb-sp-new { font-size: 22px; font-weight: 700; color: #34D399; line-height: 1.1; }
+  .eb-sticky-cta .eb-sticky-btn {
+    flex: 1; background: var(--cta); color: #fff; font-family: var(--font-body); font-weight: 700;
+    font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; padding: 14px 20px;
+    border-radius: 50px; border: none; cursor: pointer; text-align: center; text-decoration: none;
+  }
+}
+
+.eb-ch-badge { width: 80px; min-width: 80px; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 14px rgba(0,0,0,0.12); position: relative; flex-shrink: 0; }
+.eb-ch-badge .eb-ch-photo { width: 100%; height: 100px; object-fit: cover; display: block; }
+.eb-ch-badge .eb-ch-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%); padding: 24px 8px 8px; text-align: center; }
+.eb-ch-badge .eb-ch-num { font-family: var(--font-accent); font-size: 22px; font-weight: 700; color: #fff; text-shadow: 0 2px 6px rgba(0,0,0,0.5); line-height: 1; }
+
+/* ===== UPSELL POPUP ===== */
+.eb-popup-overlay { display: none; position: fixed; inset: 0; z-index: 99999; background: rgba(0,0,0,0.7); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); justify-content: center; align-items: center; padding: 20px; }
+.eb-popup-overlay.eb-popup-active { display: flex; }
+.eb-popup-box { background: #fff; border-radius: 16px; max-width: 470px; width: 100%; max-height: 94vh; overflow-y: auto; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.4); animation: ebPopIn 0.3s ease; padding: 44px 26px 22px; }
+@keyframes ebPopIn { from { opacity: 0; transform: scale(0.92) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+.eb-popup-close { position: absolute; top: 10px; right: 10px; width: 32px; height: 32px; border-radius: 50%; background: #18181B; color: #fff; border: none; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.eb-popup-close:hover { background: #404040; }
+.eb-popup-framing { font-family: var(--font-heading); font-size: 15.5px; font-weight: 700; color: #18181B; text-align: center; line-height: 1.35; margin-bottom: 6px; padding-right: 28px; }
+.eb-popup-headline { font-family: var(--font-accent); font-size: 19px; font-weight: 700; color: #16A34A; text-align: center; line-height: 1.3; margin-bottom: 3px; }
+.eb-popup-oldprice { font-family: var(--font-body); font-size: 12.5px; color: #71717A; text-align: center; margin-bottom: 10px; }
+.eb-popup-oldprice s { color: #DC2626; }
+.eb-popup-img { display: flex; justify-content: center; align-items: center; margin-bottom: 10px; }
+.eb-popup-img img { max-height: 130px; }
+.eb-popup-body { font-family: var(--font-body); font-size: 13.5px; color: #374151; text-align: center; line-height: 1.55; margin-bottom: 8px; }
+.eb-popup-body strong { color: #18181B; }
+.eb-popup-urgency { font-family: var(--font-body); font-size: 12.5px; font-weight: 600; color: #B91C1C; text-align: center; font-style: italic; margin-bottom: 12px; line-height: 1.45; }
+.eb-popup-cta { display: block; width: 100%; background: var(--cta); color: #fff; font-family: var(--font-body); font-weight: 700; font-size: 14.5px; text-transform: uppercase; letter-spacing: 0.5px; padding: 14px 22px; border-radius: 50px; border: none; cursor: pointer; text-align: center; text-decoration: none; box-shadow: 0 4px 16px rgba(183,110,121,0.4); transition: background 0.2s, transform 0.15s; }
+.eb-popup-cta:hover { background: var(--cta-hover); transform: translateY(-1px); }
+.eb-popup-decline { display: inline-block; background: none; color: #71717A; font-family: var(--font-body); font-weight: 400; font-size: 11.5px; padding: 6px 0 0; cursor: pointer; text-align: center; text-decoration: underline; border: none; transition: color 0.2s; line-height: 1.4; margin: 0 auto; }
+.eb-popup-decline:hover { color: #18181B; }
+.eb-popup-actions { display: flex; flex-direction: column; align-items: center; gap: 6px; margin-top: 6px; }
+@media (max-width: 600px) {
+  .eb-popup-overlay { padding: 10px; }
+  .eb-popup-box { padding: 45px 18px 16px; border-radius: 14px; max-height: 96vh; }
+  .eb-popup-framing { font-size: 13.5px; padding-right: 24px; }
+  .eb-popup-headline { font-size: 16.5px; }
+  .eb-popup-oldprice { font-size: 11.5px; margin-bottom: 7px; }
+  .eb-popup-img img { max-height: 95px; }
+  .eb-popup-img { margin-bottom: 7px; }
+  .eb-popup-body { font-size: 12.5px; line-height: 1.5; margin-bottom: 6px; }
+  .eb-popup-urgency { font-size: 11.5px; margin-bottom: 9px; }
+  .eb-popup-cta { font-size: 12.5px; padding: 13px 18px; letter-spacing: 0.3px; }
+  .eb-popup-decline { font-size: 11px; }
+}
+
+.eb-price,.eb-offer-price,.eb-price-now{flex-wrap:wrap}
+img{max-width:100%;height:auto}
+.eb-hero-section img{display:block;margin-left:auto!important;margin-right:auto!important}
+.eb-hero-section h1{font-size:clamp(26px,4.2vw,40px)!important;line-height:1.2!important}
+html{scroll-behavior:auto}</style>
+<section class="eb-section-white" style="padding-top:48px;padding-bottom:0">
+<div class="eb-container-narrow" style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible" style="margin-bottom:4px;">THE COMPLETE RECONNECTION METHOD</p>
+<div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:14px;" class="eb-fade-in eb-visible">
+<div style="width:56px;height:56px;border-radius:50%;background:var(--bg-alt);display:flex;align-items:center;justify-content:center;font-size:26px;">&#9829;</div>
+<div style="text-align:left;">
+<p style="font-family:var(--font-heading);font-weight:700;font-size:17px;margin-bottom:0;line-height:1.2;color:var(--text);">Win Them Back</p>
+<p style="font-size:13px;color:var(--text-muted);margin-bottom:0;font-family:var(--font-accent);">21-Day Reconnection System</p>
+</div>
+</div>
+<h1 class="eb-fade-in eb-visible" style="font-size:30px;line-height:1.25;margin-bottom:12px;">Your Ex Didn't Stop Loving You.<br><span class="eb-hero-accent" style="font-size:34px;">His Brain Stopped Producing the Hormones That Made Him Want You.</span></h1>
+<p class="eb-text-muted eb-fade-in eb-visible" style="max-width:520px;margin:0 auto 20px;">A step-by-step guide that shows you the exact sequence of messages, behaviors, and signals to restart his brain's hormones and make him come back on his own. Without begging, without checking his Instagram at 3 AM.</p>
+<div class="eb-fade-in eb-visible" style="margin-bottom:18px;">
+<img alt="Couple reunited" height="204" src="https://szerezdvissza.pages.dev/img/i01.gif" style="width:100%;max-width:280px;border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.15);" width="485"/>
+</div>
+<div class="eb-fade-in eb-visible">
+<div class="eb-social-proof">
+<span class="eb-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span>
+<span class="eb-rating">4.9/5</span>
+<span style="color:var(--text-muted);">8,818 women purchased</span>
+<span style="color:var(--text-muted);">&middot;</span>
+<span style="color:var(--text-muted);">98.8% satisfied readers</span>
+</div>
+</div>
+</div>
+</section>
+<section class="eb-section-alt" id="offer-section">
+<div class="eb-container-narrow">
+<div class="eb-timer-wrap eb-fade-in eb-visible" id="eb-timer-1">
+<p class="eb-timer-label">Offer expires in:</p>
+<div class="eb-timer">
+<div class="eb-timer-block"><div class="eb-timer-number eb-hours">11</div><div class="eb-timer-unit">hrs</div></div>
+<div class="eb-timer-block"><div class="eb-timer-number eb-minutes">59</div><div class="eb-timer-unit">min</div></div>
+<div class="eb-timer-block"><div class="eb-timer-number eb-seconds">40</div><div class="eb-timer-unit">sec</div></div>
+</div>
+</div>
+<div class="eb-offer-box eb-fade-in eb-visible">
+<div style="text-align:center;margin-bottom:20px;">
+<div class="eb-split-card">
+<img alt="Win Them Back eBook" class="eb-split-photo" height="1000" src="https://szerezdvissza.pages.dev/img/mockup-hu.png" width="1000"/>
+<div class="eb-split-info">
+<div class="eb-split-badge"><i class="fa-solid fa-circle-check"></i> eBOOK</div>
+<div class="eb-split-name">Win Them Back</div>
+<div class="eb-split-sub">21 keys to win back his heart</div>
+<div class="eb-split-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> <span>4.9/5</span></div>
+</div>
+</div>
+</div>
+<div class="eb-offer-rating"><span class="eb-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span><span class="eb-rating-text">4.9/5 (363 reviews)</span></div>
+<h3 style="font-size:24px;margin-bottom:4px;">Win Them Back</h3>
+<p style="font-size:16px;margin-bottom:4px;">A step-by-step guide that shows you exactly what to do to get your ex back and make him come back on his own. Without begging, and without scrolling through his Instagram at night.</p>
+<p style="font-size:14px;color:var(--cta);font-family:var(--font-accent);font-weight:600;margin-bottom:20px;">Here's what you'll find inside:</p>
+<ul class="eb-benefit-list">
+<li><i class="fa-solid fa-check"></i> <strong>Make him miss you again</strong> with simple attraction signals that trigger the same hormones in his brain as the beginning of your relationship</li>
+<li><i class="fa-solid fa-check"></i> <strong>Master the Silence Strategy that actually works</strong> &mdash; 14 days of precisely planned silence that turns his cool indifference into desperate longing</li>
+<li><i class="fa-solid fa-check"></i> <strong>Decode his messages and posts</strong> so you know exactly what he's thinking and when the right moment has come</li>
+<li><i class="fa-solid fa-check"></i> <strong>Erase "the other one" from his mind</strong> &mdash; even if he's already seeing someone else, these techniques make his thoughts return to you</li>
+<li><i class="fa-solid fa-check"></i> <strong>Be the woman he can't stop thinking about</strong> even when he's trying his hardest to forget you</li>
+<li><i class="fa-solid fa-check"></i> <strong>BONUS: Rekindled Love or Fresh Start?</strong> only included with this promotional purchase. Shows you how to build a stronger relationship after you reunite. Or, if you decide otherwise, how to walk away so he regrets letting you go for the rest of his life</li>
+<li><i class="fa-solid fa-check"></i> <strong>Lifetime access to all materials</strong> &mdash; download, read, and come back to them whenever you want</li>
+<li><i class="fa-solid fa-check"></i> <strong>90-day money-back guarantee</strong> &mdash; no questions asked, no explanations needed... if you don't see a change, we refund every cent</li>
+<li><i class="fa-solid fa-check"></i> <strong>Instant access</strong> &mdash; download now and start reading within 2 minutes</li>
+</ul>
+<p class="eb-guarantee-line"><i class="fa-solid fa-shield-halved"></i> 90-day satisfaction guarantee</p>
+<p class="eb-guarantee-line"><i class="fa-solid fa-infinity"></i> Lifetime access to the material</p>
+<div style="margin:24px 0 8px;">
+<p style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-family:var(--font-accent);margin-bottom:4px;">TODAY ONLY</p>
+<span class="eb-price-old">$57</span><span class="eb-price-new">$27</span>
+<div class="eb-badge-save">You save: $30 (53%)</div>
+</div>
+<div style="margin-top:24px;">
+<a class="eb-cta-btn" href="/checkout">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust"><i class="fa-solid fa-lock"></i> 100% Secure &amp; Encrypted Payment</p>
+</div>
+<p style="font-size:14px;color:#16A34A;margin-top:12px;margin-bottom:0;">&#10003; 90-day guarantee. If it doesn't work, we'll refund your $27 &mdash; no questions asked.</p>
+</div>
+</div>
+</section>
+<section class="eb-section-alt">
+<div class="eb-container-narrow">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">WHAT THIS IS ABOUT</p>
+<h2 class="eb-fade-in eb-visible">What Is <span class="eb-gradient-text">Win Them Back</span> Really?</h2>
+</div>
+<p class="eb-fade-in eb-visible">"Win Them Back" isn't another guide about how to become a better version of yourself. It's not a collection of generic advice like "focus on yourself" or "he'll come back when he's ready." It's a 21-day system that shows you the exact sequence of messages, behaviors, and signals that reset the hormones in his brain and make him start missing you.</p>
+<p class="eb-fade-in eb-visible">Unlike typical guides, this material doesn't tell you to text him first or beg. It shows you how the male brain works after a breakup, which three hormones stopped being produced when he "lost his feelings," and step by step, how to restart them.</p>
+<p class="eb-fade-in eb-visible">It combines the science of male hormones in a relationship with specific attraction techniques. Together they create the <strong>Reset Sequence</strong> that you won't find in any other guide about getting your ex back.</p>
+<div class="eb-results-grid">
+<div class="eb-result-card eb-fade-in eb-visible">
+<i class="fa-solid fa-mobile-screen"></i>
+<h3>He Texts You First</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">You'll know exactly which day he starts thinking about you so intensely that he reaches for his phone. Without your messages, without your attempts to reconnect.</p>
+</div>
+<div class="eb-result-card eb-fade-in eb-visible">
+<i class="fa-solid fa-moon"></i>
+<h3>No More Late-Night Scrolling</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">No more scrolling through his Instagram at 3 AM to see who liked his latest photo. Your brain gets a plan it can lean on.</p>
+</div>
+<div class="eb-result-card eb-fade-in eb-visible">
+<i class="fa-solid fa-heart"></i>
+<h3>He Starts Missing You</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">The same hormones &mdash; oxytocin and dopamine &mdash; that used to fire when he thought of you start working again. He feels your absence the way you now feel his.</p>
+</div>
+<div class="eb-result-card eb-fade-in eb-visible">
+<i class="fa-solid fa-brain"></i>
+<h3>You Understand How His Mind Works</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">You read his messages, posts, and silence with complete understanding. You know what every "aha," every seen, every new photo with new people really means.</p>
+</div>
+<div class="eb-result-card eb-fade-in eb-visible">
+<i class="fa-solid fa-stopwatch"></i>
+<h3>A Day-by-Day Plan</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">You know exactly what to do in week one, week two, and week three. No guessing, no improvising. A few minutes a day, at home, without anyone knowing.</p>
+</div>
+<div class="eb-result-card eb-fade-in eb-visible">
+<i class="fa-solid fa-ring"></i>
+<h3>He Comes Back More Deeply in Love</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">It won't be like before. He comes back with the mindset of a man who understood what he lost. This return is more lasting, stronger, and more certain than the beginning of your relationship.</p>
+</div>
+</div>
+<p class="eb-fade-in eb-visible" style="text-align:center;margin-top:32px;font-weight:600;font-size:19px;">You stop asking for his attention and watch as he fights to earn yours.</p>
+</div>
+</section>
+<section class="eb-section-white">
+<div class="eb-container-narrow">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">WHY EVERYTHING FAILS</p>
+<h2 class="eb-fade-in eb-visible">Why He Won't Come Back, <span class="eb-gradient-text">Even When You Do Everything Right</span></h2>
+</div>
+<p class="eb-fade-in eb-visible">You know this feeling. It's the second week after the breakup. You've already tried everything you could think of. You wrote him a letter about what you'd change. You tried the whole "no contact" thing everyone talks about. You posted new photos showing you're "living your best life." Silence. Complete silence. And meanwhile he liked another girl's photo.</p>
+<img alt="Loneliness after the breakup" class="eb-mood-photo eb-fade-in eb-visible" height="480" src="https://szerezdvissza.pages.dev/img/i03.gif" width="480"/>
+<p class="eb-fade-in eb-visible">Hundreds of women find themselves in exactly the same situation. You try harder than ever, do everything "the right way," and he stays the same. As if every step you take achieves the opposite of what you expected. As if you're holding the wrong key to the doors that used to open on their own.</p>
+<p class="eb-fade-in eb-visible">You've tried it all. No contact... he didn't even notice you stopped texting. An honest letter about your feelings... no response. Sending his favorite cookies through a friend... seen, zero reaction. Gym, new clothes, new haircut... and he's still tagging himself in photos with "the new one."</p>
+<p class="eb-fade-in eb-visible">And every time, the same thought in your head... <em>"Maybe I never really mattered to him."</em></p>
+<p class="eb-fade-in eb-visible" style="font-weight:700;font-size:20px;color:var(--accent);text-align:center;">The problem was never you. Never.</p>
+<p class="eb-fade-in eb-visible">What your ex thinks and feels about you triggers a specific mechanism in his brain. The same mechanism that made him fall in love with you. And the same one that made him "lose his feelings." That's why cookies, letters, and "no contact" never work. They're fighting something that isn't the real problem.</p>
+<h3 class="eb-fade-in eb-visible" style="text-align:center;margin:40px 0 24px;font-size:20px;">What this situation is doing to your life right now:</h3>
+<div class="eb-consequence-card eb-fade-in eb-visible">
+<h3><i class="fa-solid fa-mobile-screen"></i> You Check His Profiles Dozens of Times a Day</h3>
+<p>You open his Instagram to see who liked his latest photo. You check if he's replying to someone in his stories. You look to see if a new person tagged him. And there's that horrible chill when you see a woman's name in a comment.</p>
+</div>
+<div class="eb-consequence-card eb-fade-in eb-visible">
+<h3><i class="fa-solid fa-comments"></i> You Re-read Your Old Messages to Understand</h3>
+<p>You scroll through the conversation from the beginning. You look for that one moment when something changed. You ask "where did I go wrong" instead of understanding what's actually happening in his brain after the breakup.</p>
+</div>
+<div class="eb-consequence-card eb-fade-in eb-visible">
+<h3><i class="fa-solid fa-arrow-trend-down"></i> The Harder You Try, the Further Away He Gets</h3>
+<p>Every attempt to reach out pushes him a little further. Every "I miss you" text makes him look at you more coldly. Every new "best life" photo you post for him, he recognizes as a stunt. And he withdraws.</p>
+</div>
+<div class="eb-consequence-card eb-fade-in eb-visible">
+<h3><i class="fa-solid fa-heart-crack"></i> You Look at "Her" and Feel Like You Meant Nothing</h3>
+<p>You see the new one beside him in his stories. You check her profile. You compare yourself to her inch by inch. And every time you arrive at the same thought: "maybe it was that easy to replace me, like I was just a subscription."</p>
+</div>
+<div class="eb-consequence-card eb-fade-in eb-visible">
+<h3><i class="fa-solid fa-battery-empty"></i> You Slowly Start Believing "Maybe It's Over for Good"</h3>
+<p>A month goes by. Then two. Your friends stop asking. You start thinking about dating someone else. But deep down you know it's not what you want. You don't want anyone else. You want him back, but you no longer know how.</p>
+</div>
+<div class="eb-consequence-card eb-fade-in eb-visible">
+<h3><i class="fa-solid fa-eye-slash"></i> Your Life Has Slowed to a Standstill of Waiting</h3>
+<p>On weekends you don't want to leave the house in case you accidentally run into him. But at the same time, you want him to accidentally run into you. You can't plan for the coming weeks. You're waiting for a sign that never arrives.</p>
+</div>
+<p class="eb-fade-in eb-visible" style="margin-top:32px;">And the worst part is that with every passing day, his brain forgets more and more what it was like to be with you. Every desperate text, every profile check, every "accidental" encounter attempt. All of it reinforces his belief that he made the right decision.</p>
+<p class="eb-fade-in eb-visible" style="text-align:center;font-weight:600;font-size:19px;">The first step is understanding what's actually happening in his head. Because what he thinks is not what he feels. And what he feels can be changed.</p>
+</div>
+</section>
+<section class="eb-section-warm">
+<div class="eb-container-narrow">
+<p class="eb-eyebrow eb-fade-in eb-visible" style="text-align:center;">THE REAL REASON</p>
+<h2 class="eb-fade-in eb-visible" style="text-align:center;">He Didn't "Lose His Feelings." His Brain <span class="eb-gradient-text">Stopped Producing the Hormones That Made Him Want You.</span></h2>
+<p class="eb-fade-in eb-visible">Hundreds of women sit in the same place after a breakup as you do now. They tried no contact. They wrote letters. They sent thoughtful gifts. They started "living their best life." Deep down, each of them felt that something much deeper was blocking him than any of these methods could reach.</p>
+<p class="eb-fade-in eb-visible">It's no coincidence that the result is the same every time. A week or two of hope, then nothing. Because every one of these methods fights the SYMPTOM, not what actually happened in his brain.</p>
+<img alt="The moment of realization" class="eb-mood-photo eb-fade-in eb-visible" height="277" src="https://szerezdvissza.pages.dev/img/i04.gif" width="500"/>
+<p class="eb-fade-in eb-visible">Most women don't know that when a man says "I lost my feelings," his brain has literally stopped producing two hormones responsible for romantic love and desire. These two hormones are oxytocin and dopamine. When they're present, he's attached to you. When they drop, you simply become someone he once knew.</p>
+<p class="eb-fade-in eb-visible">You can write the most beautiful letters, post the best photos, go through a complete transformation. If his brain isn't producing these hormones when he thinks of you, he still won't want to come back. That's exactly why so many of your attempts ended in his silence.</p>
+<div class="eb-highlight-box eb-fade-in eb-visible">
+<p style="font-weight:700;margin-bottom:16px;font-size:17px;">Here's where you're looking for the answer... and here's where the problem actually is:</p>
+<p style="margin-bottom:12px;"><strong>You try... sending a letter about your feelings</strong><br/><span style="color:var(--accent);">&rarr; His brain... perceives it as a request to bring back something that no longer exists for him. It doesn't move him. He pulls away even more.</span></p>
+<p style="margin-bottom:12px;"><strong>You do... "no contact" without a plan</strong><br/><span style="color:var(--accent);">&rarr; His brain... gets exactly the time and space it needs to completely erase you and attach his emotions to someone new. Wasted time you can't get back.</span></p>
+<p style="margin-bottom:12px;"><strong>You post... "happy" photos so he sees them</strong><br/><span style="color:var(--accent);">&rarr; His brain... instantly recognizes it's for him. He feels you're not doing well. His guilt disappears.</span></p>
+<p style="margin-bottom:0;"><strong>You believe... "maybe I never mattered to him"</strong><br/><span style="color:var(--accent);">&rarr; The truth... the oxytocin and dopamine that crash after a breakup work chemically. This isn't a judgment about you. It's biology. And they can be restarted.</span></p>
+</div>
+<p class="eb-fade-in eb-visible">The techniques in this material are simple but profoundly effective. Instead of fighting the symptom (his silence), they go straight to the hormones in his brain. A specific signal sequence that restores oxytocin and dopamine production &mdash; the same chemicals that once made him look at you like no one else.</p>
+<p class="eb-fade-in eb-visible" style="font-weight:700;font-size:20px;text-align:center;color:var(--accent);">The question is no longer "is it possible." It's: <em>how do you restart his hormones, step by step, in 21 days?</em></p>
+</div>
+</section>
+<section class="eb-section-white">
+<div class="eb-container">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">HOW IT WORKS</p>
+<h2 class="eb-fade-in eb-visible">4 Stages You'll Complete <span class="eb-gradient-text">in 21 Days</span></h2>
+<p class="eb-fade-in eb-visible" style="color:var(--text-muted);max-width:600px;margin:0 auto;">Some women see the first signs from him after just 10 days. Most receive his first message between day 14 and 21. Everyone moves through this process at their own pace.</p>
+</div>
+<div class="eb-process-grid">
+<div class="eb-process-card eb-fade-in eb-visible">
+<div class="eb-step-number">01</div>
+<h3>Understand Why He Really Left</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">Right now you only see surface-level reasons like "we weren't compatible," "I need space," "I lost my feelings." After this stage, you'll know exactly which three patterns caused the hormone crash in his brain. And how to reverse each one.</p>
+</div>
+<div class="eb-process-card eb-fade-in eb-visible">
+<div class="eb-step-number">02</div>
+<h3>The Silence That Restarts His Brain</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">14 days of precisely planned silence. What you do specifically on day 3, day 5, day 10. This isn't "just not texting." It's a behavior sequence that triggers his oxytocin and dopamine in your absence.</p>
+</div>
+<div class="eb-process-card eb-fade-in eb-visible">
+<div class="eb-step-number">03</div>
+<h3>The First Message That Opens the Door</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">When his brain has restarted, you send one specific message. Not "I miss you," not "how are you." Exact words that trigger an instant reaction and make him think about you for the rest of the evening.</p>
+</div>
+<div class="eb-process-card eb-fade-in eb-visible">
+<div class="eb-step-number">04</div>
+<h3>The Meeting After Which He Can't Stop Thinking About You</h3>
+<p style="margin-bottom:0;font-size:16px;color:var(--text-muted);">You know exactly how the first meeting should look, what to say, what not to say, and when to leave (yes, you leave first). After that evening, he scrolls through your conversations the way you once scrolled through his social media.</p>
+</div>
+</div>
+<div class="eb-fade-in eb-visible" style="text-align:center;margin-top:40px;">
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust"><i class="fa-solid fa-shield-halved"></i> 90-day guarantee | Instant access</p>
+</div>
+</div>
+</section>
+<section class="eb-section-alt">
+<div class="eb-container">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">WHAT'S INSIDE</p>
+<h2 class="eb-fade-in eb-visible">6 Chapters + Bonus. <span class="eb-gradient-text">Step by Step, What You Do in 21 Days.</span></h2>
+<p class="eb-fade-in eb-visible" style="color:var(--text-muted);max-width:600px;margin:0 auto 40px;">Every chapter is specific instructions, exact messages, exact behaviors. No generalities like "be yourself." Each one builds on the previous. You follow a path that has a beginning, middle, and end.</p>
+<p class="eb-fade-in eb-visible" style="font-weight:600;max-width:600px;margin:0 auto 40px;text-align:center;">The women who actually got their ex back all have one thing in common: they understood that the battle is in his brain, not in your messages.</p>
+</div>
+<div class="eb-preview-list eb-fade-in eb-visible">
+<h3>Here are 5 things you'll see inside:</h3>
+<div class="eb-preview-list-item"><i class="fa-solid fa-circle-dot"></i><span><strong>The real reason he "lost his feelings"</strong> which has nothing to do with you or what you did in the relationship... and what exactly these hormones force him to do when they return <span class="eb-pl-tag">(Chapter 1)</span></span></div>
+<div class="eb-preview-list-item"><i class="fa-solid fa-circle-dot"></i><span><strong>A 14-day silence plan with exact instructions for each day</strong> &mdash; what nobody tells you about "no contact": what to do on day 3, day 7, day 12, to make his brain trigger longing <span class="eb-pl-tag">(Chapter 2)</span></span></div>
+<div class="eb-preview-list-item"><i class="fa-solid fa-circle-dot"></i><span><strong>5 signals of the "New You"</strong> that his brain picks up subconsciously and that trigger oxytocin production. You do them at home, in a few minutes a day, without anyone knowing <span class="eb-pl-tag">(Chapter 3)</span></span></div>
+<div class="eb-preview-list-item"><i class="fa-solid fa-circle-dot"></i><span><strong>The exact first message</strong> that psychologists specializing in relationship neuroscience use. 9 words that open the door without risking being ignored <span class="eb-pl-tag">(Chapter 4)</span></span></div>
+<div class="eb-preview-list-item"><i class="fa-solid fa-circle-dot"></i><span><strong>How the first meeting looks after which he texts you that same night</strong> &mdash; what to say, what not to say, how to leave (yes, you leave first), and what happens in his mind afterward <span class="eb-pl-tag">(Chapter 5)</span></span></div>
+</div>
+<h3 class="eb-fade-in eb-visible" style="font-family:var(--font-heading);font-size:22px;font-weight:700;text-align:center;margin:32px 0;color:var(--text);">And here's exactly what you'll find in each chapter:</h3>
+<div class="eb-chapter eb-fade-in eb-visible">
+<div class="eb-chapter-header">
+<div class="eb-ch-badge">
+<img alt="Part 1" class="eb-ch-photo" height="200" src="https://szerezdvissza.pages.dev/img/u05.jpg" width="160"/>
+<div class="eb-ch-overlay"><div class="eb-ch-num">1</div></div>
+</div>
+<div>
+<p class="eb-chapter-number">Part 1</p>
+<h3>The First Stage of the Breakup</h3>
+<p class="eb-chapter-subtitle">You realize something ended... but you don't yet know why. A starting point, full of pain, but also the power to rebuild.</p>
+</div>
+</div>
+<div class="eb-tools-grid">
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>The Real Reason for the Breakup</strong> &mdash; you discover what actually led to this point, not what he said at the end.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>The Patterns That Destroyed You</strong> &mdash; three patterns in your relationship that neither of you saw, yet they did the most damage.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>Why "Forcing" a Fix Backfires</strong> &mdash; the attempts that push him further away, and what to do instead.</span></div>
+</div>
+<p class="eb-chapter-closing">After this part, you stop believing "maybe I never mattered to him." Because you finally see what really happened. And what can still be reversed.</p>
+</div>
+<div class="eb-chapter eb-fade-in eb-visible">
+<div class="eb-chapter-header">
+<div class="eb-ch-badge">
+<img alt="Part 2" class="eb-ch-photo" height="200" src="https://szerezdvissza.pages.dev/img/u06.jpg" width="160"/>
+<div class="eb-ch-overlay"><div class="eb-ch-num">2</div></div>
+</div>
+<div>
+<p class="eb-chapter-number">Part 2</p>
+<h3>The Silence That Works</h3>
+<p class="eb-chapter-subtitle">The worst part is not knowing what to do. Text, wait, act? You learn the emotional reset principle and how to be silent in a way that makes silence work in your favor.</p>
+</div>
+</div>
+<div class="eb-tools-grid">
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>The Emotional Reset Principle</strong> &mdash; how to use silence so it works for you, not against you.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>The Silence That Attracts</strong> &mdash; the difference between the silence that reminds him of you and the one that lets him forget you.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>What to Do If He Texts First During the Silence</strong> &mdash; exact scripts for three possible messages from him ("how are you," "we need to talk," "I'm sorry").</span></div>
+</div>
+<p class="eb-chapter-closing">After this part, you know exactly when to be silent and how to be silent. Your silence stops being absence. It starts carrying a presence that reminds him of you.</p>
+</div>
+<div class="eb-chapter eb-fade-in eb-visible">
+<div class="eb-chapter-header">
+<div class="eb-ch-badge">
+<img alt="Part 3" class="eb-ch-photo" height="200" src="https://szerezdvissza.pages.dev/img/u07.jpg" width="160"/>
+<div class="eb-ch-overlay"><div class="eb-ch-num">3</div></div>
+</div>
+<div>
+<p class="eb-chapter-number">Part 3</p>
+<h3>The New You He Can't Ignore</h3>
+<p class="eb-chapter-subtitle">He needs to see that something changed: not just in words, but in you, entirely. You'll focus on your inner world, your appearance, and your energy.</p>
+</div>
+</div>
+<div class="eb-tools-grid">
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>Working on Your Inner World</strong> &mdash; the exact changes he sees in your eyes, your walk, your laugh, even before you two talk again.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>The Appearance That Signals Change</strong> &mdash; exactly what to adjust so the first accidental encounter shows him you're someone different.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>The Energy He Feels From Afar</strong> &mdash; signals you send unconsciously that the male brain picks up in an instant. The kind your friends who always had "that something" carry.</span></div>
+</div>
+<p class="eb-chapter-closing">You build the version of yourself he'll remember... and start missing. No gym required, no transformation, no expensive treatments. Just what you need for 21 days.</p>
+</div>
+<div class="eb-chapter eb-fade-in eb-visible">
+<div class="eb-chapter-header">
+<div class="eb-ch-badge">
+<img alt="Part 4" class="eb-ch-photo" height="200" src="https://szerezdvissza.pages.dev/img/u08.jpg" width="160"/>
+<div class="eb-ch-overlay"><div class="eb-ch-num">4</div></div>
+</div>
+<div>
+<p class="eb-chapter-number">Part 4</p>
+<h3>First Contact: How to Plant Doubt in His Decision</h3>
+<p class="eb-chapter-subtitle">It's not about convincing him. It's about making him question his own decision. You learn how to start a conversation that opens the door, and how not to burn this chance.</p>
+</div>
+</div>
+<div class="eb-tools-grid">
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>How to Start a Conversation After the Silence</strong> &mdash; the exact words of the first message that opens the door without risking being ignored.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>How to Plant Doubt in His Decision</strong> &mdash; three techniques that make him start asking himself: "was I right to end this?"</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>How Not to Burn This Chance</strong> &mdash; the three most common mistakes women make in the first conversation after a breakup, which instantly undo everything from the previous stages.</span></div>
+</div>
+<p class="eb-chapter-closing">These techniques work because they don't come from desperation. They come from the place where he finally becomes the one pursuing you.</p>
+</div>
+<div class="eb-chapter eb-fade-in eb-visible">
+<div class="eb-chapter-header">
+<div class="eb-ch-badge">
+<img alt="Part 5" class="eb-ch-photo" height="200" src="https://szerezdvissza.pages.dev/img/u09.jpg" width="160"/>
+<div class="eb-ch-overlay"><div class="eb-ch-num">5</div></div>
+</div>
+<div>
+<p class="eb-chapter-number">Part 5</p>
+<h3>The Meeting That Changes Everything</h3>
+<p class="eb-chapter-subtitle">You can't show up the same way. You need to be a new experience. You'll learn how to prepare, what to say, how to look, and what to do so he can't stop thinking about you after you leave.</p>
+</div>
+</div>
+<div class="eb-tools-grid">
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>How to Prepare for the Meeting</strong> &mdash; what you do the day before, a few hours before, and 30 minutes before, to arrive as a woman he's never met.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>What to Say and How to Look</strong> &mdash; 5 topics that ignite his desire, and 3 topics to avoid because they undo everything you've built.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right"></i><span><strong>What to Do So He Can't Stop Thinking About You</strong> &mdash; how to leave first, when to reply, and when to stay silent in response to his initiative.</span></div>
+</div>
+<p class="eb-chapter-closing">After that evening, he scrolls your last conversations that same night. The next morning he checks if you replied. This is the moment you control the rhythm of what comes next.</p>
+</div>
+<div class="eb-chapter eb-chapter-bonus eb-fade-in eb-visible">
+<div class="eb-bonus-badge"><i class="fa-solid fa-gift"></i> FREE BONUS</div>
+<div class="eb-bonus-ribbon"><i class="fa-solid fa-bolt" style="margin-right:4px;"></i>THIS OFFER ONLY</div>
+<div class="eb-chapter-header" style="padding-top:20px;">
+<div class="eb-ch-badge" style="border:3px solid var(--cta);box-shadow:0 6px 20px rgba(183,110,121,0.32);">
+<img alt="Bonus Part" class="eb-ch-photo" height="200" src="https://szerezdvissza.pages.dev/img/u10.jpg" width="160"/>
+<div class="eb-ch-overlay" style="background:linear-gradient(to top,rgba(139,74,90,0.85) 0%,transparent 100%);"><div class="eb-ch-num">6</div></div>
+</div>
+<div>
+<span class="eb-bonus-value">Value: $12 FREE</span>
+<p class="eb-chapter-number">Bonus Part</p>
+<h3 style="color:var(--text);font-size:22px;">Rekindled Love or Fresh Start?</h3>
+<p class="eb-chapter-subtitle">When he starts coming back, that's just the beginning. You learn how not to repeat old mistakes, how to build a new foundation for the relationship, or... <strong style="color:var(--cta);">walk away with dignity if you realize you deserve more.</strong></p>
+</div>
+</div>
+<div class="eb-tools-grid">
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right" style="color:var(--cta);"></i><span><strong>How Not to Repeat Old Mistakes</strong> &mdash; three patterns that ruined your first relationship. And how to avoid them now that he's back.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right" style="color:var(--cta);"></i><span><strong>How to Build a New Foundation</strong> &mdash; what you do differently in the first 30 days after his return so the old pattern doesn't continue.</span></div>
+<div class="eb-tool-item"><i class="fa-solid fa-angle-right" style="color:var(--cta);"></i><span><strong>How to Walk Away With Dignity If You Realize You Deserve More</strong> &mdash; sometimes the real answer is different from what you thought when you started this process.</span></div>
+</div>
+<p class="eb-chapter-closing"><i class="fa-solid fa-circle-exclamation" style="color:var(--cta);margin-right:8px;"></i><strong>You get this part ONLY with this promotional purchase.</strong> After the promotion ends, it disappears from the package. Because it shows that your decision about whether you want him back is just as important as his decision to return.</p>
+</div>
+<div class="eb-fade-in eb-visible" style="text-align:center;margin-top:16px;">
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust"><i class="fa-solid fa-shield-halved"></i> 90-day guarantee | Instant access</p>
+</div>
+</div>
+</section>
+<section class="eb-section-dark">
+<div class="eb-container-narrow">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">IS THIS ABOUT YOU?</p>
+<h2 class="eb-fade-in eb-visible" style="color:#fff;">These 6 Things <span class="eb-gradient-text">Every Woman Does After a Breakup</span></h2>
+</div>
+<div class="eb-id-card eb-fade-in eb-visible"><i class="fa-solid fa-xmark"></i><span>You check his Instagram dozens of times a day to see if there's a new woman somewhere. You analyze every post wondering "is this about me." And every time you feel the same knot in your stomach.</span></div>
+<div class="eb-id-card eb-fade-in eb-visible"><i class="fa-solid fa-xmark"></i><span>The harder you try to act "normal," the more you both know how desperately you want him back. He instantly recognizes your "happy" photos on social media as a show put on for him.</span></div>
+<div class="eb-id-card eb-fade-in eb-visible"><i class="fa-solid fa-xmark"></i><span>You re-read your old messages to understand when something changed. You're looking for that one moment when "the end began." You ask "where did I go wrong" instead of "what's happening in his brain right now."</span></div>
+<div class="eb-id-card eb-fade-in eb-visible"><i class="fa-solid fa-xmark"></i><span>You've tried everything: no contact, honest letter, his favorite things through a friend, gym, new photos, "accidental" appearances at his usual spots. And every time, silence. Or worse. New photos of him with "the other one."</span></div>
+<div class="eb-id-card eb-fade-in eb-visible"><i class="fa-solid fa-xmark"></i><span>You compare yourself to the new one you see in his stories. You check her profile. You compare yourselves. And every time you arrive at the same thought: "maybe it was that easy to replace me."</span></div>
+<div class="eb-id-card eb-fade-in eb-visible"><i class="fa-solid fa-xmark"></i><span>You slowly start believing that maybe you never really mattered to him. That maybe something is wrong with you. That maybe this is really over for good. And that's why you wake up at night with tears in your eyes, blindly scrolling through his social media.</span></div>
+<p class="eb-fade-in eb-visible" style="text-align:center;margin-top:32px;font-size:17px;color:#E2E8F0;">If you recognized yourself in at least 3 of these 6 situations, that's not a coincidence. Any woman who broke up with a man she truly loved could have written the same thing word for word. Because the problem is one. And the 8,818 women who went through this before you eventually solved it.</p>
+<div class="eb-fade-in eb-visible" style="margin-top:40px;">
+<div class="eb-offer-box">
+<div class="eb-offer-rating"><span class="eb-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span><span class="eb-rating-text">4.9/5 (363 reviews)</span></div>
+<h3 style="font-size:24px;margin-bottom:4px;">Win Them Back</h3>
+<p style="font-size:16px;margin-bottom:4px;">A step-by-step guide showing you exactly what to do to get your ex back and make him return on his own. Without begging, and without scrolling through his Instagram at night.</p>
+<p style="font-size:14px;color:#D08C9A;font-family:var(--font-accent);font-weight:600;margin-bottom:20px;">Here's what you'll find inside:</p>
+<ul class="eb-benefit-list">
+<li><i class="fa-solid fa-check"></i> <strong>Make him miss you again</strong> with simple attraction signals that trigger the same hormones as the beginning of your relationship</li>
+<li><i class="fa-solid fa-check"></i> <strong>Master the Silence Strategy that actually works</strong> &mdash; 14 days of precisely planned silence that turns his cool indifference into desperate longing</li>
+<li><i class="fa-solid fa-check"></i> <strong>Decode his messages and posts</strong> so you know exactly what he's thinking and when the right moment has come</li>
+<li><i class="fa-solid fa-check"></i> <strong>Erase "the other one" from his mind</strong> even if he's already seeing someone else</li>
+<li><i class="fa-solid fa-check"></i> <strong>Be the woman he can't stop thinking about</strong> even when he's trying his hardest to forget you</li>
+<li><i class="fa-solid fa-check"></i> <strong>BONUS: Rekindled Love or Fresh Start?</strong> only with this promotional purchase. Shows you how to build a stronger relationship after reuniting. Or walk away so he regrets letting you go for the rest of his life</li>
+<li><i class="fa-solid fa-check"></i> <strong>Lifetime access to all materials</strong> download, read, and return anytime</li>
+<li><i class="fa-solid fa-check"></i> <strong>90-day money-back guarantee</strong> no questions asked</li>
+<li><i class="fa-solid fa-check"></i> <strong>Instant access</strong> download now and start reading within 2 minutes</li>
+</ul>
+<p class="eb-guarantee-line"><i class="fa-solid fa-shield-halved"></i> 90-day satisfaction guarantee</p>
+<p class="eb-guarantee-line"><i class="fa-solid fa-infinity"></i> Lifetime access to the material</p>
+<div style="margin:24px 0 8px;">
+<p style="font-size:13px;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,0.5);font-family:var(--font-accent);margin-bottom:4px;">TODAY ONLY</p>
+<span class="eb-price-old">$57</span><span class="eb-price-new">$27</span>
+<div class="eb-badge-save">You save: $30 (53%)</div>
+</div>
+<div style="margin-top:24px;">
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust"><i class="fa-solid fa-lock"></i> 100% Secure &amp; Encrypted Payment</p>
+</div>
+<p style="font-size:14px;color:#34D399;margin-top:12px;margin-bottom:0;">&#10003; 90-day guarantee. If it doesn't work, we'll refund your $27 &mdash; no questions asked.</p>
+</div>
+</div>
+</div>
+</section>
+<section class="eb-section-white" style="padding:60px 0;">
+<div class="eb-container-narrow">
+<div class="eb-objection-box eb-fade-in eb-visible">
+<p>You're probably thinking right now: <strong>"Another guide about getting your ex back. I've already read so many articles, watched so many YouTube videos, followed so much 'expert advice.' Nothing worked."</strong> And you have every right to think that. Because that's exactly what happened every time. No contact brought nothing. The heartfelt letter brought nothing. Gym, new haircut, "happy" photos. Nothing.</p>
+<p>But this material approaches it from a completely different angle. Every previous method fought the symptom: his silence, his distance, his new girlfriend. The symptom, however, is not what needs to change here. Here you go straight to the hormones in his brain. Specific, step-by-step behaviors and messages that restart the production of oxytocin and dopamine &mdash; the hormones that once made him fall in love with you.</p>
+</div>
+</div>
+</section>
+<section class="eb-section-warm">
+<div class="eb-container-narrow" style="max-width:640px;">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">FROM WOMEN WHO'VE BEEN THROUGH THIS</p>
+</div>
+<div class="eb-vision-text eb-fade-in eb-visible">
+<p style="font-weight:700;color:var(--text);margin-bottom:24px;font-style:normal;">Listen.</p>
+<p>Imagine an evening three weeks from now. Your phone lights up with a single notification on the nightstand. A name on the screen. His name. You open the message calmly, without the knot in your stomach you've grown used to in recent weeks. Because now you know this had to happen.</p>
+<p>This time, you decide when to reply. This time, you choose the words. This time, he asks when you can meet again. He apologizes for acting like an idiot. He says he should never have ended it.</p>
+<p>You don't agonize over what to write. You don't analyze every punctuation mark. You know exactly what to do. Because you have a plan.</p>
+<p>Hundreds of women in the exact same situation repeated word for word: "I looked for advice everywhere, read everything, asked everyone, and nobody told me the problem was in his hormones, not in my messages." Every one of them tried harder than ever. And every time the same thing happened. The harder they tried, the further the man pulled away.</p>
+</div>
+<img alt="Couple's intimacy after the return" class="eb-mood-photo eb-fade-in eb-visible" height="270" src="https://szerezdvissza.pages.dev/img/i11.gif" width="480"/>
+<div class="eb-vision-text eb-fade-in eb-visible">
+<p>I know you probably have one of these thoughts running through your mind right now:</p>
+<p style="font-style:italic;padding-left:16px;border-left:3px solid var(--cta);margin:16px 0;font-size:18px;">"I've already tried everything. Another guide won't change anything."</p>
+<p style="font-style:italic;padding-left:16px;border-left:3px solid var(--cta);margin:16px 0;font-size:18px;">"He's already with someone else. It's too late."</p>
+<p style="font-style:italic;padding-left:16px;border-left:3px solid var(--cta);margin:16px 0;font-size:18px;">"Maybe I'm just not the woman he'd stay for."</p>
+<p>Every time you accept that thought, his brain reinforces it. Because your behavior &mdash; the checking, the texting, the begging, the disappearing &mdash; fits his little script: "she was replaceable."</p>
+<p style="font-weight:700;font-size:22px;color:var(--cta);margin:24px 0;font-style:normal;text-align:center;">That is not true.</p>
+<p style="font-style:normal;">You don't need to send more messages that confirm his decision.<br/>You don't need to be silent for a month without a plan and watch him completely erase you.<br/>You don't need to sleep with your phone in hand anymore to see if he texted.</p>
+<p>This isn't magic. 8,818 women in worse situations than yours got in 21 days what months of desperate attempts couldn't give them. Not because they became different women. Simply because they learned to speak to the male brain on its own terms.</p>
+<p>Hundreds of women thought the same thing at the start as you do now: <em>"And what if this doesn't work for me either? I've already tried so much."</em></p>
+<p>That's exactly why this system was created. So you don't have to search as long as they did. So you finally know what to do instead of sitting over his Instagram at night wondering which girl liked his last photo first.</p>
+</div>
+<div class="eb-fade-in eb-visible" style="text-align:center;margin-top:32px;">
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust"><i class="fa-solid fa-shield-halved"></i> 90-day guarantee | Instant access</p>
+</div>
+</div>
+</section>
+<section class="eb-section-alt">
+<div class="eb-container-narrow">
+<p class="eb-eyebrow eb-fade-in eb-visible" style="text-align:center;">WHAT DOING NOTHING REALLY COSTS</p>
+<h2 class="eb-fade-in eb-visible" style="text-align:center;">How Much Has <span class="eb-gradient-text">Doing Nothing Already Cost You?</span></h2>
+<p class="eb-fade-in eb-visible">This material was created with a single purpose. So every woman who lost the man she truly loved can reverse it. Regardless of how long it's been since the breakup, whether he's already with someone else, or whether you were together for 3 years or 15.</p>
+<p class="eb-fade-in eb-visible">In a world where couples therapy costs $50&ndash;100 per session (and he'd have to agree to go), an online relationship coach charges $75&ndash;130 per hour, and a psychotherapist consultation is $65 per session &mdash; there needs to be a place where the first step to getting him back doesn't cost a fortune, doesn't require his consent, and doesn't mean telling a stranger about your late-night Instagram scrolling.</p>
+<div class="eb-comparison-box eb-fade-in eb-visible">
+<div class="eb-comp-item"><i class="fa-solid fa-xmark"></i><span>Online relationship coach session: $90/hour (you need at least 4, that's $360 before anything moves)</span></div>
+<div class="eb-comp-item"><i class="fa-solid fa-xmark"></i><span>Couples therapy (8 sessions): $615... assuming he agrees to go (usually he doesn't)</span></div>
+<div class="eb-comp-item"><i class="fa-solid fa-xmark"></i><span>Consultation with a psychologist specializing in relationship neuroscience: $115/hour (3-month waitlist)</span></div>
+<div class="eb-comp-item"><i class="fa-solid fa-xmark"></i><span>The cost of waiting: more months scrolling his social media at 3 AM, his new photos with "the other one," and your growing certainty that "maybe I never mattered to him"</span></div>
+<div class="eb-comp-item eb-comp-highlight"><i class="fa-solid fa-check"></i><span>Everything you need: $27</span></div>
+</div>
+<p class="eb-fade-in eb-visible">If this guide were priced based on the knowledge, time, and research inside it, it would easily be $100&ndash;130.</p>
+<p class="eb-fade-in eb-visible" style="font-weight:700;font-size:22px;text-align:center;">That's why "Win Them Back" is <span style="color:#16A34A;">$27</span> today.</p>
+<p class="eb-fade-in eb-visible">That's not an arbitrary price. It's a deliberate decision to make the first step within reach. Less than a dinner for two. Less than a new bag you'd buy to cheer yourself up.</p>
+<img alt="Happy woman after the transformation" class="eb-mood-photo eb-fade-in eb-visible" height="161" src="https://szerezdvissza.pages.dev/img/i12.gif" width="208"/>
+<p class="eb-fade-in eb-visible">The real value of this material isn't in the price. It's in that evening when you're in his arms again. In his 3 AM message saying he should never have ended it. In the fact that you won't be the woman who waits, but the one who chooses.</p>
+<div class="eb-fade-in eb-visible" style="text-align:center;margin-top:32px;">
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust"><i class="fa-solid fa-lock"></i> 100% Secure &amp; Encrypted Payment</p>
+</div>
+</div>
+</section>
+<section class="eb-section-white">
+<div class="eb-container-narrow" style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">RISK-FREE</p>
+<h2 class="eb-fade-in eb-visible">90 Days to See If It Works for You. <span class="eb-gradient-text">Zero Risk.</span></h2>
+<div class="eb-fade-in eb-visible" style="margin-bottom:32px;">
+<div class="eb-guarantee-badge" style="margin:0 auto;">
+<span class="eb-gb-top">GUARANTEE</span>
+<span class="eb-gb-number">90</span>
+<span class="eb-gb-bottom">DAYS</span>
+</div>
+</div>
+<p class="eb-fade-in eb-visible">Every story is different. Some women get his first message after 10 days, others after 21. Some get back together in a month, others in two. That's why we give you a full 3-month guarantee.</p>
+<p class="eb-fade-in eb-visible">You have 90 days to try this material for yourself. Read it. Run the diagnosis from Chapter 1. Go through the 14-day silence plan from Chapter 2. Send the first message from Chapter 4. See what starts to happen.</p>
+<p class="eb-fade-in eb-visible" style="font-weight:600;">If after all that time:</p>
+<div class="eb-fade-in eb-visible" style="max-width:600px;margin:0 auto;text-align:left;">
+<p><strong>1.</strong> You don't understand exactly why he really left (not what he told you, but what happened in his brain)</p>
+<p><strong>2.</strong> You don't know the exact sequence of messages and behaviors that restarts the male brain's hormones after a breakup</p>
+<p><strong>3.</strong> You don't feel that you finally know what to do, instead of sitting over his Instagram at 3 AM</p>
+</div>
+<p class="eb-fade-in eb-visible">You don't need to prove anything or explain. The money goes back to your account within a few business days. <strong>You keep the material.</strong></p>
+<p class="eb-fade-in eb-visible" style="font-weight:700;font-size:19px;color:var(--accent);">You can get $27 back with a single email. But every day his brain erases you a little more &mdash; that you can't undo.</p>
+</div>
+</section>
+<section class="eb-section-dark">
+<div class="eb-container-wide">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">WHAT YOU GET EXACTLY</p>
+<h2 class="eb-fade-in eb-visible" style="color:#fff;">Everything You Need to Make Him Come Back... <span style="color:#D08C9A;">For Just $27</span></h2>
+</div>
+<div class="eb-value-stack eb-fade-in eb-visible">
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>Complete Diagnosis of What Happened in His Brain</strong> &mdash; you'll know exactly which of the three patterns caused his hormones to drop, and what reverses it</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>Map of the First Three Months of Your Relationship</strong> &mdash; a day-by-day reconstruction of what was happening in his head, so you finally understand the real story</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>14-Day Silence Plan, Day by Day</strong> &mdash; exact instructions for each of the 14 days that trigger oxytocin in your absence instead of erasing you</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>5 Signs of the "New You"</strong> &mdash; exactly what to change in your presence online and offline so his brain perceives your absence as a loss</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>The First Message After the Silence</strong> &mdash; exactly 9 words you send after 14 days. No longing, no apology. Just a sequence that triggers his dopamine</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>Three Paths After His Return</strong> &mdash; you decide whether you want rekindled love, a fresh start with new rules, or a dignified exit</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>Anatomy of the First Meeting</strong> &mdash; where, when, how long, what to say, what not to say, when to leave first, so he thinks of you all night</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>Erase "the Other One" From His Mind</strong> &mdash; even if he's with someone else, the Contrast Technique makes him think of you when he's with her</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>5 Crisis Messages</strong> &mdash; what to reply when he talks about his new girlfriend, when he disappears for a week, when he texts drunk at 3 AM</span></div>
+<div class="eb-value-stack-item"><i class="fa-solid fa-check"></i><span><strong>BONUS: Rekindled Love or Fresh Start?</strong> only with this promotional purchase. Shows you how to build a stronger relationship after reuniting. Or walk away so he regrets letting you go for the rest of his life</span></div>
+</div>
+<div class="eb-value-stack-total eb-fade-in eb-visible">
+<p class="eb-vs-label">Total value</p>
+<span class="eb-vs-old">$57</span>
+<span class="eb-vs-new">$27</span>
+</div>
+<div class="eb-timer-wrap eb-fade-in eb-visible" id="eb-timer-2">
+<p class="eb-timer-label">Offer expires in:</p>
+<div class="eb-timer">
+<div class="eb-timer-block"><div class="eb-timer-number eb-hours">11</div><div class="eb-timer-unit">hrs</div></div>
+<div class="eb-timer-block"><div class="eb-timer-number eb-minutes">59</div><div class="eb-timer-unit">min</div></div>
+<div class="eb-timer-block"><div class="eb-timer-number eb-seconds">40</div><div class="eb-timer-unit">sec</div></div>
+</div>
+</div>
+<div class="eb-offer-sidebyside eb-fade-in eb-visible">
+<div class="eb-offer-mockup">
+<div class="eb-split-card-lg">
+<img alt="Win Them Back eBook" class="eb-split-photo" height="1000" src="https://szerezdvissza.pages.dev/img/mockup-hu.png" width="1000"/>
+<div class="eb-split-info">
+<div class="eb-split-badge"><i class="fa-solid fa-circle-check"></i> eBOOK</div>
+<div class="eb-split-name">Win Them Back</div>
+<div class="eb-split-sub">21 keys to win back his heart</div>
+<div class="eb-split-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> <span>4.9/5</span></div>
+</div>
+</div>
+</div>
+<div class="eb-offer-content">
+<div class="eb-offer-box">
+<div class="eb-offer-rating"><span class="eb-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span><span class="eb-rating-text">4.9/5 (363 reviews)</span></div>
+<h3 style="font-size:24px;margin-bottom:4px;">Win Them Back</h3>
+<p style="font-size:16px;margin-bottom:4px;">A 21-day system that restarts the hormones in his brain and makes him come back on his own.</p>
+<p style="font-size:14px;color:#D08C9A;font-family:var(--font-accent);font-weight:600;margin-bottom:20px;">Here's what you'll find inside:</p>
+<ul class="eb-benefit-list">
+<li><i class="fa-solid fa-check"></i> <strong>Complete diagnosis of what happened in his brain</strong> &mdash; in three weeks you'll know more than a relationship coach who charges $360</li>
+<li><i class="fa-solid fa-check"></i> <strong>14-day silence plan with daily instructions</strong> &mdash; this plan restarts the hormones in his brain so he starts missing you</li>
+<li><i class="fa-solid fa-check"></i> <strong>The exact first message after the silence</strong> &mdash; 9 words that trigger his dopamine within seconds of reading it</li>
+<li><i class="fa-solid fa-check"></i> <strong>21 ready-made messages for every situation</strong> &mdash; just copy and adapt them to your story</li>
+<li><i class="fa-solid fa-check"></i> <strong>Anatomy of the first meeting</strong> &mdash; after which he texts you that very night saying he made a mistake</li>
+<li><i class="fa-solid fa-check"></i> <strong>BONUS: Rekindled Love or Fresh Start?</strong> only with this promotional purchase. Build a stronger relationship, or walk away so he regrets it forever</li>
+<li><i class="fa-solid fa-check"></i> <strong>Lifetime access</strong> download, read, and return anytime</li>
+<li><i class="fa-solid fa-check"></i> <strong>90-day money-back guarantee</strong> no questions asked</li>
+<li><i class="fa-solid fa-check"></i> <strong>Instant access</strong> download now and start reading within 2 minutes</li>
+</ul>
+<p class="eb-guarantee-line"><i class="fa-solid fa-shield-halved"></i> 90-day satisfaction guarantee</p>
+<p class="eb-guarantee-line"><i class="fa-solid fa-infinity"></i> Lifetime access to the material</p>
+<div style="margin:24px 0 8px;">
+<p style="font-size:13px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-accent);margin-bottom:4px;">TODAY ONLY</p>
+<span class="eb-price-old">$57</span><span class="eb-price-new">$27</span>
+<div class="eb-badge-save">You save: $30 (53%)</div>
+</div>
+<div style="margin-top:24px;">
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+</div>
+</div>
+</div>
+</div>
+<div class="eb-fade-in eb-visible" style="text-align:center;margin-top:32px;">
+<p style="color:rgba(255,255,255,0.7);max-width:520px;margin:0 auto 24px;font-size:17px;">Every day without a plan is another evening scrolling his social media. Every week of silence without a system is more time for him to erase you and attach his emotions to someone new.</p>
+<div class="eb-guarantee-badge eb-guarantee-badge-sm" style="margin:0 auto 16px;">
+<span class="eb-gb-top">GUARANTEE</span><span class="eb-gb-number">90</span><span class="eb-gb-bottom">DAYS</span>
+</div>
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust" style="color:rgba(255,255,255,0.5);"><i class="fa-solid fa-lock" style="color:#D08C9A;"></i> 100% Secure &amp; Encrypted Payment</p>
+<div class="eb-payment-icons" style="margin-top:24px;">
+<span class="eb-pay-label">We accept:</span>
+<i class="fa-brands fa-cc-visa"></i>
+<i class="fa-brands fa-cc-mastercard"></i>
+<i class="fa-brands fa-cc-paypal"></i>
+<i class="fa-brands fa-cc-apple-pay"></i>
+</div>
+</div>
+</div>
+</section>
+<section class="eb-section-warm">
+<div class="eb-container-narrow" style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">YOUR SECURITY</p>
+<div class="eb-fade-in eb-visible" style="margin-bottom:20px;">
+<div class="eb-guarantee-badge eb-guarantee-badge-sm" style="margin:0 auto;">
+<span class="eb-gb-top">GUARANTEE</span><span class="eb-gb-number">90</span><span class="eb-gb-bottom">DAYS</span>
+</div>
+</div>
+<p class="eb-fade-in eb-visible" style="font-weight:700;font-size:19px;color:var(--text);max-width:500px;margin:0 auto;">Zero risk. Only your decision.</p>
+</div>
+</section>
+<section class="eb-section-white">
+<div class="eb-container">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">WHAT YOU'LL DISCOVER</p>
+<h2 class="eb-fade-in eb-visible">5 Things Nobody Has Ever Told You <span class="eb-gradient-text">About Your Breakup</span></h2>
+<p class="eb-fade-in eb-visible" style="color:var(--text-muted);max-width:600px;margin:0 auto 40px;">Each of these comes from the "Win Them Back" material. This is a brief preview of what you'll find inside.</p>
+</div>
+<div class="eb-discovery-card eb-fade-in eb-visible">
+<p class="eb-disc-number">Discovery #1</p>
+<h3>He Didn't "Lose His Feelings." His Brain Simply Stopped Producing the Hormones That Made Him Want You.</h3>
+<p>Most women after a breakup believe that "he lost his feelings" means "he never loved me." That's not true. When a man says he "lost his feelings," his brain has literally stopped producing oxytocin and dopamine when exposed to your presence. This is a hormonal phenomenon described in research on romantic bond dissolution.</p>
+<p>That's why the cookies didn't work. That's why the letter changed nothing. That's why no contact only gave him more time to move on. You were speaking to the logical part of his brain while the problem was in the emotional part.</p>
+<p>In the "Win Them Back" material, you'll see exactly which three patterns caused these hormones to drop in his brain. And step by step, how to reverse each one.</p>
+</div>
+<div class="eb-discovery-card eb-fade-in eb-visible">
+<p class="eb-disc-number">Discovery #2</p>
+<h3>The Harder You Try to Win Him Back, the Further He Pulls Away.</h3>
+<p>You probably think that for him to come back, you need to prove you deserve a second chance. Show him how important he is to you. Signal that you're not the same woman he left. The more you do this, the more his brain perceives you as "available" and "desperate" &mdash; the two strongest brakes on male desire.</p>
+<p>The real change begins completely differently. With understanding his hormones, not fighting his silence. Instead of texting, "accidentally" running into him, or posting happy photos, you do something specific that triggers a sense of loss in his brain.</p>
+<p>In the guide you'll see how quickly everything changes when you stop fighting for his attention and start giving his brain what it actually needs.</p>
+</div>
+<div class="eb-discovery-card eb-fade-in eb-visible">
+<p class="eb-disc-number">Discovery #3</p>
+<h3>14 Days of Silence Restarts His Brain. Everything Else Is Just a Consequence.</h3>
+<p>A lasting return doesn't come from grand gestures, romantic letters, or mutual friends who "accidentally" mention they saw you. It comes from 14 days of precisely planned silence during which his brain naturally starts producing oxytocin in your absence.</p>
+<p>This isn't "just not texting." It's a series of specific behaviors on specific days. What you do on day 3, what you don't do on day 7, the one thing on day 10 that can ruin the entire process. A few minutes a day is enough to stay on plan.</p>
+<p>In the "Win Them Back" material, you get a concrete, day-by-day plan. Without overhauling your life, without hiding from friends, and without being physically present in his life.</p>
+</div>
+<div class="eb-discovery-card eb-fade-in eb-visible">
+<p class="eb-disc-number">Discovery #4</p>
+<h3>Every Male Brain Reacts Differently. Generic Internet Advice Works in 10% of Cases.</h3>
+<p>The hormones that need to be reset are the same in every man. But HOW you trigger them depends on context: his personality, how long you were together, the reason for the breakup, the time that's passed, and his current situation. All of this changes which specific triggers activate his oxytocin and dopamine.</p>
+<p>That's why "no contact" from internet guides works for one woman and ends with him having a new girlfriend in three weeks for another. That's why "be the best version of yourself" almost never works beyond the initial excitement.</p>
+<p>"Win Them Back" gives you a three-step diagnosis so you know exactly which techniques work for your specific ex. One tailored to his brain, not a generic "post-breakup guy."</p>
+</div>
+<div class="eb-discovery-card eb-fade-in eb-visible">
+<p class="eb-disc-number">Discovery #5</p>
+<h3>His Return Is Quiet. Until One Night Your Phone Lights Up With His Name.</h3>
+<p>Movies and guides promise that one day you'll wake up and everything will be different. That's not how it looks. His hormone reset arrives silently. First he starts liking your photos he used to skip. Then he likes something from six months ago. Then he watches your stories the very first time you post them.</p>
+<p>You start noticing that mutual friends mention his name more often, his new photos become less frequent, and he stops tagging himself with "the other one." Then one evening your phone lights up with a single notification. His name. A message that starts: "I wanted to check how you're doing..."</p>
+<p>These seemingly small changes add up day by day into something that completely transforms your life. In the guide you see exactly what this looks like stage by stage, so you know everything is going according to plan.</p>
+</div>
+<div class="eb-fade-in eb-visible" style="text-align:center;margin-top:32px;">
+<p style="font-size:17px;color:var(--text-muted);max-width:600px;margin:0 auto 24px;">These are just 5 of the dozens of discoveries you'll find in the "Win Them Back" material. Each one changes how you see your past relationship. And what you do about it.</p>
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust"><i class="fa-solid fa-shield-halved"></i> 90-day guarantee | Instant access</p>
+</div>
+</div>
+</section>
+<section class="eb-section-alt">
+<div class="eb-container-narrow">
+<div style="text-align:center;">
+<p class="eb-eyebrow eb-fade-in eb-visible">QUESTIONS &amp; ANSWERS</p>
+<h2 class="eb-fade-in eb-visible">Frequently Asked <span class="eb-gradient-text">Questions</span></h2>
+</div>
+<div class="eb-fade-in eb-visible">
+<div class="eb-faq-item">
+<div class="eb-faq-question"><span>Does it work if he's already in a new relationship?</span><span class="eb-faq-toggle">+</span></div>
+<div class="eb-faq-answer"><div class="eb-faq-answer-inner">Yes. Most women who purchase this material are in exactly this situation. In Chapter 3, you'll find the Contrast Technique, which works precisely when he's already with someone. It makes his brain start comparing "the other one" to you, not the other way around. And every male brain that once produced strong hormones for his ex makes these comparisons.</div></div>
+</div>
+<div class="eb-faq-item">
+<div class="eb-faq-question"><span>I don't have much time. How long does it take each day?</span><span class="eb-faq-toggle">+</span></div>
+<div class="eb-faq-answer"><div class="eb-faq-answer-inner">Just a few minutes a day. The material was created for women who have jobs, sometimes children, and social lives. You read it on your phone on the way to work, in the evening before bed, or on Saturday morning with your coffee. Consistency for 21 days is enough. Not hours.</div></div>
+</div>
+<div class="eb-faq-item">
+<div class="eb-faq-question"><span>Are these techniques complicated?</span><span class="eb-faq-toggle">+</span></div>
+<div class="eb-faq-answer"><div class="eb-faq-answer-inner">No. Every technique is described step by step in simple language. No psychology jargon, no academic theory. You can send the first message after the silence as early as day 15. Just copy the ready-made 9-word sequence. Most women start applying the first elements on the day they purchase.</div></div>
+</div>
+<div class="eb-faq-item">
+<div class="eb-faq-question"><span>Are these techniques manipulation?</span><span class="eb-faq-toggle">+</span></div>
+<div class="eb-faq-answer"><div class="eb-faq-answer-inner">No. This is simply knowledge of how the male brain works after a breakup. Manipulation is any attempt to force someone to think something they don't feel. These techniques trigger hormones he once already produced for you. If he comes back, it's because his real feelings return on their own. Not because you forced him.</div></div>
+</div>
+<div class="eb-faq-item">
+<div class="eb-faq-question"><span>My case is very difficult. Will it work for me too?</span><span class="eb-faq-toggle">+</span></div>
+<div class="eb-faq-answer"><div class="eb-faq-answer-inner">The methods in this material have worked for women in very different and difficult situations. From those who had a single argument and a short breakup to those who went through a year of silence and distance. The hormonal reaction during a breakup is the same in every man. The only difference is how long the reset takes. And you have a 90-day guarantee to try it risk-free.</div></div>
+</div>
+<div class="eb-faq-item">
+<div class="eb-faq-question"><span>What if he comes back and then leaves again?</span><span class="eb-faq-toggle">+</span></div>
+<div class="eb-faq-answer"><div class="eb-faq-answer-inner">That's exactly what the bonus chapter, "Rekindled Love or Fresh Start?" is about. You learn how not to repeat the old mistakes that broke you apart, how to build a new foundation for the relationship after he returns, or if you realize you deserve more, how to walk away with dignity. Most women who completed this system say their relationship is now <em>stronger</em> than before the breakup.</div></div>
+</div>
+<div class="eb-faq-item">
+<div class="eb-faq-question"><span>How do I get access, and is it discreet?</span><span class="eb-faq-toggle">+</span></div>
+<div class="eb-faq-answer"><div class="eb-faq-answer-inner">Immediately after your order, you receive an email with the download link. The entire process takes less than 2 minutes. You can read it on your phone, tablet, or computer. The material is digital, no package at your door, no visible transaction on a shared account. Nobody needs to know you're working on this.</div></div>
+</div>
+</div>
+</div>
+</section>
+<section class="eb-section-dark">
+<div class="eb-container-narrow">
+<div style="text-align:center;">
+<h2 class="eb-fade-in eb-visible" style="color:#fff;">Last Chance, <span style="color:#D08C9A;">Before You Close This Page</span></h2>
+<p class="eb-fade-in eb-visible" style="color:rgba(255,255,255,0.7);max-width:560px;margin:0 auto 32px;">If you've read this far, you're looking for answers. They're within reach.</p>
+</div>
+<div class="eb-timer-wrap eb-fade-in eb-visible" id="eb-timer-3">
+<p class="eb-timer-label">Offer expires in:</p>
+<div class="eb-timer">
+<div class="eb-timer-block"><div class="eb-timer-number eb-hours">11</div><div class="eb-timer-unit">hrs</div></div>
+<div class="eb-timer-block"><div class="eb-timer-number eb-minutes">59</div><div class="eb-timer-unit">min</div></div>
+<div class="eb-timer-block"><div class="eb-timer-number eb-seconds">40</div><div class="eb-timer-unit">sec</div></div>
+</div>
+</div>
+<div class="eb-offer-box eb-fade-in eb-visible">
+<div style="text-align:center;margin-bottom:20px;">
+<div class="eb-split-card">
+<img alt="Win Them Back eBook" class="eb-split-photo" height="1000" src="https://szerezdvissza.pages.dev/img/mockup-hu.png" width="1000"/>
+<div class="eb-split-info">
+<div class="eb-split-badge"><i class="fa-solid fa-circle-check"></i> eBOOK</div>
+<div class="eb-split-name">Win Them Back</div>
+<div class="eb-split-sub">21 keys to win back his heart</div>
+<div class="eb-split-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> <span>4.9/5</span></div>
+</div>
+</div>
+</div>
+<div class="eb-offer-rating"><span class="eb-stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span><span class="eb-rating-text">4.9/5 (363 reviews)</span></div>
+<h3 style="font-size:24px;margin-bottom:4px;">Win Them Back</h3>
+<p style="font-size:16px;margin-bottom:4px;">A 21-day system that restarts the hormones in his brain and makes him come back on his own.</p>
+<p style="font-size:14px;color:#D08C9A;font-family:var(--font-accent);font-weight:600;margin-bottom:20px;">Here's what you'll find inside:</p>
+<ul class="eb-benefit-list">
+<li><i class="fa-solid fa-check"></i> <strong>Make him miss you again</strong> with simple attraction signals that trigger the same hormones as the beginning of your relationship</li>
+<li><i class="fa-solid fa-check"></i> <strong>Master the Silence Strategy that actually works</strong> &mdash; 14 days of precisely planned silence that turns his cool indifference into desperate longing</li>
+<li><i class="fa-solid fa-check"></i> <strong>Decode his messages and posts</strong> so you know what he's thinking and when the right moment has come</li>
+<li><i class="fa-solid fa-check"></i> <strong>Erase "the other one" from his mind</strong> even if he's already seeing someone else</li>
+<li><i class="fa-solid fa-check"></i> <strong>Be the woman he can't stop thinking about</strong> even when he's trying his hardest to forget you</li>
+<li><i class="fa-solid fa-check"></i> <strong>BONUS: Rekindled Love or Fresh Start?</strong> only with this promotional purchase. Build a stronger bond, or walk away so he regrets it forever</li>
+<li><i class="fa-solid fa-check"></i> <strong>Lifetime access</strong> download, read, and return anytime</li>
+<li><i class="fa-solid fa-check"></i> <strong>90-day money-back guarantee</strong> no questions asked</li>
+<li><i class="fa-solid fa-check"></i> <strong>Instant access</strong> download now and start reading within 2 minutes</li>
+</ul>
+<p class="eb-guarantee-line"><i class="fa-solid fa-shield-halved"></i> 90-day satisfaction guarantee</p>
+<p class="eb-guarantee-line"><i class="fa-solid fa-infinity"></i> Lifetime access to the material</p>
+<div style="margin:24px 0 8px;">
+<p style="font-size:13px;text-transform:uppercase;letter-spacing:1px;font-family:var(--font-accent);margin-bottom:4px;">TODAY ONLY</p>
+<span class="eb-price-old">$57</span><span class="eb-price-new">$27</span>
+<div class="eb-badge-save">You save: $30 (53%)</div>
+</div>
+<div style="margin-top:24px;">
+<a class="eb-cta-btn" href="#offer-section">GET INSTANT ACCESS NOW</a>
+<p class="eb-cta-trust" style="color:rgba(255,255,255,0.5);"><i class="fa-solid fa-lock" style="color:#D08C9A;"></i> 100% Secure &amp; Encrypted Payment</p>
+</div>
+<p style="font-size:14px;color:#34D399;margin-top:12px;margin-bottom:0;">&#10003; 90-day guarantee. If it doesn't work, we'll refund your $27 &mdash; no questions asked.</p>
+</div>
+<div class="eb-fade-in eb-visible" style="text-align:center;margin-top:32px;">
+<div class="eb-payment-icons">
+<span class="eb-pay-label">We accept:</span>
+<i class="fa-brands fa-cc-visa"></i>
+<i class="fa-brands fa-cc-mastercard"></i>
+<i class="fa-brands fa-cc-paypal"></i>
+<i class="fa-brands fa-cc-apple-pay"></i>
+</div>
+<p class="eb-fade-in eb-visible" style="color:rgba(255,255,255,0.7);max-width:560px;margin:32px auto 0;font-size:17px;">Every evening you choose scrolling his social media is another moment his brain erases you a little more. Every week of silence without a plan is more time for "the other one" beside him. The situation won't change on its own.</p>
+</div>
+</div>
+</section>
+<section class="eb-ps-section">
+<div class="eb-container-narrow">
+<p class="eb-ps-label eb-fade-in eb-visible">P.S.</p>
+<p class="eb-fade-in eb-visible">If you've read this far, it's probably because you recognized yourself in what you read. Scrolling his social media at 3 AM. Sleepless nights. The unbearable feeling that he's getting further away while you just wait for anything that might be a sign.</p>
+<p class="eb-fade-in eb-visible">It's not your fault. Nobody told you that his "I lost my feelings" has nothing to do with you as a woman. It has to do with his brain stopping the production of the hormones that used to make him want you. And those hormones can be restarted. Now you know how.</p>
+<p class="eb-fade-in eb-visible" style="font-weight:600;">The decision is yours. You close this page and go back to what you've been doing for the past weeks. Or you <a class="eb-ps-link" href="#offer-section">click here and start reading in 2 minutes</a> the thing that changes your next evening.</p>
+</div>
+</section>
+<section class="eb-ps-section" style="border-top:1px solid rgba(0,0,0,0.06);">
+<div class="eb-container-narrow">
+<p class="eb-ps-label eb-fade-in eb-visible">P.P.S.</p>
+<p class="eb-fade-in eb-visible">One more thing.</p>
+<p class="eb-fade-in eb-visible">Imagine that 21 days from now, your phone buzzes in the evening. A name on the screen. His. You open the message calmly, because you know this had to happen.</p>
+<p class="eb-fade-in eb-visible">And this time he doesn't politely write "I wanted to check how you're doing." Instead, it says: <em>"I should never have ended it. Can we meet?"</em></p>
+<p class="eb-fade-in" style="font-weight:600;">So? Tonight, will you stop scrolling his Instagram at 3 AM? <a class="eb-ps-link" href="#offer-section">Click here and start today.</a></p>
+</div>
+</section>
+
+<footer style="text-align:center;padding:26px 16px;font:12px/1.5 sans-serif;color:#8a6a72;background:#fff">Digital product. Results vary by individual.</footer><script>(function(){var K='wtb_en_timer',D=12*3600;function end(){var s=null;try{s=localStorage.getItem(K)}catch(e){}if(s){var v=parseInt(s,10);if(v>Date.now()&&(v-Date.now())/1000<=D)return v}var n=Date.now()+D*1000;try{localStorage.setItem(K,String(n))}catch(e){}return n}var E=end();function p(x){return String(x).length<2?'0'+x:String(x)}function tick(){var d=Math.max(0,Math.floor((E-Date.now())/1000));var h=Math.floor(d/3600),m=Math.floor(d%3600/60),s=d%60;[['.eb-hours',h],['.eb-minutes',m],['.eb-seconds',s]].forEach(function(a){document.querySelectorAll(a[0]).forEach(function(el){el.textContent=p(a[1])})});if(d<=0){try{localStorage.removeItem(K)}catch(e){}E=end()}setTimeout(tick,1000)}tick();
+var fi=document.querySelectorAll('.eb-faq-item');fi.forEach(function(it){var q=it.querySelector('.eb-faq-question');if(!q)return;q.addEventListener('click',function(){var act=it.classList.contains('active');fi.forEach(function(f){f.classList.remove('active');var a=f.querySelector('.eb-faq-answer');if(a)a.style.maxHeight='0'});if(!act){it.classList.add('active');var a=it.querySelector('.eb-faq-answer');if(a)a.style.maxHeight=a.scrollHeight+'px'}})});
+var fe=document.querySelectorAll('.eb-fade-in');if('IntersectionObserver'in window){var o=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('eb-visible');o.unobserve(x.target)}})},{threshold:.12});fe.forEach(function(e){o.observe(e)})}else{fe.forEach(function(e){e.classList.add('eb-visible')})}
+function goOffer(e){var t=document.getElementById('offer-section');if(!t)return;e.preventDefault();var go=function(){var y=t.getBoundingClientRect().top+window.pageYOffset-8;window.scrollTo({top:y,behavior:'auto'})};go();setTimeout(go,250);setTimeout(go,700);setTimeout(go,1400)}
+document.querySelectorAll('a[href="#offer-section"]').forEach(function(a){a.addEventListener('click',goOffer)});
+})()</script></body></html>
