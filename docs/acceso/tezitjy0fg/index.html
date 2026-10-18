@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Quiz Cookie Instagrameable</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--pink:#F9D2DF;--pink-dark:#E8A6BE;--pink-light:#FDF0F5;--accent:#D4547A;--bg:#FFFFFF;--text:#1A1A2E;--text-light:#555;--green:#16A34A;--red:#DC2626;--radius:12px;--shadow:0 2px 12px rgba(0,0,0,.08)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased}
+.app{max-width:480px;margin:0 auto;padding:0 16px 32px;position:relative}
+/* Progress */
+.progress-wrap{position:sticky;top:0;z-index:100;background:var(--bg);padding:12px 0 8px}
+.progress-bar{height:6px;background:#eee;border-radius:3px;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--pink-dark));border-radius:3px;transition:width .4s ease}
+.progress-text{font-size:11px;color:var(--text-light);text-align:center;margin-top:4px}
+/* Step container */
+.step{display:none;animation:fadeIn .35s ease}
+.step.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+/* Typography */
+h2{font-size:20px;font-weight:800;line-height:1.3;margin-bottom:16px;text-align:center}
+.alert-box{background:var(--pink-light);border-left:4px solid var(--accent);padding:14px 16px;border-radius:0 var(--radius) var(--radius) 0;margin:12px 0;font-size:14px;font-weight:600;line-height:1.5}
+.alert-box.green{background:#ECFDF5;border-left-color:var(--green)}
+.text-block{font-size:15px;line-height:1.6;margin:12px 0;text-align:center}
+.text-block strong,.text-block b{font-weight:700}
+/* Options grid */
+.options-grid{display:grid;gap:10px;margin:16px 0}
+.options-grid.cols-2{grid-template-columns:1fr 1fr}
+.opt-btn{background:var(--bg);border:2px solid #E5E5E5;border-radius:var(--radius);padding:12px;text-align:center;cursor:pointer;transition:all .2s;font-size:14px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:8px}
+.opt-btn:active,.opt-btn.selected{border-color:var(--accent);background:var(--pink-light);transform:scale(.97)}
+.opt-btn img{width:64px;height:64px;object-fit:contain;border-radius:8px;pointer-events:none}
+.opt-btn span{pointer-events:none}
+/* Multi-select */
+.multi-select .opt-btn.selected{border-color:var(--accent);background:var(--pink-light)}
+.multi-select .opt-btn.selected::after{content:'✓';position:absolute;top:6px;right:8px;color:var(--accent);font-weight:800;font-size:16px}
+.multi-select .opt-btn{position:relative}
+/* Buttons */
+.btn{display:block;width:100%;padding:16px;border:none;border-radius:var(--radius);font-family:inherit;font-size:16px;font-weight:700;cursor:pointer;transition:all .2s;margin:12px 0}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 4px 16px rgba(212,84,122,.3)}
+.btn-primary:active{transform:scale(.97);background:#C04570}
+.btn-secondary{background:#f0f0f0;color:var(--text)}
+/* Images */
+.step-img{width:100%;border-radius:var(--radius);margin:12px 0;display:block}
+/* Loading */
+.loading-wrap{text-align:center;padding:40px 0}
+.loading-spinner{width:64px;height:64px;border:4px solid #eee;border-top-color:var(--accent);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-pct{font-size:32px;font-weight:800;color:var(--accent)}
+.loading-label{font-size:14px;color:var(--text-light);margin-top:8px}
+/* Lead form */
+.form-group{margin:12px 0}
+.form-group label{display:block;font-size:13px;font-weight:600;margin-bottom:4px;color:var(--text-light)}
+.form-group input{width:100%;padding:14px 16px;border:2px solid #E5E5E5;border-radius:var(--radius);font-family:inherit;font-size:15px;transition:border-color .2s}
+.form-group input:focus{outline:none;border-color:var(--accent)}
+/* Pitch page */
+.pitch-section{margin:20px 0}
+.price-card{background:var(--pink-light);border:2px solid var(--accent);border-radius:var(--radius);padding:20px;text-align:center;margin:16px 0}
+.price-card .old-price{font-size:18px;color:var(--text-light);text-decoration:line-through}
+.price-card .new-price{font-size:36px;font-weight:900;color:var(--accent)}
+.price-card .installments{font-size:14px;color:var(--text-light);margin-top:4px}
+.line-item{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee;font-size:14px}
+.line-item .name{font-weight:600}
+.line-item .val{color:var(--text-light);text-decoration:line-through}
+.guarantee-box{background:#FFF7ED;border:2px solid #F59E0B;border-radius:var(--radius);padding:20px;text-align:center;margin:20px 0}
+.guarantee-box img{width:80px;margin-bottom:12px}
+/* FAQ */
+.faq-item{border:1px solid #eee;border-radius:var(--radius);margin:8px 0;overflow:hidden}
+.faq-q{padding:14px 16px;font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;background:var(--pink-light)}
+.faq-q::after{content:'+';font-size:20px;font-weight:800;color:var(--accent);transition:transform .2s}
+.faq-item.open .faq-q::after{transform:rotate(45deg)}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:all .3s;font-size:13px;line-height:1.6;color:var(--text-light)}
+.faq-item.open .faq-a{padding:12px 16px;max-height:500px}
+/* Comparison */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+.compare-col{border-radius:var(--radius);padding:16px;font-size:13px}
+.compare-col.trad{background:#FEE2E2;border:2px solid var(--red)}
+.compare-col.insta{background:#ECFDF5;border:2px solid var(--green)}
+.compare-col h4{font-size:14px;margin-bottom:8px}
+.compare-col li{margin:6px 0;line-height:1.4}
+/* Carousel placeholder */
+.carousel-wrap{display:flex;gap:12px;overflow-x:auto;padding:12px 0;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.carousel-wrap::-webkit-scrollbar{display:none}
+.carousel-card{min-width:260px;scroll-snap-align:start;background:var(--pink-light);border-radius:var(--radius);padding:16px;font-size:13px;line-height:1.5}
+/* Checklist */
+.checklist{margin:12px 0}
+.check-item{display:flex;gap:8px;padding:8px 0;font-size:14px;line-height:1.5}
+.check-item .icon{flex-shrink:0;font-size:16px}
+/* Metric */
+.metric-row{display:flex;justify-content:space-between;padding:8px 12px;margin:4px 0;background:var(--pink-light);border-radius:8px;font-size:13px;font-weight:600}
+/* Scroll indicator */
+.scroll-hint{text-align:center;font-size:24px;animation:bounce 1.5s infinite}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+/* Video embed */
+.video-placeholder{background:#000;border-radius:var(--radius);padding:40px;text-align:center;color:#fff;font-size:14px;margin:12px 0}
+</style>
+</head>
+<body>
+<div class="app">
+<div class="progress-wrap">
+<div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+<div class="progress-text" id="progressText">Paso 1 de 42</div>
+</div>
+<div id="stepsContainer"></div>
+</div>
+
+<script>
+const CHECKOUT='https://cookie-instagrameable.impultienda.ar/checkout';
+const TOTAL_STEPS=42;
+let current=0;
+let answers={};
+let userName='';
+
+const steps=[
+// 0 - Inicial (gender)
+{type:'question',title:'',layers:[
+{type:'alert',text:'RESPONDÉ EL QUIZ Y DESBLOQUEÁ ESTA OPORTUNIDAD'},
+{type:'text',text:'RECIBÍ EL PLAN PERSONALIZADO PARA HACER DE $300.000 A $500.000 POR MES CON LA COOKIE INSTAGRAMEABLE<br>↓ TOCÁ ABAJO PARA EMPEZAR ↓'},
+{type:'options',multi:false,cols:2,options:[
+{text:'Hombre',image:'https://media.inlead.cloud/uploads/101/2026-07-23/sfiRS-homem.webp',value:'hombre'},
+{text:'Mujer',image:'https://media.inlead.cloud/uploads/101/2026-07-23/oi9Yz-mulher.webp',value:'mujer'}
+]}
+]},
+// 1 - Edad
+{type:'question',title:'¿Cuántos años tenés?',layers:[
+{type:'options',multi:false,cols:2,options:[
+{text:'18-29',image:'https://media.inlead.cloud/uploads/101/2026-07-23/sdM7C-19-29.webp'},
+{text:'30-39',image:'https://media.inlead.cloud/uploads/101/2026-07-23/dgDaT-29-39.webp'},
+{text:'40-49',image:'https://media.inlead.cloud/uploads/101/2026-07-23/Hayl9-39-49.webp'},
+{text:'+50',image:'https://media.inlead.cloud/uploads/101/2026-07-23/S5BeY-50.webp'}
+]}
+]},
+// 2 - ¿Ya hiciste alguna receta en casa?
+{type:'question',title:'¿Ya hiciste alguna receta en casa?',layers:[
+{type:'options',multi:false,cols:2,options:[
+{text:'Sí',image:'https://media.inlead.cloud/uploads/101/2026-07-23/zv9jp-01-sempre-fundo-removido.webp'},
+{text:'No',image:'https://media.inlead.cloud/uploads/101/2026-07-23/iENHy-04-raramente-fundo-removido.webp'}
+]}
+]},
+// 3 - ¿Cuántas recetas hacés por mes?
+{type:'question',title:'¿Cuántas recetas solés hacer por mes?',layers:[
+{type:'options',multi:false,options:[
+{text:'Más de 4 recetas por mes',image:'https://media.inlead.cloud/uploads/101/2026-07-23/ECXdC-01-cookinho-4mais-sem-fundo.webp',value:'4'},
+{text:'Entre 2 y 4 recetas por mes',image:'https://media.inlead.cloud/uploads/101/2026-07-23/gXggE-02-cookinho-2a4-sem-fundo.webp',value:'2-4'},
+{text:'1 receta por mes',image:'https://media.inlead.cloud/uploads/101/2026-07-23/BMxM1-03-cookinho-1-sem-fundo.webp',value:'1'},
+{text:'Casi nunca hago recetas',image:'https://media.inlead.cloud/uploads/101/2026-07-23/wrs5k-04-cookinho-0-sem-fundo.webp',value:'0'}
+]}
+]},
+// 4 - ¿Qué recetas ya hiciste? (multi-select)
+{type:'question',title:'¿Qué recetas ya hiciste o intentaste hacer?',layers:[
+{type:'options',multi:true,cols:2,options:[
+{text:'Torta simple',image:'https://media.inlead.cloud/uploads/101/2026-07-23/bs769-bolo-caseiro.webp'},
+{text:'Trufas',image:'https://media.inlead.cloud/uploads/101/2026-07-23/3lIg0-brigadeiro.webp'},
+{text:'Flan',image:'https://media.inlead.cloud/uploads/101/2026-07-23/ANR0m-pudim.webp'},
+{text:'Torta en frasco',image:'https://media.inlead.cloud/uploads/101/2026-07-23/3Azu3-bolo-no-pote.webp'},
+{text:'Brownie',image:'https://media.inlead.cloud/uploads/101/2026-07-23/d2i3D-brownie.webp'},
+{text:'Pan casero',image:'https://media.inlead.cloud/uploads/101/2026-07-23/9vjvM-pao-caseiro.webp'},
+{text:'Cookie o galletita',image:'https://media.inlead.cloud/uploads/101/2026-07-23/skXkj-cookie.webp'},
+{text:'Ninguna de estas',image:'https://media.inlead.cloud/uploads/101/2026-07-23/iENHy-04-raramente-fundo-removido.webp'}
+]},
+{type:'button',label:'Continuar'}
+]},
+// 5 - ¿Con qué frecuencia cocinás para amigos o familia?
+{type:'question',title:'¿Con qué frecuencia cocinás para amigos o familia?',layers:[
+{type:'options',multi:false,options:[
+{text:'Siempre',image:'https://media.inlead.cloud/uploads/101/2026-07-23/zv9jp-01-sempre-fundo-removido.webp',value:'siempre'},
+{text:'Casi siempre',image:'https://media.inlead.cloud/uploads/101/2026-07-23/xxEJg-02-quase-sempre-fundo-removido.webp',value:'casi_siempre'},
+{text:'A veces',image:'https://media.inlead.cloud/uploads/101/2026-07-23/T4ZVC-03-as-vezes-fundo-removido.webp',value:'a_veces'},
+{text:'Rara vez',image:'https://media.inlead.cloud/uploads/101/2026-07-23/iENHy-04-raramente-fundo-removido.webp',value:'rara_vez'},
+{text:'Nunca',image:'https://media.inlead.cloud/uploads/101/2026-07-23/3Qt37-05-nunca-fundo-removido.webp',value:'nunca'}
+]}
+]},
+// 6 - Inserción 1 — Validación inicial
+{type:'content',title:'',layers:[
+{type:'alert',text:'TU NIVEL ACTUAL: PRINCIPIANTE'},
+{type:'text',text:'<strong>ESTÁS EN EL COMIENZO</strong>'},
+{type:'alert',text:'<strong>Buena noticia:</strong> La Cookie Instagrameable es una de las MEJORES RECETAS para quien está empezando.'},
+{type:'text',text:'Te voy a mostrar el paso a paso para hacer la receta sin errores. Aunque estés empezando ahora en la repostería.'},
+{type:'button',label:'Continuar'}
+]},
+// 7 - ¿Cuál de estas opciones te representa mejor hoy?
+{type:'question',title:'¿Cuál de estas opciones te representa mejor hoy?',layers:[
+{type:'options',multi:false,options:[
+{text:'Ya trabajo con dulces o repostería',image:'https://media.inlead.cloud/uploads/101/2026-07-23/020mp-chatgpt-image-23-de-jul-de-2026-14-28-42-1.webp'},
+{text:'Soy principiante, pero me gusta hacer recetas',image:'https://media.inlead.cloud/uploads/101/2026-07-23/QW7Y8-chatgpt-image-23-de-jul-de-2026-14-28-42-2.webp'},
+{text:'Nunca trabajé con dulces, pero quiero empezar',image:'https://media.inlead.cloud/uploads/101/2026-07-23/YI1ug-chatgpt-image-23-de-jul-de-2026-14-28-42-3.webp'},
+{text:'Solo quiero aprender una receta linda y rica',image:'https://media.inlead.cloud/uploads/101/2026-07-23/pqATc-chatgpt-image-23-de-jul-de-2026-14-28-43-4.webp'}
+]}
+]},
+// 8 - ¿Qué tenés en tu cocina? (multi-select)
+{type:'question',title:'¿Cuáles de estos elementos tenés en tu cocina?',layers:[
+{type:'options',multi:true,cols:2,options:[
+{text:'Bowl',image:'https://media.inlead.cloud/uploads/101/2026-07-23/Vfpir-chatgpt-image-23-de-jul-de-2026-14-00-43-1.webp',value:'bowl'},
+{text:'Balanza de cocina',image:'https://media.inlead.cloud/uploads/101/2026-07-23/niZEI-chatgpt-image-23-de-jul-de-2026-14-00-44-5.webp',value:'balanza'},
+{text:'Cuchara o espátula',image:'https://media.inlead.cloud/uploads/101/2026-07-23/XRUVt-chatgpt-image-23-de-jul-de-2026-14-00-43-2.webp'},
+{text:'Molde/bandeja',image:'https://media.inlead.cloud/uploads/101/2026-07-23/GEK5t-chatgpt-image-23-de-jul-de-2026-14-05-50.webp'},
+{text:'Horno',image:'https://media.inlead.cloud/uploads/101/2026-07-25/CHlhp-forno-com-luz.webp'},
+{text:'Papel manteca',image:'https://media.inlead.cloud/uploads/101/2026-07-23/5Dm9c-chatgpt-image-23-de-jul-de-2026-14-00-44-4.webp'},
+{text:'Batidora',image:'https://media.inlead.cloud/uploads/101/2026-07-23/qIg3B-chatgpt-image-23-de-jul-de-2026-14-00-44-6.webp'},
+{text:'No tengo nada de esto',image:'https://media.inlead.cloud/uploads/101/2026-07-23/iENHy-04-raramente-fundo-removido.webp'}
+]},
+{type:'button',label:'Continuar'}
+]},
+// 9 - Inserción 2 — Materiales
+{type:'content',title:'',layers:[
+{type:'alert',text:'<strong>YA ESTÁS LISTA</strong><br>Tenés todo lo que necesitás: solo un bowl, un horno y una balanza de cocina.'},
+{type:'text',text:'Solo necesitás un bowl y una balanza para empezar.'},
+{type:'button',label:'Continuar'}
+]},
+// 10 - ¿Hay supermercado en tu zona?
+{type:'question',title:'¿Tenés un supermercado cerca?',layers:[
+{type:'options',multi:false,cols:2,options:[
+{text:'Sí',image:'https://media.inlead.cloud/uploads/101/2026-07-24/PmMIx-04-nunca-pensei-nisso-sem-fundo.webp',value:'si'},
+{text:'No',image:'https://media.inlead.cloud/uploads/101/2026-07-23/iENHy-04-raramente-fundo-removido.webp',value:'no'}
+]}
+]},
+// 11 - Inserción descalificación (no tiene mercado)
+{type:'content',title:'',layers:[
+{type:'text',text:'Como respondiste que no tenés acceso a un supermercado cerca...<br><strong>Lamentablemente no estás calificada para hacer las COOKIES INSTAGRAMEABLES</strong>'},
+{type:'alert',text:'Los ingredientes son simples y fáciles de conseguir<br><strong>PERO NECESITÁS UN SUPERMERCADO O ALMACÉN PARA COMPRAR LOS INGREDIENTES</strong>'},
+{type:'alert',text:'Si tenés algún lugar donde comprar ingredientes simples, tocá el botón de abajo'},
+{type:'button',label:'No tengo acceso a ningún lugar para comprar ingredientes'},
+{type:'button',label:'Creo que sí puedo comprarlos',cls:'btn-primary'}
+]},
+// 12 - ¿Ya intentaste hacer una receta de cookie?
+{type:'question',title:'¿Ya intentaste hacer una receta de cookie?',layers:[
+{type:'options',multi:false,cols:2,options:[
+{text:'Sí',image:'https://media.inlead.cloud/uploads/101/2026-07-23/zv9jp-01-sempre-fundo-removido.webp'},
+{text:'No',image:'https://media.inlead.cloud/uploads/101/2026-07-23/iENHy-04-raramente-fundo-removido.webp'}
+]}
+]},
+// 13 - Si ya intentaste, ¿cómo quedó?
+{type:'question',title:'Si ya intentaste, ¿cómo te quedó?',layers:[
+{type:'options',multi:false,options:[
+{text:'Quedó bien',image:'https://media.inlead.cloud/uploads/101/2026-07-23/9ooFs-bom.jpg',value:'quedo_bien'},
+{text:'Quedó dura, parecía galletita',image:'https://media.inlead.cloud/uploads/101/2026-07-23/dSNIg-01-cookie-duro.webp'},
+{text:'Quedó que se desarmaba',image:'https://media.inlead.cloud/uploads/101/2026-07-23/b61If-02-cookie-farelento.webp'},
+{text:'Quedó cruda por dentro',image:'https://media.inlead.cloud/uploads/101/2026-07-23/sooAB-03-cookie-cru-por-dentro.webp'},
+{text:'Se esparció demasiado en la bandeja',image:'https://media.inlead.cloud/uploads/101/2026-07-23/tgk0q-04-cookie-espalhou-demais.webp'},
+{text:'No quedó linda como esperaba',image:'https://media.inlead.cloud/uploads/101/2026-07-23/Fv1Bv-05-cookie-formato-irregular.webp'}
+]}
+]},
+// 14 - Inserción 3 — Experiencia previa
+{type:'content',title:'',layers:[
+{type:'alert',text:'Más de 20 mil alumnas ya pasaron por la misma experiencia que vos'},
+{type:'text',text:'Estas alumnas también se equivocaron antes.<br>Pero, después de aplicar la metodología correcta, <strong>así les quedan las cookies:</strong>'},
+{type:'alert',text:'<strong>YA ESTÁS EN EL CAMINO CORRECTO</strong>'},
+{type:'text',text:'Mirá cómo le quedaron las cookies a algunas alumnas que siguieron el Método Cookie Instagrameable.'},
+{type:'alert',text:'Hasta quien nunca hizo, puede hacerlo'},
+{type:'button',label:'Continuar'}
+]},
+// 15 - ¿Cuántas veces dejaste de hacer una receta porque pensaste que era caro?
+{type:'question',title:'¿Cuántas veces dejaste de hacer una receta porque pensaste que iba a ser caro?',layers:[
+{type:'options',multi:false,options:[
+{text:'Muchas veces',image:'https://media.inlead.cloud/uploads/101/2026-07-24/AJthl-01-muitas-vezes-sem-fundo.webp'},
+{text:'Algunas veces',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp'},
+{text:'Rara vez',image:'https://media.inlead.cloud/uploads/101/2026-07-24/SsGbk-03-raramente-sem-fundo.webp'},
+{text:'Nunca lo pensé',image:'https://media.inlead.cloud/uploads/101/2026-07-24/PmMIx-04-nunca-pensei-nisso-sem-fundo.webp'}
+]}
+]},
+// 16 - Inserción 4 — Objeción "es caro"
+{type:'content',title:'',layers:[
+{type:'alert',text:'EMPEZAR CUESTA MENOS DE LO QUE IMAGINÁS'},
+{type:'text',text:'Con ingredientes simples que conseguís en cualquier supermercado, podés hacer cookies instagrameables gastando muy poco.'},
+{type:'button',label:'Continuar'}
+]},
+// 17 - ¿Cuál es tu nivel de confianza para hacer una receta dulce?
+{type:'question',title:'¿Cuál es tu nivel de confianza para hacer una receta dulce?',layers:[
+{type:'options',multi:false,options:[
+{text:'Soy muy confiada',image:'https://media.inlead.cloud/uploads/101/2026-07-23/T4ZVC-03-as-vezes-fundo-removido.webp'},
+{text:'Tengo confianza media',image:'https://media.inlead.cloud/uploads/101/2026-07-23/xxEJg-02-quase-sempre-fundo-removido.webp'},
+{text:'Tengo poca confianza',image:'https://media.inlead.cloud/uploads/101/2026-07-23/iENHy-04-raramente-fundo-removido.webp'},
+{text:'Tengo cero confianza',image:'https://media.inlead.cloud/uploads/101/2026-07-23/3Qt37-05-nunca-fundo-removido.webp'}
+]}
+]},
+// 18 - ¿Qué es lo que más te frena?
+{type:'question',title:'¿Qué es lo que más te frena para empezar a hacer cookies instagrameables?',layers:[
+{type:'options',multi:false,options:[
+{text:'Tengo miedo de que sea difícil',image:'https://media.inlead.cloud/uploads/101/2026-07-23/iENHy-04-raramente-fundo-removido.webp',value:'miedo_dificil'},
+{text:'Tengo miedo de necesitar muchos materiales',image:'https://media.inlead.cloud/uploads/101/2026-07-24/SsGbk-03-raramente-sem-fundo.webp',value:'miedo_materiales'},
+{text:'Tengo miedo de gastar plata y que quede mal',image:'https://media.inlead.cloud/uploads/101/2026-07-24/AJthl-01-muitas-vezes-sem-fundo.webp',value:'miedo_gastar'},
+{text:'Nunca hice cookies y no sé si puedo',image:'https://media.inlead.cloud/uploads/101/2026-07-24/PmMIx-04-nunca-pensei-nisso-sem-fundo.webp',value:'no_se_si_puedo'},
+{text:'No sé si da plata de verdad',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp',value:'no_se_si_da_plata'},
+{text:'No sé cómo vendería',image:'https://media.inlead.cloud/uploads/101/2026-07-23/xxEJg-02-quase-sempre-fundo-removido.webp',value:'no_se_como_venderia'}
+]}
+]},
+// 19 - Inserción 5 — Quiebre de objeciones
+{type:'content',title:'',layers:[
+{type:'alert',text:'EL MÉTODO COOKIE INSTAGRAMEABLE ES MÁS SIMPLE DE LO QUE PARECE'},
+{type:'text',text:'Con la receta correcta y poca práctica, ya vas a estar haciendo las Cookies Instagrameables perfectas.'},
+{type:'alert',text:'NO NECESITÁS UNA COCINA LLENA DE EQUIPAMIENTO'},
+{type:'text',text:'Para empezar, un bowl, una balanza y algunos utensilios simples ya alcanzan.'},
+{type:'alert',text:'UNA RECETA A PRUEBA DE ERRORES CON INGREDIENTES BARATOS'},
+{type:'text',text:'Siguiendo el Método Cookie Instagrameable, además de ahorrar en ingredientes, vas a recibir una receta muy fácil de lograr.'},
+{type:'text',text:'Probé más de 100 recetas y encontré la FÓRMULA PERFECTA'},
+{type:'alert',text:'CREÉ UNA RECETA SIMPLE Y FÁCIL QUE HASTA QUIEN NO TIENE EXPERIENCIA PUEDE HACER'},
+{type:'alert',text:'LA COOKIE INSTAGRAMEABLE ES UNA DE LAS RECETAS MÁS RENTABLES DE LA REPOSTERÍA'},
+{type:'text',text:'Además de hacerse con ingredientes baratos, la Cookie Instagrameable tiene un alto valor agregado.'},
+{type:'alert',text:'Gastás $600 para producir, y vendés a $3.000'},
+{type:'text',text:'Así es como esta alumna está haciendo +$800.000 de ganancia todos los meses.'},
+{type:'alert',text:'EL SECRETO ES UN PRODUCTO QUE SE VENDE SOLO'},
+{type:'text',text:'Ese es el gran poder de las COOKIES INSTAGRAMEABLES'},
+{type:'alert',text:'No necesitás ser una excelente vendedora para tener buenos resultados, porque tu producto va a dejar al cliente salivando antes de pedir'},
+{type:'text',text:'Mirá cómo las Cookies de las alumnas son IRRESISTIBLES'},
+{type:'button',label:'Continuar'}
+]},
+// 20 - ¿Cuál es tu principal motivación?
+{type:'question',title:'¿Cuál es tu principal motivación para hacer cookies?',layers:[
+{type:'options',multi:false,options:[
+{text:'Quiero hacer un ingreso extra',image:'https://media.inlead.cloud/uploads/101/2026-07-24/SsGbk-03-raramente-sem-fundo.webp',value:'ingreso_extra'},
+{text:'Quiero complementar mis ingresos todos los meses',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp',value:'complementar'},
+{text:'Ya tengo local o vendo dulces y quiero vender más',image:'https://media.inlead.cloud/uploads/101/2026-07-24/PmMIx-04-nunca-pensei-nisso-sem-fundo.webp',value:'tengo_local'},
+{text:'Quiero ganar plata para una ocasión especial',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp',value:'ocasion_especial'},
+{text:'Solo quiero aprender una receta nueva',image:'https://media.inlead.cloud/uploads/101/2026-07-23/T4ZVC-03-as-vezes-fundo-removido.webp',value:'aprender_receta'}
+]}
+]},
+// 21 - ¿Mayor dificultad para ganar $50.000-$80.000 por semana?
+{type:'question',title:'¿Cuál sería tu mayor dificultad para hacer de $50.000 a $80.000 por semana con cookies?',layers:[
+{type:'options',multi:false,options:[
+{text:'No sé cómo vender',image:'https://media.inlead.cloud/uploads/101/2026-07-24/AJthl-01-muitas-vezes-sem-fundo.webp',value:'no_se_vender'},
+{text:'No tengo clientes todavía',image:'https://media.inlead.cloud/uploads/101/2026-07-23/SxXCj-04-cookinho-0-sem-fundo.webp',value:'sin_clientes'},
+{text:'Nunca vendí nada antes',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp',value:'nunca_vendi'},
+{text:'Tengo miedo de que la cookie no quede bien',image:'https://media.inlead.cloud/uploads/101/2026-07-23/xxEJg-02-quase-sempre-fundo-removido.webp',value:'miedo_no_quede'},
+{text:'No sé cuánto cobrar',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp',value:'no_se_cobrar'}
+]}
+]},
+// 22 - Inserción 6 — Objeción sobre venta
+{type:'content',title:'',layers:[
+{type:'alert',text:'VAS A TENER UN PRODUCTO QUE SE VENDE SOLO'},
+{type:'text',text:'En la Era de la Atención, las personas consumen con los ojos antes de comprar.'},
+{type:'text',text:'Por eso, las cookies instagrameables son la MEJOR MANERA para hacer un ingreso extra, <strong>aunque no sepas vender</strong>.'},
+{type:'alert',text:'TE VOY A ENSEÑAR CÓMO VENDER TU PRIMER LOTE DE COOKIES EN LOS PRÓXIMOS DÍAS'},
+{type:'text',text:'Mirá el testimonio de Isabeli que no tenía clientes, y ya logró vender +24 cookies EN UNA HORA en su trabajo.'},
+{type:'alert',text:'CON LA RECETA CORRECTA, NO HAY FORMA DE EQUIVOCARSE'},
+{type:'text',text:'Te voy a mostrar el paso a paso para salir de cero y hacer una Cookie IRRESISTIBLE.<br>No te preocupes si pensás que no tenés "buena mano" para los dulces.'},
+{type:'alert',text:'Porque te voy a mostrar el paso a paso de la receta — no hay forma de que salga mal siguiendo el método correcto.'},
+{type:'alert',text:'TE VOY A MOSTRAR CUÁNTO TENÉS QUE COBRAR PARA VENDER COOKIES CON MUCHA RENTABILIDAD'},
+{type:'text',text:'Si tenés dudas de cómo poner precio, quedate tranquila.<br>Dentro del Método Cookie Instagrameable te voy a llevar de la mano y explicar el paso a paso de la <strong>precificación de COOKIES RENTABLES</strong>.'},
+{type:'button',label:'Continuar'}
+]},
+// 23 - ¿Cómo preferís aprender una receta?
+{type:'question',title:'¿Cómo preferís aprender una receta?',layers:[
+{type:'options',multi:false,cols:2,options:[
+{text:'Mirando video',image:'https://media.inlead.cloud/uploads/101/2026-07-24/hU0XG-chatgpt-image-24-de-jul-de-2026-20-46-20-1.webp'},
+{text:'Leyendo PDF con paso a paso',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Nd0rc-lendo-bilete.webp'},
+{text:'Video + PDF',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Av3ew-chatgpt-image-24-de-jul-de-2026-20-46-20-3.webp'},
+{text:'Me da igual, mientras sea simple',image:'https://media.inlead.cloud/uploads/101/2026-07-24/x0HO0-chatgpt-image-24-de-jul-de-2026-20-46-20-4.webp'}
+]}
+]},
+// 24 - ¿Cómo te sentirías al hacer tu primera cookie así?
+{type:'question',title:'¿Cómo te sentirías al hacer tu primera cookie y que te quede así?',layers:[
+{type:'options',multi:false,options:[
+{text:'Feliz con el resultado',image:'https://media.inlead.cloud/uploads/101/2026-07-23/zv9jp-01-sempre-fundo-removido.webp'},
+{text:'Con mucho orgullo',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp'},
+{text:'Con ganas de vender',image:'https://media.inlead.cloud/uploads/101/2026-07-24/AJthl-01-muitas-vezes-sem-fundo.webp'},
+{text:'Con ganas de hacer más',image:'https://media.inlead.cloud/uploads/101/2026-07-23/T4ZVC-03-as-vezes-fundo-removido.webp'},
+{text:'Sorprendida con mi propio resultado',image:'https://media.inlead.cloud/uploads/101/2026-07-24/SsGbk-03-raramente-sem-fundo.webp'}
+]}
+]},
+// 25 - Inserción 7 — Prueba/visualización
+{type:'content',title:'',layers:[
+{type:'alert',text:'ESA ES LA SENSACIÓN CUANDO HACÉS TU PRIMERA COOKIE INSTAGRAMEABLE'},
+{type:'text',text:'Isa ya había probado varias recetas de Cookie.<br>Pero recién cuando siguió la RECETA CORRECTA logró hacer COOKIES INSTAGRAMEABLES. Mirá el testimonio:'},
+{type:'button',label:'Continuar'}
+]},
+// 26 - ¿Ya pensaste en hacer plata con la cocina?
+{type:'question',title:'¿Ya pensaste en hacer plata con la cocina?',layers:[
+{type:'options',multi:false,options:[
+{text:'Sí, ya lo pensé varias veces',image:'https://media.inlead.cloud/uploads/101/2026-07-24/SsGbk-03-raramente-sem-fundo.webp',value:'si_varias'},
+{text:'Sí, pero nunca empecé',image:'https://media.inlead.cloud/uploads/101/2026-07-24/AJthl-01-muitas-vezes-sem-fundo.webp',value:'si_nunca_empece'},
+{text:'Nunca lo había pensado en serio',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp',value:'nunca_en_serio'},
+{text:'Ya vendo dulces o comida',image:'https://media.inlead.cloud/uploads/101/2026-07-23/T4ZVC-03-as-vezes-fundo-removido.webp',value:'ya_vendo'}
+]}
+]},
+// 27 - Inserción 8 — Oportunidad
+{type:'content',title:'',layers:[
+{type:'alert',text:'COOKIE INSTAGRAMEABLE ES LA MEJOR MANERA DE EMPEZAR A GENERAR INGRESOS CON LA REPOSTERÍA'},
+{type:'text',text:'Si ya pensaste en ganar plata con repostería, la cookie puede ser un gran comienzo.'},
+{type:'text',text:'Hay alumnas empezando de cero y transformando la cookie en ingresos.'},
+{type:'text',text:'Mucha gente entra pensando que es "solo una receta".<br>Pero cuando aprende bien, <strong>la cookie se convierte en una fuente de Ingreso Extra todos los meses</strong>.'},
+{type:'button',label:'Continuar'}
+]},
+// 28 - ¿Ya vendiste alguna receta o dulce antes?
+{type:'question',title:'¿Ya vendiste alguna receta o dulce antes?',layers:[
+{type:'options',multi:false,options:[
+{text:'Sí, ya vendo actualmente',image:'https://media.inlead.cloud/uploads/101/2026-07-24/SsGbk-03-raramente-sem-fundo.webp'},
+{text:'Sí, pero vendí pocas veces',image:'https://media.inlead.cloud/uploads/101/2026-07-24/AJthl-01-muitas-vezes-sem-fundo.webp'},
+{text:'Nunca vendí, pero quiero empezar',image:'https://media.inlead.cloud/uploads/101/2026-07-24/Sh7uf-02-de-vez-em-quando-sem-fundo.webp'},
+{text:'Nunca vendí y me da miedo',image:'https://media.inlead.cloud/uploads/101/2026-07-23/xxEJg-02-quase-sempre-fundo-removido.webp'}
+]}
+]},
+// 29 - ¿En tu ciudad piden comida por delivery?
+{type:'question',title:'¿En tu zona la gente suele pedir comida por delivery?',layers:[
+{type:'options',multi:false,options:[
+{text:'Sí, hay PedidosYa, Rappi u otras apps',image:'https://media.inlead.cloud/uploads/101/2026-07-24/fWM4G-chatgpt-image-24-de-jul-de-2026-22-32-33-5.webp',value:'si_apps'},
+{text:'Sí, pero más por WhatsApp',image:'https://media.inlead.cloud/uploads/101/2026-07-24/9ORWG-chatgpt-image-24-de-jul-de-2026-22-32-32-2.webp',value:'si_whatsapp'},
+{text:'Mi zona es chica, pero hay delivery local',image:'https://media.inlead.cloud/uploads/101/2026-07-24/iAik7-chatgpt-image-24-de-jul-de-2026-22-32-33-3.webp',value:'si_local'},
+{text:'No sabría decirte',image:'https://media.inlead.cloud/uploads/101/2026-07-24/liELS-chatgpt-image-24-de-jul-de-2026-22-32-33-4.webp',value:'no_se'},
+{text:'Casi no hay delivery donde vivo',image:'https://media.inlead.cloud/uploads/101/2026-07-24/mytsm-chatgpt-image-24-de-jul-de-2026-22-32-32-1.webp',value:'no'}
+]}
+]},
+// 30 - ¿Cuántas horas por semana podés dedicar?
+{type:'question',title:'¿Cuántas horas por semana podés dedicar para hacer cookies?',layers:[
+{type:'options',multi:false,options:[
+{text:'Más de 5 horas por semana',image:'https://media.inlead.cloud/uploads/101/2026-07-24/xdE8d-chatgpt-image-24-de-jul-de-2026-22-43-17-1.webp',value:'+5h'},
+{text:'Entre 4 y 5 horas por semana',image:'https://media.inlead.cloud/uploads/101/2026-07-24/L95NW-chatgpt-image-24-de-jul-de-2026-22-43-17-2.webp',value:'4-5h'},
+{text:'Entre 3 y 4 horas por semana',image:'https://media.inlead.cloud/uploads/101/2026-07-24/ceAJd-chatgpt-image-24-de-jul-de-2026-22-43-18-3.webp',value:'3-4h'},
+{text:'Entre 2 y 3 horas por semana',image:'https://media.inlead.cloud/uploads/101/2026-07-24/kTkR6-chatgpt-image-24-de-jul-de-2026-22-43-18-4.webp',value:'2-3h'},
+{text:'Menos de 2 horas por semana',image:'https://media.inlead.cloud/uploads/101/2026-07-24/pNmCX-chatgpt-image-24-de-jul-de-2026-22-43-18-5.webp',value:'-2h'}
+]}
+]},
+// 31 - ¿Qué tan confiada estás?
+{type:'question',title:'¿Qué tan confiada estás para hacer tu primera Cookie Instagrameable?',layers:[
+{type:'options',multi:false,options:[
+{text:'Muy confiada',image:'https://media.inlead.cloud/uploads/101/2026-07-23/zv9jp-01-sempre-fundo-removido.webp'},
+{text:'Más confiada ahora',image:'https://media.inlead.cloud/uploads/101/2026-07-24/SsGbk-03-raramente-sem-fundo.webp'},
+{text:'Todavía tengo dudas, pero quiero intentar',image:'https://media.inlead.cloud/uploads/101/2026-07-23/xxEJg-02-quase-sempre-fundo-removido.webp'},
+{text:'Quiero aprender el paso a paso',image:'https://media.inlead.cloud/uploads/101/2026-07-23/T4ZVC-03-as-vezes-fundo-removido.webp'}
+]}
+]},
+// 32 - Loading: Calculando potencial
+{type:'loading',title:'',labels:['Analizando tus respuestas...','Calculando tu potencial de ganancia...','Preparando tu diagnóstico personalizado...']},
+// 33 - Diagnóstico
+{type:'content',title:'',layers:[
+{type:'text',text:'<strong>Acá está tu resultado...</strong>'},
+{type:'alert',text:'ESTÁS 100% CALIFICADA PARA HACER LA COOKIE INSTAGRAMEABLE Y EMPEZAR A FACTURAR DE $300.000 A $500.000/MES'},
+{type:'text',text:'<strong>Respondiste que...</strong>'},
+{type:'alert',text:'<strong>Situación Actual</strong>'},
+{type:'metric',items:[
+['Tu ingreso extra actual','$0/mes'],
+['Confianza para cocinar','En crecimiento'],
+['Productos que vendés','Ninguno todavía']
+]},
+{type:'alert',text:'<strong>Vendiendo Cookies Instagrameables</strong>'},
+{type:'metric',items:[
+['Ingreso extra proyectado','$300.000-$500.000/mes'],
+['Costo por cookie','~$600'],
+['Precio de venta por cookie','$3.000+'],
+]},
+{type:'text',text:'<strong>Por eso...</strong>'},
+{type:'alert',text:'ESTÁS 100% CALIFICADA'},
+{type:'text',text:'Tocá el botón de abajo para continuar y entender cómo podés empezar hoy mismo.'},
+{type:'button',label:'Continuar'}
+]},
+// 34 - Mirá la diferencia
+{type:'content',title:'',layers:[
+{type:'text',text:'<strong>Mirá la diferencia en tu vida ANTES vs DESPUÉS DE LAS COOKIES INSTAGRAMEABLES</strong>'},
+{type:'metric',items:[
+['Antes: Sin ingreso extra','Después: +$300.000/mes'],
+['Antes: Sin confianza en la cocina','Después: Repostera segura'],
+['Antes: Recetas que no salen','Después: Cookies perfectas'],
+['Antes: Sin saber vender','Después: Clientes fieles'],
+['Antes: Ingredientes caros','Después: $600 por cookie']
+]},
+{type:'text',text:'<strong>Satisfacción y Feedback después de aprender el MÉTODO COOKIES INSTAGRAMEABLES</strong>'},
+{type:'button',label:'Continuar'}
+]},
+// 35 - Testimonios (en la práctica)
+{type:'content',title:'',layers:[
+{type:'text',text:'<strong>Ahora mirá EN LA PRÁCTICA la historia de estas alumnas que tuvieron sus vidas TRANSFORMADAS</strong>'},
+{type:'text',text:'Miles de alumnas ya están vendiendo cookies instagrameables y generando ingresos desde su casa.'},
+{type:'button',label:'Continuar'}
+]},
+// 36 - Historia común (1)
+{type:'content',title:'',layers:[
+{type:'text',text:'Y lo más interesante es que, antes de empezar, casi todas me contaban la misma historia...'},
+{type:'text',text:'"Nikh... yo quería ganar más plata, pero no tengo tiempo ni energía para otro trabajo."<br>Pensaban que ingreso extra era sinónimo de otro empleo, y eso siempre asustaba.'},
+{type:'text',text:'<strong>ERA MUCHO ESFUERZO PARA POCO INGRESO EXTRA</strong>'},
+{type:'button',label:'Continuar'}
+]},
+// 37 - Historia común (2)
+{type:'content',title:'',layers:[
+{type:'text',text:'Pero... después de aprender el Método Cookie Instagrameable, <strong>estos fueron sus resultados:</strong>'},
+{type:'text',text:'Todo esto porque, en pocos días, aprendieron la Receta de la Cookie Instagrameable que les permitió facturar $500.000 en el primer mes — <strong>sin experiencia en repostería</strong>.'},
+{type:'text',text:'Mirá el testimonio de Jessika que reactivó su Instagram viejo y vendió 100 cookies en la primera semana.'},
+{type:'button',label:'Continuar'}
+]},
+// 38 - Después del plan (question)
+{type:'question',title:'',layers:[
+{type:'alert',text:'↓ DESLIZÁ HACIA ABAJO ↓'},
+{type:'text',text:'Basándonos en todo lo que respondiste hasta acá...<br><strong>Vas a recibir la receta perfecta en tus manos.</strong>'},
+{type:'text',text:'<strong>Tu Progreso:</strong>'},
+{type:'alert',text:'¿Creés que serías capaz de mejorar tu situación económica si tuvieras este plan en tus manos? ↓'},
+{type:'options',multi:false,options:[
+{text:'Sí, estoy lista para esto',image:'https://media.inlead.cloud/uploads/101/2026-07-24/x0HO0-chatgpt-image-24-de-jul-de-2026-20-46-20-4.webp'},
+{text:'Seguro, solo necesito dirección',image:'https://media.inlead.cloud/uploads/101/2026-07-24/SsGbk-03-raramente-sem-fundo.webp'},
+{text:'Creo que sí... Quiero intentar',image:'https://media.inlead.cloud/uploads/101/2026-07-24/AJthl-01-muitas-vezes-sem-fundo.webp'}
+]}
+]},
+// 39 - Loading: Preparando plan
+{type:'loading',title:'',labels:['Basándonos en tus respuestas preparamos un plan personalizado...','Cargando tu plan...','Casi listo...']},
+// 40 - Lead capture (nombre y WhatsApp)
+{type:'lead',title:'',layers:[
+{type:'text',text:'<strong>Último paso antes de recibir tu Plan para hacer $500.000/mes con Cookies...</strong><br>Ingresá tu Nombre y WhatsApp:'},
+{type:'fields',fields:[
+{name:'nombre',label:'Tu nombre',type:'text',placeholder:'Ej: María'},
+{name:'email',label:'Tu email',type:'email',placeholder:'tu@email.com'},
+{name:'whatsapp',label:'Tu WhatsApp (opcional)',type:'tel',placeholder:'Ej: 11 2345-6789'}
+]},
+{type:'text',text:'<small>Al tocar el botón, autorizás el uso de tus datos (nombre, email y WhatsApp) para recibir el resultado del quiz, contenidos gratuitos y comunicaciones. Tus datos serán tratados con seguridad. Podés cancelar en cualquier momento.</small>'},
+{type:'button',label:'VER MI PLAN PERSONALIZADO'}
+]},
+// 41 - PITCH (sales page)
+{type:'pitch',title:''}
+];
+
+function renderStep(idx){
+  const s=steps[idx];
+  const el=document.getElementById('stepsContainer');
+  el.innerHTML='';
+  const div=document.createElement('div');
+  div.className='step active';
+
+  // Update progress
+  const pct=Math.round(((idx+1)/TOTAL_STEPS)*100);
+  document.getElementById('progressFill').style.width=pct+'%';
+  document.getElementById('progressText').textContent=`Paso ${idx+1} de ${TOTAL_STEPS}`;
+
+  if(s.type==='loading'){
+    div.innerHTML=renderLoading(s);
+    el.appendChild(div);
+    animateLoading(idx);
+    return;
+  }
+  if(s.type==='pitch'){
+    div.innerHTML=renderPitch();
+    el.appendChild(div);
+    initFaq();
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+
+  let html='';
+  if(s.title)html+=`<h2>${s.title}</h2>`;
+
+  const layers=s.layers||[];
+  let hasMulti=false;
+  let multiId='';
+  layers.forEach((l,li)=>{
+    if(l.type==='alert')html+=`<div class="alert-box">${l.text}</div>`;
+    else if(l.type==='text')html+=`<div class="text-block">${l.text}</div>`;
+    else if(l.type==='options'){
+      const m=l.multi?true:false;
+      if(m){hasMulti=true;multiId='multi_'+li;}
+      const cols=l.cols===2?' cols-2':'';
+      html+=`<div class="options-grid${cols}${m?' multi-select':''}" data-multi="${m}" id="${m?multiId:''}">`;
+      l.options.forEach((o,oi)=>{
+        html+=`<div class="opt-btn" data-idx="${oi}" data-value="${o.value||o.text}" onclick="${m?'toggleMulti(this)':'selectOption(this,'+idx+')'}">`;
+        if(o.image)html+=`<img src="${o.image}" alt="${o.text}" loading="lazy">`;
+        html+=`<span>${o.text}</span></div>`;
+      });
+      html+='</div>';
+    }else if(l.type==='button'){
+      const cls=l.cls||'btn-primary';
+      if(s.type==='lead'&&l.label){
+        html+=`<button class="btn ${cls}" onclick="submitLead(${idx})">${l.label}</button>`;
+      }else{
+        html+=`<button class="btn ${cls}" onclick="goNext(${idx})">${l.label}</button>`;
+      }
+    }else if(l.type==='fields'){
+      l.fields.forEach(f=>{
+        html+=`<div class="form-group"><label>${f.label}</label><input type="${f.type}" name="${f.name}" id="field_${f.name}" placeholder="${f.placeholder||''}"></div>`;
+      });
+    }else if(l.type==='metric'&&l.items){
+      l.items.forEach(m=>{
+        html+=`<div class="metric-row"><span>${m[0]}</span><span><strong>${m[1]}</strong></span></div>`;
+      });
+    }
+  });
+
+  div.innerHTML=html;
+  el.appendChild(div);
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function selectOption(btn,stepIdx){
+  btn.classList.add('selected');
+  const val=btn.dataset.value;
+  answers['step_'+stepIdx]=val;
+  setTimeout(()=>goNext(stepIdx),300);
+}
+
+function toggleMulti(btn){
+  btn.classList.toggle('selected');
+}
+
+function goNext(idx){
+  // Handle step 11 special case (disqualification has 2 buttons)
+  if(idx===11){
+    // "Creo que sí puedo comprarlos" advances, other goes nowhere
+  }
+  if(idx<TOTAL_STEPS-1){
+    current=idx+1;
+    renderStep(current);
+  }
+}
+
+function submitLead(idx){
+  const n=document.getElementById('field_nombre');
+  const e=document.getElementById('field_email');
+  if(n)userName=n.value.trim()||'';
+  if(!userName){alert('Por favor ingresá tu nombre');return;}
+  if(e&&!e.value.trim()){alert('Por favor ingresá tu email');return;}
+  answers.nombre=userName;
+  answers.email=e?e.value.trim():'';
+  const w=document.getElementById('field_whatsapp');
+  if(w)answers.whatsapp=w.value.trim();
+  goNext(idx);
+}
+
+function renderLoading(s){
+  const labels=s.labels||['Cargando...'];
+  return `<div class="loading-wrap">
+    <div class="loading-spinner"></div>
+    <div class="loading-pct" id="loadPct">0%</div>
+    <div class="loading-label" id="loadLabel">${labels[0]}</div>
+  </div>`;
+}
+
+function animateLoading(idx){
+  const s=steps[idx];
+  const labels=s.labels||['Cargando...'];
+  let pct=0;
+  const pctEl=document.getElementById('loadPct');
+  const lblEl=document.getElementById('loadLabel');
+  const interval=setInterval(()=>{
+    pct+=Math.random()*4+1;
+    if(pct>100)pct=100;
+    pctEl.textContent=Math.round(pct)+'%';
+    const li=Math.min(Math.floor((pct/100)*labels.length),labels.length-1);
+    lblEl.textContent=labels[li];
+    if(pct>=100){
+      clearInterval(interval);
+      setTimeout(()=>goNext(idx),600);
+    }
+  },80);
+}
+
+function renderPitch(){
+  const name=userName||'';
+  return `
+<div class="pitch-section">
+  <h2>${name?name+', ':''}ACÁ ESTÁ EL PLAN PARA HACER LA COOKIE INSTAGRAMEABLE Y GANAR +$500.000/MES</h2>
+  <div class="text-block"><strong>(AUNQUE NO TENGAS EXPERIENCIA Y SIN SALIR DE TU CASA)</strong></div>
+
+  <div class="metric-row"><span>Antes</span><span>Después</span></div>
+  <div class="metric-row"><span>Sin ingreso extra</span><span><strong>+$300.000/mes</strong></span></div>
+  <div class="metric-row"><span>Inseguridad en la cocina</span><span><strong>Repostera confiada</strong></span></div>
+  <div class="metric-row"><span>Recetas que no salen</span><span><strong>Cookies perfectas</strong></span></div>
+  <div class="metric-row"><span>No sabés vender</span><span><strong>Clientes que te buscan</strong></span></div>
+  <div class="metric-row"><span>Sin clientes</span><span><strong>Pedidos todos los días</strong></span></div>
+
+  <div class="alert-box" style="text-align:center">↓ DESLIZÁ PARA ABAJO ↓<br>Y MIRÁ EL PLAN COMPLETO</div>
+
+  <div class="text-block"><strong>ESTA ES TU MAYOR OPORTUNIDAD DE APRENDER Y HACER COOKIES INSTAGRAMEABLES Y FACTURAR +$500.000/MES, SIN SALIR DE TU CASA</strong><br>(Aunque nunca hayas hecho cookies antes y sin equipamiento profesional)</div>
+
+  <div class="text-block">Holaaa, ${name}...<br>Nikh Sweet, acá:</div>
+
+  <div class="text-block">No sé si me conocés...<br>Pero acá van algunas cosas sobre mí:</div>
+
+  <div class="alert-box">TENGO +500.000 SEGUIDORES EN MIS REDES SOCIALES</div>
+  <div class="alert-box">+20.000 ALUMNAS QUE YA HACEN LAS COOKIES INSTAGRAMEABLES</div>
+  <div class="alert-box">SOY REPOSTERA PROFESIONAL Y YA HICE +30.000 COOKIES INSTAGRAMEABLES</div>
+
+  <div class="text-block"><strong>VOY A REVELARTE:</strong><br>LA COOKIE INSTAGRAMEABLE QUE ESTÁ HACIENDO QUE CUALQUIER PERSONA FACTURE +$500.000/MES, AUNQUE SIN EXPERIENCIA CON COOKIES<br>(SIN NECESITAR UTENSILIOS CAROS NI EXPERIENCIA PREVIA — LITERALMENTE, CUALQUIERA PUEDE TENER ESTOS RESULTADOS)</div>
+
+  <div class="alert-box">¿QUÉ NECESITÁS PARA TENER ACCESO A LA COOKIE INSTAGRAMEABLE?</div>
+  <div class="text-block">Solo un celular o computadora con internet para acceder al curso.<br>Un horno, un bowl y una balanza.<br>Ganas de aprender y crecer.</div>
+
+  <div class="text-block"><strong>SEGÚN LO QUE RESPONDISTE EN EL QUIZ:</strong></div>
+  <div class="alert-box green">Tenés acceso a un Supermercado para ingredientes</div>
+  <div class="alert-box green">Tenés una balanza y un bowl</div>
+  <div class="alert-box green">Tenés un horno</div>
+  <div class="alert-box"><strong>ESTÁS 100% CALIFICADA PARA HACER LAS COOKIES INSTAGRAMEABLES Y GANAR +$500.000/MES CON ELLAS</strong></div>
+
+  <div class="text-block"><strong>¿POR QUÉ LAS COOKIES INSTAGRAMEABLES VENDEN TANTO?</strong></div>
+  <div class="text-block">Es simple...<br><strong>HOY, LA PRIMERA MORDIDA ENTRA POR LOS OJOS</strong></div>
+  <div class="alert-box">Sin importar dónde vendas... El cliente siempre va a consumir primero con los ojos y tomar su decisión en base a lo que está viendo en el "menú digital".<br><strong>Por eso... LA COOKIE MÁS LINDA SIEMPRE VA A VENDER MUCHO MÁS</strong></div>
+
+  <div class="text-block"><strong>PRUEBA PRÁCTICA:<br>¿CUÁL DE ESTAS PREFERIRÍAS?</strong></div>
+
+  <div class="compare-grid">
+    <div class="compare-col trad">
+      <h4>TRADICIONAL</h4>
+      <ul>
+        <li>Menos atractiva para vender en redes, delivery y otros</li>
+        <li>Menos relleno y sabor</li>
+        <li>No podés cobrar mucho</li>
+        <li>Menos valor percibido por tu cliente</li>
+      </ul>
+    </div>
+    <div class="compare-col insta">
+      <h4>INSTAGRAMEABLE</h4>
+      <ul>
+        <li>MUCHO MÁS ATRACTIVA para vender en redes, delivery y otros</li>
+        <li>MUCHO MÁS relleno y sabor en cada mordida</li>
+        <li>Podés cobrar fácilmente $3.000+ por cookie</li>
+        <li>MUCHO MÁS VALOR percibido por tu cliente</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="text-block"><strong>VENDÉS MÁS,<br>VENDÉS MÁS CARO,<br>Y ENAMORÁS MUCHO MÁS A TU CLIENTE</strong></div>
+
+  <div class="alert-box">LO MEJOR DE TODO ES QUE, PARA HACER LAS COOKIES INSTAGRAMEABLES Y EMPEZAR A GANAR, VOS:<br><br>No necesitás experiencia previa<br>No necesitás utensilios caros<br>No necesitás saber vender<br>No necesitás salir de tu casa</div>
+
+  <div class="text-block"><strong>SOLO NECESITÁS ESTO:</strong></div>
+  <div class="text-block">Un bowl, una balanza, un horno y los ingredientes simples del super.<br>+ La receta correcta (que te vamos a dar).</div>
+
+  <div class="alert-box" style="text-align:center"><strong>POR ESO, TE PRESENTO:<br>MÉTODO COOKIES INSTAGRAMEABLES</strong></div>
+
+  <div class="alert-box"><strong>VAS A APRENDER EL PASO A PASO PARA SALIR DEL ABSOLUTO CERO Y HACER LA COOKIE INSTAGRAMEABLE — Y GANAR +$500.000/MES CON ELLAS</strong></div>
+
+  <div class="text-block"><strong>¿CÓMO FUNCIONA ESTE ENTRENAMIENTO?</strong></div>
+  <div class="text-block">
+    Receta completa en video paso a paso<br>
+    PDF descargable con medidas exactas<br>
+    Clase de precificación para maximizar ganancias<br>
+    Las 5 mejores formas de venta para tus primeros clientes<br>
+    Comunidad de alumnas para compartir experiencias
+  </div>
+
+  <div class="alert-box"><strong>DESPUÉS DEL ENTRENAMIENTO MÉTODO COOKIES INSTAGRAMEABLES, VAS A ESTAR PREPARADA PARA HACER DE:<br>$300.000 a +$500.000/mes</strong></div>
+
+  <div class="alert-box">TODO ESTO:<br><br>Trabajando desde tu casa<br>Con ingredientes baratos<br>Sin necesidad de experiencia<br>Con pocas horas por semana<br>Sin equipamiento caro</div>
+
+  <div class="alert-box">ADEMÁS, VAS A:<br><br>Aprender a sacar fotos instagrameables<br>Aprender a embalar de forma profesional<br>Tener acceso a proveedores recomendados<br>Recibir 3 recetas bonus exclusivas</div>
+
+  <div class="text-block"><strong>Ahora decime, ¿cuánto creés que valdría tener acceso a todo esto?</strong></div>
+  <div class="alert-box"><strong>TENER LA POSIBILIDAD DE HACER +$500.000/MES CON LAS COOKIES INSTAGRAMEABLES, EN LA COCINA DE TU CASA</strong></div>
+  <div class="text-block"><strong>¿CUÁNTO TE COSTARÍA A VOS Y A TU FUTURO, NO TENER ACCESO AL MÉTODO COOKIES INSTAGRAMEABLES?</strong></div>
+  <div class="text-block">Si saco la cuenta, todo esto costaría...</div>
+
+  <div class="line-item"><span class="name">Método Cookies Instagrameables</span><span class="val">$19.990</span></div>
+  <div class="line-item"><span class="name">Receta: Double Chocolate</span><span class="val">$4.990</span></div>
+  <div class="line-item"><span class="name">Receta: Cenocookie</span><span class="val">$4.990</span></div>
+  <div class="line-item"><span class="name">Receta: Crookie</span><span class="val">$4.990</span></div>
+  <div class="line-item"><span class="name">Método de la Victoria - 5 Mejores Formas de Venta</span><span class="val">$4.990</span></div>
+  <div class="line-item"><span class="name">Fotos que Venden</span><span class="val">$4.990</span></div>
+  <div class="line-item"><span class="name">Embalajes que Enamoran</span><span class="val">$2.990</span></div>
+  <div class="line-item"><span class="name">Lista de Proveedores</span><span class="val">$2.990</span></div>
+
+  <div class="text-block">AL SUMAR TODOS ESTOS PRODUCTOS QUE TE VAS A LLEVAR, EL PRECIO TOTAL SERÍA:</div>
+  <div class="text-block" style="font-size:28px;font-weight:900;text-decoration:line-through;color:var(--text-light)">$49.990</div>
+  <div class="text-block"><strong>PERO, TENÉS LA OPORTUNIDAD DE LLEVARTE TODO ESTO POR...</strong></div>
+
+  <div class="price-card">
+    <div style="font-size:14px;font-weight:600;color:var(--text-light);margin-bottom:4px">MÉTODO COOKIES INSTAGRAMEABLES</div>
+    <div class="old-price">$49.990</div>
+    <div class="new-price">$17.990</div>
+    <div class="installments">o hasta en 12 cuotas</div>
+  </div>
+
+  <a href="${CHECKOUT}" class="btn btn-primary" style="text-decoration:none;text-align:center;display:block;font-size:18px">COMPRAR AHORA</a>
+
+  <div class="text-block"><strong>ESTA ES TU OPORTUNIDAD DE TENER ESTOS RESULTADOS</strong></div>
+
+  <div class="guarantee-box">
+    <div style="font-size:40px">🛡️</div>
+    <div style="font-size:16px;font-weight:700;margin:8px 0">GARANTÍA INCONDICIONAL DE 7 DÍAS</div>
+    <div style="font-size:13px;color:var(--text-light)">(literalmente cero riesgo)</div>
+    <div style="font-size:14px;margin-top:12px;line-height:1.6">Nuestro MÉTODO COOKIES INSTAGRAMEABLES tiene garantía de 100% de devolución de tu plata hasta 7 días.<br><strong>INVERSIÓN RIESGO CERO</strong> PARA QUE CONSUMAS EL CONTENIDO Y VEAS SI ES PARA VOS (SIN LETRA CHICA).</div>
+  </div>
+
+  <div class="text-block"><strong>PREGUNTAS FRECUENTES:</strong></div>
+
+  <div id="faqContainer">
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">¿Es muy difícil hacer la Cookie Instagrameable?</div><div class="faq-a">No. Hay alumnas que nunca habían hecho cookies en su vida y, después de seguir el paso a paso, lograron hacer las Cookies Instagrameables y ya están volando alto. Subí un poquito y mirá con tus propios ojos los testimonios de las alumnas.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">¿Cuánto tiempo lleva empezar a vender mis Cookies Instagrameables?</div><div class="faq-a">Podés empezar a vender en las primeras semanas. Te presento las 5 mejores formas de venta para que hagas tus primeras 10 ventas. Quedate tranquila que te voy a guiar.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">¿Cuáles son las formas de pago?</div><div class="faq-a">Tarjeta de crédito/débito y transferencia bancaria.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">¿El pago es seguro?</div><div class="faq-a">Sí. Utilizamos una de las plataformas de pago más seguras del mercado.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">¿Cómo recibo el acceso al Método Cookies Instagrameables?</div><div class="faq-a">Vas a recibir el acceso por email para entrar al área de alumnas. También te mandamos un mensaje por WhatsApp para facilitarte el acceso.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">¿Y si compro y no me gusta?</div><div class="faq-a">Podés recibir el 100% de tu plata de vuelta. Tenés 7 días para probar, aplicar y tomar la decisión.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">No tengo experiencia, ¿voy a poder tener resultados?</div><div class="faq-a">Sí. Mi método fue desarrollado 100% para quien no tiene experiencia con Cookies. Vas a lograr excelentes resultados si aplicás el 100% de lo que se enseña en las clases.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">¿Cuánto tiempo de acceso tengo?</div><div class="faq-a">Tu acceso es válido por 1 año.</div></div>
+    <div class="faq-item"><div class="faq-q" onclick="this.parentElement.classList.toggle('open')">¿Es necesario aparecer en redes sociales para vender las Cookies?</div><div class="faq-a">No, podés simplemente postear fotos de tus productos para impulsar tus ventas. Vos elegís si aparecés o no. Además, las redes sociales son 1 de las 5 formas de venta.</div></div>
+  </div>
+
+  <div class="text-block"><strong>ASEGURÁ AHORA TU ACCESO AL MÉTODO COOKIES INSTAGRAMEABLES:</strong></div>
+
+  <div class="price-card">
+    <div style="font-size:14px;font-weight:600;color:var(--text-light);margin-bottom:4px">MÉTODO COOKIES INSTAGRAMEABLES</div>
+    <div class="old-price">$49.990</div>
+    <div class="new-price">$17.990</div>
+    <div class="installments">o hasta en 12 cuotas</div>
+  </div>
+
+  <a href="${CHECKOUT}" class="btn btn-primary" style="text-decoration:none;text-align:center;display:block;font-size:18px">COMPRAR AHORA</a>
+  <a href="${CHECKOUT}" class="btn btn-primary" style="text-decoration:none;text-align:center;display:block;font-size:18px;margin-top:8px;background:var(--green)">QUIERO EMPEZAR HOY</a>
+
+  <div class="text-block" style="font-size:12px;color:var(--text-light);margin-top:32px">Este producto es comercializado con el apoyo de una plataforma de pago segura. Las imágenes son ilustrativas. Los resultados pueden variar de persona a persona.</div>
+</div>`;
+}
+
+function initFaq(){
+  // FAQ is handled by inline onclick
+}
+
+// Start
+renderStep(0);
+</script>
+</body>
+</html>
