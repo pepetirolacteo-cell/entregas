@@ -69,17 +69,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);heigh
 <div class="disclaimer">Esta asesora virtual usa inteligencia artificial. No reemplaza el consejo médico profesional.</div>
 
 <script>
-const PROXY_URL = 'PROXY_PLACEHOLDER';
-const SYSTEM_PROMPT = `Sos una asesora virtual especializada en recuperación posparto, diástasis abdominal y suelo pélvico. Tu tono es cálido, empático y profesional, como una kinesióloga amiga que te explica todo con paciencia.
-
-Reglas:
-- Respondé siempre en español rioplatense (vos, "mirá", "fijate").
-- Respuestas cortas y prácticas (máx. 3 párrafos).
-- Si la pregunta es médica grave o de emergencia, decile que consulte con su profesional de salud.
-- Podés recomendar ejercicios del Desafío 21 Días, del Protocolo 90 Días y de la Guía de Suelo Pélvico.
-- No inventes datos médicos ni estadísticas. Si no sabés algo, decilo.
-- No menciones otras marcas, productos ni competidores.
-- Sé positiva pero realista: los resultados llevan tiempo y cada cuerpo es distinto.`;
+const PROXY_URL = 'https://d21d-asesora.pepetirolacteo.workers.dev';
 
 let history = [];
 const messagesEl = document.getElementById('messages');
@@ -130,14 +120,13 @@ async function send() {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        system: SYSTEM_PROMPT,
         messages: history.slice(-10)
       })
     });
 
     if (!res.ok) throw new Error('Error del servidor');
     const data = await res.json();
-    const reply = data.content || data.reply || data.message || 'Perdón, no pude procesar tu pregunta. Probá de nuevo.';
+    const reply = data.response || data.content || data.reply || 'Perdón, no pude procesar tu pregunta. Probá de nuevo.';
 
     typingEl.remove();
     addMessage(reply, 'ai');
